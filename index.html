@@ -1,0 +1,4555 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fledglynn · 个人主页</title>
+<meta name="theme-color" content="#0A0C0F">
+<!-- 站点图标：夜空中的星。SVG 优先（矢量、任意缩放都清晰），ICO 兼容旧浏览器，PNG 给 iOS 主屏 -->
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Noto+Serif+SC:wght@500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Cinzel:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --yellow: #F6C445;
+    --yellow-light: #FBE08A;
+    --blue: #2E4A66;      /* 深蓝灰（海/点缀）——再调浅 */
+    --blue-deep: #213A56; /* 深蓝（hero 底色）——再调浅 */
+    --ink: #EDF1F6;       /* 正文文字（浅色） */
+    --bg: #0A0C0F;        /* 页面整体黑色背景 */
+    --panel: #14171C;     /* 卡片/面板深色 */
+    --line: rgba(255,255,255,.12); /* 深色下的描边 */
+    --paper: #F6F4EC;     /* 浅色（hero 文字/灯塔/头像描边保留） */
+    --muted: #8A939E;
+    /* 高级感字体 */
+    --font-display: "Cinzel","Cormorant Garamond","Playfair Display","Noto Serif SC",serif; /* 罗马碑刻风标题 */
+    --font-body: "Noto Serif SC","PingFang SC","Microsoft YaHei",-apple-system,sans-serif;
+    /* 玻璃拟态 / 悬浮质感 */
+    --glass: rgba(255,255,255,.06);
+    --glass-border: rgba(255,255,255,.14);
+    --glow-shadow: 0 22px 60px rgba(0,0,0,.48);
+    --lift: translateY(-6px);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;overflow-x:clip}
+  ::selection{background:rgba(246,196,69,.32);color:var(--paper)}
+  body{
+    font-family:var(--font-body);
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.8;
+    letter-spacing:.3px;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  a{color:inherit;text-decoration:none}
+  /* 细鎏金滚动条 */
+  ::-webkit-scrollbar{width:11px}
+  ::-webkit-scrollbar-track{background:var(--bg)}
+  ::-webkit-scrollbar-thumb{background:rgba(255,255,255,.16);border-radius:8px;border:3px solid var(--bg)}
+  ::-webkit-scrollbar-thumb:hover{background:rgba(246,196,69,.45)}
+
+  /* ===== 顶部导航 ===== */
+  .topbar{
+    position:sticky;top:0;z-index:50;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 68px 14px 22px;
+    background:rgba(10,12,15,.72);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--glass-border);
+    transition:padding .3s,box-shadow .3s;
+  }
+  .topbar.scrolled{box-shadow:0 8px 30px rgba(0,0,0,.35)}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.6px;font-family:var(--font-display);font-size:18px}
+  .brand .dot{width:12px;height:12px;border-radius:50%;background:var(--yellow);box-shadow:0 0 0 3px rgba(246,196,69,.28),0 0 14px rgba(246,196,69,.6)}
+  .nav{display:flex;gap:22px;font-size:14px}
+  .nav a{color:var(--ink);font-weight:600;position:relative;padding-bottom:3px;opacity:.85}
+  .nav a:hover{color:var(--yellow-light);opacity:1}
+  .nav a:after{content:"";position:absolute;left:0;bottom:0;width:0;height:2px;background:var(--yellow);transition:width .25s}
+  .nav a:hover:after{width:100%}
+  /* ===== 语言切换 ===== */
+  .topbar-right{display:flex;align-items:center;gap:20px}
+  .lang-switch{display:flex;align-items:center;background:rgba(255,255,255,.05);border:1px solid var(--glass-border);border-radius:999px;padding:3px}
+  .lang-btn{border:0;background:transparent;color:var(--muted);font-weight:600;font-size:12px;line-height:1;padding:6px 12px;border-radius:999px;cursor:pointer;transition:color .2s,background .2s}
+  .lang-btn.active{background:var(--yellow);color:#0A0C0F}
+  .lang-btn:not(.active):hover{color:var(--ink)}
+
+  .wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+
+  /* ===== Hero ===== */
+  .hero{
+    position:relative;
+    background:
+      radial-gradient(60% 55% at 16% 10%, rgba(246,196,69,.16), transparent 70%),
+      radial-gradient(70% 70% at 88% 88%, rgba(255,255,255,.06), transparent 60%),
+      linear-gradient(180deg,var(--blue-deep) 0%,var(--blue) 55%,#0A0C0F 100%);
+    color:var(--paper);
+    overflow:hidden;
+    border-bottom:3px solid var(--yellow);
+  }
+  .hero-inner{position:relative;z-index:3;text-align:center;padding:80px 22px 124px;transform:translate3d(0,var(--py,0px),0);will-change:transform,opacity}
+
+  /* ===== BGM 音符按钮（悬浮固定在屏幕右上角，简洁音符 emoji） ===== */
+  .bgm-btn{
+    position:fixed;top:18px;right:18px;z-index:90;
+    display:flex;align-items:center;justify-content:center;
+    width:42px;height:42px;flex:none;
+    border-radius:50%;
+    background:var(--glass);border:1px solid var(--glass-border);
+    cursor:pointer;
+    transition:transform .25s,background .25s,border-color .25s,box-shadow .25s;
+    backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  }
+  .bgm-btn:hover{
+    transform:translateY(-2px) scale(1.05);
+    border-color:var(--yellow);background:rgba(246,196,69,.14);
+    box-shadow:0 8px 22px rgba(0,0,0,.35),0 0 16px rgba(246,196,69,.22);
+  }
+  .bgm-btn:active{transform:scale(.94)}
+  .bgm-btn .note{
+    display:block;font-size:21px;line-height:1;
+    filter:grayscale(35%);opacity:.9;
+    transition:filter .25s,opacity .25s;
+  }
+  .bgm-btn:hover .note{filter:grayscale(0);opacity:1}
+  /* 播放时音符缓缓浮动，表达"正在播放" */
+  .bgm-btn.playing .note{animation:note-float 2.2s ease-in-out infinite}
+  @keyframes note-float{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-3px)}
+  }
+  /* 用户手动暂停后：音符略微变暗，并在按钮表面盖一道斜杠，表示"已暂停"
+     （用独立的 .paused 类，只有用户主动点暂停才出现；初次加载不显示） */
+  .bgm-btn.paused .note{filter:grayscale(45%);opacity:.78}
+  .bgm-btn::after{
+    content:"";
+    position:absolute;left:50%;top:50%;z-index:2;
+    width:26px;height:3px;margin:-1.5px 0 0 -13px;
+    border-radius:3px;
+    background:var(--ink);
+    box-shadow:0 0 0 1.5px rgba(10,12,15,.5),0 0 7px rgba(0,0,0,.3);
+    transform:rotate(-45deg) scaleX(0);
+    opacity:0;
+    transition:transform .22s cubic-bezier(.34,1.56,.64,1),opacity .18s ease;
+    pointer-events:none;
+  }
+  .bgm-btn.paused::after{opacity:.5;transform:rotate(-45deg) scaleX(1)}
+  /* 海浪声按钮：与 BGM 按钮同款式同行为，仅垂直向下错开，避免两个按钮重叠 */
+  .bgm-btn.sea-btn{top:68px}
+  /* 声音提示：浏览器的自动播放策略会拦截"未经交互"的播放，页面刚打开时必然是静的。
+     这里浮出一行小字引导访客点一下，首次真正播出声后淡出退场。
+     位置很讲究：右上角那一列是 topbar 用 padding-right(68px/60px) 给两个音符按钮预留的，
+     往左伸就会压住导航；而 hero 右下角的灯塔插画顶边大约在 153px（bottom:0 + translateY(68px)），
+     所以唯一的空档是 topbar 底边(≈61px) 到灯塔顶边之间的这条带 —— 提示条正好落在这里。 */
+  .sound-hint{
+    position:fixed;top:64px;right:70px;z-index:90;
+    display:flex;align-items:center;height:42px;
+    padding:0 13px;border-radius:999px;
+    font-size:12.5px;line-height:1;letter-spacing:.3px;
+    color:var(--yellow-light);
+    background:var(--glass);border:1px solid var(--glass-border);
+    box-shadow:0 8px 22px rgba(0,0,0,.32);
+    backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+    white-space:nowrap;pointer-events:none;   /* 纯提示，不拦截点击 */
+    opacity:0;transform:translateX(10px);
+    transition:opacity .55s ease,transform .55s ease;
+  }
+  .sound-hint.show{opacity:1;transform:translateX(0)}
+  @media (prefers-reduced-motion: reduce){
+    /* 关掉滑动，只保留淡入淡出 */
+    .sound-hint{transition:opacity .25s ease}
+    .sound-hint.show{transform:none}
+  }
+  /* ≤620px 时导航独占一行（.nav{flex:1 0 100%}），topbar 长高到 ≈82px；
+     ≤440px 再让一步，避开极窄屏下导航换到第三行的情况。 */
+  @media (max-width: 620px){
+    .sound-hint{top:92px}
+  }
+  @media (max-width: 440px){
+    .sound-hint{top:116px;font-size:11.5px}
+  }
+
+  /* ===== 头像：实心金色球体 + 3D 经纬网格 + 土星环（纯 CSS） ===== */
+  .avatar{
+    width:150px;height:150px;margin:0 auto 30px;
+    position:relative;display:flex;align-items:center;justify-content:center;
+    perspective:900px;                    /* 给经纬网格提供 3D 透视 */
+  }
+  /* 实心金色球：固定不旋转，始终呈现正圆形 + 体积光影 —— 这是"球"的底 */
+  .sphere{
+    position:absolute;left:50%;top:50%;width:124px;height:124px;
+    margin:-62px 0 0 -62px;border-radius:50%;
+    background:radial-gradient(circle at 30% 26%, #FFF9DE, #F5C64A 44%, #E0A32E 62%, #a86a14 92%);
+    box-shadow:
+      /* 左上受光、右下背光的体积感 */
+      inset 14px 16px 24px rgba(255,255,255,.35),
+      inset -16px -20px 28px rgba(70,42,0,.5),
+      0 0 8px rgba(255,240,190,.8),
+      0 0 34px rgba(246,196,69,.55);
+  }
+  /* 球体表面一层淡淡的受光渐变，强化"圆"而非"平" */
+  .sphere::before{
+    content:"";position:absolute;left:10%;top:6%;width:44%;height:36%;border-radius:50%;
+    background:radial-gradient(circle,rgba(255,255,255,.5),transparent 70%);filter:blur(6px);opacity:.8;
+  }
+  /* 经纬网格 3D 场景：只承载线条，整组绕垂直轴(Y)旋转 */
+  .planet{
+    position:absolute;left:50%;top:50%;width:120px;height:120px;
+    margin:-60px 0 0 -60px;
+    transform-style:preserve-3d;          /* 允许子元素真正的 3D 定位 */
+    animation:planet-spin 16s linear infinite;
+  }
+  /* 通用圆环：绝对定位到球心，一个经/纬线环 */
+  .meridian,.parallel{
+    position:absolute;left:50%;top:50%;width:120px;height:120px;
+    margin:-60px 0 0 -60px;border-radius:50%;
+    border:2px solid rgba(255,246,220,.45);
+    box-shadow:inset 0 0 8px rgba(255,246,220,.25);
+  }
+  /* 经线：4 个竖直大圈，绕 Y 轴分布在 0/45/90/135° 经度 */
+  .m0{transform:rotateY(0deg)}
+  .m1{transform:rotateY(45deg)}
+  .m2{transform:rotateY(90deg)}
+  .m3{transform:rotateY(135deg)}
+  /* 纬线：平躺(rotateX 90°)，用 translateZ 放到不同高度(纬度) */
+  .parallel{border-color:rgba(255,246,220,.4)}
+  .p1{transform:rotateX(90deg) translateZ(-38px);width:96px;height:96px;margin:-48px 0 0 -48px}
+  .p2{transform:rotateX(90deg);width:120px;height:120px;margin:-60px 0 0 -60px}
+  .p3{transform:rotateX(90deg) translateZ(38px);width:96px;height:96px;margin:-48px 0 0 -48px}
+  /* 顶部受光高光（网格上方） */
+  .shine{
+    position:absolute;left:22px;top:16px;width:50px;height:28px;border-radius:50%;
+    background:radial-gradient(circle,rgba(255,255,255,.7),transparent 70%);
+    filter:blur(3px);opacity:.85;pointer-events:none;
+  }
+  /* 中心首字母：正立不动，作为球面上的标志 */
+  .core{
+    position:absolute;left:50%;top:50%;width:124px;height:124px;
+    margin:-62px 0 0 -62px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:56px;font-weight:800;color:rgba(90,58,8,.8);
+    font-family:var(--font-display);text-shadow:0 1px 0 rgba(255,255,255,.4);
+    pointer-events:none;z-index:5;
+  }
+  /* 土星环：倾斜贯穿球体的光带环 */
+  .ring{
+    position:absolute;left:50%;top:50%;width:216px;height:216px;
+    margin:-108px 0 0 -108px;border-radius:50%;
+    transform:rotateX(76deg);
+    background:
+      radial-gradient(closest-side,
+        transparent 0 33%,
+        rgba(214,150,36,.15) 33%,
+        rgba(255,230,160,.95) 37%,
+        transparent 38% 42%,
+        rgba(214,150,36,.5) 44%,
+        transparent 45% 49%,
+        rgba(255,230,160,.85) 51%,
+        transparent 52%);
+    box-shadow:0 0 38px rgba(246,196,69,.42);
+    pointer-events:none;z-index:4;
+  }
+  @keyframes planet-spin{
+    from{transform:rotateY(0deg)}
+    to{transform:rotateY(360deg)}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .planet{animation:none}
+  }
+  .hero h1{
+    font-family:var(--font-display);
+    font-size:54px;letter-spacing:3px;font-weight:700;
+    line-height:1.08;
+    text-shadow:0 2px 26px rgba(246,196,69,.22);
+  }
+  .tagline{max-width:560px;margin:16px auto 0;font-size:18px;color:var(--yellow-light);font-weight:500;line-height:1.7}
+  .hero-badges{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:30px}
+  .badge{
+    font-size:13px;padding:7px 15px;border-radius:999px;
+    border:1px solid rgba(251,224,138,.45);
+    color:var(--paper);background:rgba(246,196,69,.1);
+    backdrop-filter:blur(4px);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.08);
+    transition:transform .25s,border-color .25s,background .25s;
+  }
+  .badge:hover{transform:translateY(-2px);border-color:var(--yellow-light);background:rgba(246,196,69,.18)}
+
+  /* 灯塔 + 海浪 SVG */
+  /* 左侧 · 实心海：填满左侧区域，右边缘为波浪线，随拍打在中央标签一带进退 */
+  .sea-left{
+    position:absolute;left:0;top:0;bottom:0;width:60%;
+    pointer-events:none;z-index:1;overflow:hidden;
+    transform:translate3d(0,var(--py,0px),0);   /* 视差：中景层 */
+    will-change:transform;
+  }
+  /* 内层 SVG 稍宽并左移，留出横向进退的空间，避免左缘露白 */
+  .sea-left svg{
+    position:absolute;left:-16%;top:0;width:132%;height:100%;
+    display:block;
+  }
+  .sea-left .swell{
+    will-change:transform;
+    animation:swell 7s ease-in-out infinite;
+  }
+  /* 每层错开的时长与相位 → 错落拍打，形成层次 */
+  .sea-left .swell:nth-child(1){animation-duration:8s;animation-delay:0s}
+  .sea-left .swell:nth-child(2){animation-duration:7.2s;animation-delay:-1.4s}
+  .sea-left .swell:nth-child(3){animation-duration:8.6s;animation-delay:-3.2s}
+  .sea-left .swell:nth-child(4){animation-duration:7.8s;animation-delay:-4.8s}
+  /* 大幅向外(右)冲再收回 = 拍打 */
+  @keyframes swell{
+    0%,100%{transform:translateX(0)}
+    46%   {transform:translateX(9%)}
+    72%   {transform:translateX(-2.5%)}
+  }
+  /* 移动端收窄，避免盖住头像 */
+  @media (max-width:720px){
+    .sea-left{width:52%}
+    .sea-left svg{left:-22%;width:132%}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .sea-left .swell{animation:none}
+  }
+
+  /* ===== 灯塔 · 俯视图（圆盘塔顶 + 放射窗格 + 中心亮灯 + 旋转光束） ===== */
+  /* ===== 灯塔 · 经典侧视剪影 + 光束绕垂直轴(水平面)旋转，带透视纵深 ===== */
+  .lighthouse{
+    position:absolute;right:0;bottom:0;   /* 整体下移，让底座压住 hero 底部黄线 */
+    width:470px;height:560px;
+    /* 原本下移 68px 让底座贴合黄线；这里把视差位移叠加进去（--py 由脚本驱动），
+       绝不覆盖原位移，否则灯塔会在滚动时跳位 */
+    transform:translateY(calc(68px + var(--py,0px)));
+    pointer-events:none;z-index:2;overflow:visible;
+    will-change:transform;
+    perspective:1000px;             /* 3D 纵深透视 */
+  }
+  .lighthouse svg{width:100%;height:100%;display:block}
+  .lighthouse .tower{fill:var(--blue);stroke:rgba(250,246,236,.5);stroke-width:2}
+  /* 塔身红白环带（此处用浅色/黄色条纹区分层次） */
+  .lighthouse .stripe{fill:var(--paper)}
+  /* 塔底 */
+  .lighthouse .base{fill:var(--blue-deep);stroke:rgba(250,246,236,.4);stroke-width:2}
+  .lighthouse .base2{fill:var(--blue);stroke:rgba(250,246,236,.3);stroke-width:2}
+  /* 顶灯室 */
+  .lighthouse .gallery{fill:var(--blue);stroke:rgba(250,246,236,.45);stroke-width:2}
+  .lighthouse .glass{fill:rgba(255,214,90,.9)}
+  .lighthouse .roof{fill:var(--blue-deep);stroke:rgba(250,246,236,.4);stroke-width:2}
+  .lighthouse .base-strip{fill:rgba(250,246,236,.25)}
+  .lamp-halo{
+    fill:rgba(255,214,90,.38);
+    transform-box:view-box;transform-origin:90px 50px;
+    animation:halo 2.8s ease-in-out infinite;
+  }
+  .lamp{fill:#FFF0B0;transform-box:view-box;transform-origin:90px 50px;animation:glow 2.8s ease-in-out infinite}
+  @keyframes glow{0%,100%{opacity:1}50%{opacity:.45}}
+  @keyframes halo{0%,100%{transform:scale(1);opacity:.85}50%{transform:scale(1.35);opacity:.3}}
+  /* 3D 光束：从灯塔黄圈圆心(容器内 left:50%; top:22.7%)一点射出，绕垂直轴旋转 */
+  .beam-spin{
+    position:absolute;left:50%;top:22.7%;
+    width:0;height:0;transform-style:preserve-3d;
+  }
+  /* 一束窄而长的真实光锥：起点对齐灯心(黄圈圆心)一点、向前发散、远端渐隐 */
+  .beam{
+    position:absolute;left:0;top:-48px; /* 上移半高，让中心线穿过灯心 */
+    width:820px;height:96px;
+    transform-origin:left center;
+    clip-path:polygon(0 50%, 100% 0, 100% 100%);
+    background:
+      /* 宽而淡的外围光晕（光尘感） */
+      radial-gradient(ellipse at 0 50%, rgba(255,220,120,.5), rgba(255,214,90,.2) 30%, rgba(255,200,70,.06) 62%, rgba(255,200,70,0) 88%),
+      /* 亮芯（贴近光源） */
+      radial-gradient(ellipse at 0 50%, rgba(255,244,190,.95), rgba(255,214,90,.65) 20%, rgba(255,200,70,.22) 52%, rgba(255,200,70,0) 80%);
+  }
+  @media (max-width:720px){
+    .lighthouse{width:230px;height:276px;right:0}
+    .beam{width:440px;height:58px;top:-29px}
+  }
+
+  /* ===== 个人简介区 ===== */
+  .section{padding:70px 0}
+  .section-title{font-size:26px;font-weight:800;letter-spacing:.5px;margin-bottom:28px;color:var(--ink);font-family:var(--font-display)}
+  .section-title span{color:var(--yellow);margin-right:8px}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+  .card{
+    background:var(--glass);
+    border:1px solid var(--line);border-radius:16px;
+    padding:26px;box-shadow:0 3px 16px rgba(0,0,0,.22);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    position:relative;overflow:hidden;
+    border-top:3px solid transparent;
+    background-image:linear-gradient(var(--panel),var(--panel)),linear-gradient(90deg,var(--yellow),rgba(246,196,69,.3));
+    background-origin:border-box;background-clip:padding-box,border-box;
+    transition:transform .35s cubic-bezier(.2,.7,.3,1),box-shadow .35s;
+  }
+  .card::after{
+    content:"";position:absolute;top:0;left:0;width:100%;height:100%;
+    background:radial-gradient(120px 80px at 0 0, rgba(246,196,69,.12), transparent 70%);
+    opacity:0;transition:opacity .35s;pointer-events:none;
+  }
+  .card:hover{transform:var(--lift);box-shadow:0 24px 54px rgba(0,0,0,.4)}
+  .card:hover::after{opacity:1}
+  .card h3{font-size:17px;margin-bottom:10px;color:var(--ink)}
+  .card p{font-size:14.5px;color:var(--ink)}
+  .card .k{color:var(--muted);font-size:12.5px;margin-bottom:7px;letter-spacing:.8px;text-transform:uppercase;font-weight:600}
+
+  .interests{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+  .chip{
+    background:rgba(46,74,102,.6);color:var(--paper);font-size:13px;
+    padding:6px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.06);
+    transition:.25s;
+  }
+  .chip:hover{background:rgba(46,74,102,.85);transform:translateY(-2px)}
+  .chip.y{background:var(--yellow);color:var(--blue-deep);font-weight:600}
+  .chip.y:hover{background:var(--yellow-light)}
+
+  /* 简介行：一段自我介绍 */
+  .about{
+    background:var(--glass);
+    border:1px solid var(--line);border-radius:16px;padding:30px;margin-bottom:20px;
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    background-image:linear-gradient(var(--panel),var(--panel));
+    position:relative;overflow:hidden;
+    box-shadow:0 3px 16px rgba(0,0,0,.22);
+  }
+  .about::before{content:"";position:absolute;top:0;left:0;width:3px;height:100%;background:linear-gradient(var(--yellow),transparent)}
+  .about b{color:var(--yellow-light)}
+  .about .hl{background:linear-gradient(transparent 62%,rgba(246,196,69,.35) 0);padding:0 2px;color:var(--ink)}
+
+  /* ===== 学习 · 时间轴 =====
+     中轴一条竖线，节点左右交替（第 1、3… 条在左，第 2、4… 条在右），
+     卡片直接复用 .card 的玻璃语言，只补排布。
+     滚动时中轴线按进度点亮：--tl 由 JS 写入（未点亮部分是 --tl 上面的暗轨）。
+     移动端(<=720px)自动变成"全线靠左 + 卡片单列"。 */
+  .timeline{position:relative;padding:4px 0}
+  .timeline::before{                     /* 暗轨：整条轴 */
+    content:"";position:absolute;left:50%;top:0;bottom:0;width:2px;margin-left:-1px;
+    background:linear-gradient(180deg,transparent,rgba(255,255,255,.14) 7%,
+               rgba(255,255,255,.14) 93%,transparent);
+  }
+  .timeline::after{                      /* 亮轨：高度=滚动进度 */
+    content:"";position:absolute;left:50%;top:0;width:2px;margin-left:-1px;
+    height:var(--tl,0%);
+    background:linear-gradient(180deg,var(--yellow),rgba(246,196,69,.35));
+    box-shadow:0 0 14px rgba(246,196,69,.35);
+    border-radius:2px;
+    transition:height .18s linear;
+  }
+  .tl-item{
+    position:relative;z-index:1;         /* 压住中轴，圆点才不会被线盖住 */
+    display:grid;grid-template-columns:minmax(0,1fr) 46px minmax(0,1fr);
+    align-items:start;padding:14px 0;
+  }
+  .tl-item .tl-dot{                       /* 未点亮：暗点 */
+    grid-column:2;grid-row:1;justify-self:center;
+    width:14px;height:14px;border-radius:50%;margin-top:10px;
+    background:rgba(255,255,255,.18);
+    transition:background .45s ease,box-shadow .45s ease;
+  }
+  .tl-item .tl-card{grid-row:1;grid-column:3}          /* 默认在右 */
+  .tl-item:nth-child(odd) .tl-card{grid-column:1;text-align:right}
+  .tl-item:nth-child(odd) .interests{justify-content:flex-end}
+  /* 阅读线走过之后点亮（卡片沿用站点统一的 --lift 悬停位移，不另设） */
+  .tl-item.lit .tl-dot{
+    background:var(--yellow);
+    box-shadow:0 0 0 4px rgba(246,196,69,.14),0 0 18px rgba(246,196,69,.6);
+  }
+  /* 尾巴节点：还没发生的事，画成虚位——不点亮、虚线框 */
+  .tl-item.tl-more .tl-dot{
+    background:transparent;border:2px dashed rgba(246,196,69,.42);
+  }
+  .tl-item.tl-more .tl-card{
+    background-image:linear-gradient(var(--panel),var(--panel));
+    border-style:dashed;border-color:rgba(255,255,255,.14);
+    box-shadow:none;
+  }
+  /* 节点对面的照片：跟卡片同宽的玻璃相框，只放图不写字 */
+  .tl-photo{
+    grid-row:1;grid-column:3;
+    aspect-ratio:4/3;padding:8px;border-radius:16px;overflow:hidden;
+    border:1px solid var(--line);
+    background:linear-gradient(160deg,rgba(255,255,255,.05),rgba(255,255,255,.015));
+    box-shadow:0 18px 40px rgba(0,0,0,.32);
+  }
+  .tl-item:nth-child(even) .tl-photo{grid-column:1}   /* 偶数条照片翻到左 */
+  /* 还没放图时整格收起来：以后把 <img> 的 src 填上、去掉 .is-empty 即可 */
+  .tl-photo.is-empty{display:none}
+  .tl-photo img{
+    display:block;width:100%;height:100%;object-fit:cover;
+    border-radius:11px;
+  }
+  @media (max-width:720px){
+    .tl-item{grid-template-columns:34px minmax(0,1fr);padding:12px 0}
+    .timeline::before,.timeline::after{left:18px;margin-left:-1px}
+    .tl-item .tl-dot{grid-column:1;margin-top:8px}
+    .tl-item .tl-card,
+    .tl-item:nth-child(odd) .tl-card{grid-column:2;text-align:left}
+    .tl-item:nth-child(odd) .interests{justify-content:flex-start}
+    /* 窄屏改单列：照片排到卡片下面，别跟卡片抢同一格 */
+    .tl-item .tl-photo,
+    .tl-item:nth-child(even) .tl-photo{grid-column:2;grid-row:2;margin-top:12px}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .timeline::after{transition:none}
+    .tl-item{--lift:none}
+  }
+
+  /* ===== 脑机接口：整块是一个容器（沿用 .about / .card 的玻璃卡片语言，保住外部轮廓感），
+     内部左文右演示共享同一道光场，左右之间没有分界线 ===== */
+  .bci-split{
+    position:relative;
+    display:grid;
+    grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);
+    gap:0;align-items:stretch;
+    background:var(--glass);
+    border:1px solid var(--line);border-radius:16px;
+    /* 故意不设 overflow:hidden —— 圆角依旧会裁切容器自身的背景与描边，
+       但子元素可以溢出，3D 舞台才能"抠"出卡片之外 */
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    box-shadow:0 3px 16px rgba(0,0,0,.22);
+    /* 三层叠加：右侧神经青辉 → 黑到蓝的横向色阶 → 卡片底色。
+       色阶的左段与中段是完全透明的，所以中间保持容器本身的深色（黑），
+       只在靠右的 3D 一侧才渐入蓝。容器自己的圆角与描边负责整体边缘感。 */
+    background-image:
+      radial-gradient(42% 72% at 72% 46%, rgba(0,229,255,.16), rgba(0,229,255,0) 100%),
+      linear-gradient(90deg,
+        rgba(10,12,15,0)    0%,
+        rgba(10,12,15,0)    36%,
+        rgba(18,36,58,.24)  58%,
+        rgba(34,66,102,.40) 78%,
+        rgba(46,74,102,.46) 100%),
+      linear-gradient(var(--panel),var(--panel));
+  }
+  /* 与上方 .about 同款的左侧黄线，维持整页区块的视觉节奏。
+     容器已不裁切子元素，所以这里要自己补圆角，免得两端戳出卡片轮廓。 */
+  .bci-split::before{
+    content:"";position:absolute;top:0;left:0;width:3px;height:100%;z-index:2;
+    border-radius:16px 0 0 16px;
+    background:linear-gradient(var(--yellow),transparent);
+  }
+  .bci-text{
+    position:relative;z-index:1;
+    padding:30px 40px 30px 30px;
+    display:flex;flex-direction:column;justify-content:center;
+  }
+  .bci-text h3{font-size:18px;margin-bottom:12px;color:var(--ink);font-weight:700}
+  .bci-text p{font-size:14.5px;color:var(--ink);line-height:1.75;margin-bottom:10px}
+  .bci-text p:last-of-type{margin-bottom:0}
+  .bci-text b{color:var(--yellow-light)}
+  .bci-credit{padding-top:18px;font-size:12px;color:var(--muted);line-height:1.65}
+  .bci-credit a{color:var(--yellow-light);text-decoration:none;border-bottom:1px solid rgba(246,196,69,.42);transition:border-color .2s}
+  .bci-credit a:hover{border-bottom-color:var(--yellow-light)}
+
+  /* 3D 舞台：默认与卡片右列同宽同高（窄屏走这套，完全不溢出）；
+     桌面端由下面 min-width:901px 的规则让它向外溢出，神经才会"抠"出卡片 */
+  .bci-stage{
+    position:relative;z-index:4;cursor:crosshair;
+    min-height:470px;
+    font-family:'SF Pro Display',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    color:#fff;user-select:none;
+  }
+  /* 画布遮罩：**椭圆**。之前用的"横向+纵向线性渐变取交集"会给神经套一个矩形可见区，
+     四边全是直线切痕，看着像被裁掉一块，不自然；椭圆是曲线边界，
+     神经向四周柔和收成一团独立的发光体，像从黑底上被单独"拎"出来放在卡片上。
+     中心/尺寸取 50%/50%，四条边上的透明度正好归零 → 任何一边都不会被硬切。
+     实心区放大到 70%（柔化带约 105px 宽）：卡片右边框落在横向约 80% 处，
+     仍在满不透明区间内，所以神经照样压住那条 1px 白线，
+     并在框外再实心伸出约 35px 才化开。 */
+  .bci-canvas-wrap{
+    position:absolute;inset:0;z-index:1;
+    -webkit-mask-image:radial-gradient(50% 50% at 50% 50%, #000 70%, transparent 100%);
+    mask-image:radial-gradient(50% 50% at 50% 50%, #000 70%, transparent 100%);
+  }
+  .bci-canvas-wrap canvas{display:block;width:100%;height:100%}
+  /* 叠加层：只保留扫描线。边缘淡化已交给画布那道遮罩，这里再压暗会在卡片中间留下脏影。
+     扫描线必须跟着同一个椭圆一起消散，否则神经"拎出去"之后，
+     框外那片空黑里会残留一块矩形的细横纹，露馅。 */
+  .bci-overlay{
+    position:absolute;inset:0;z-index:5;pointer-events:none;
+    background:repeating-linear-gradient(0deg, rgba(0,0,0,.10) 0px, rgba(0,0,0,.10) 1px, transparent 1px, transparent 2px);
+    -webkit-mask-image:radial-gradient(50% 50% at 50% 50%, #000 70%, transparent 100%);
+    mask-image:radial-gradient(50% 50% at 50% 50%, #000 70%, transparent 100%);
+  }
+  .bci-hud{
+    position:absolute;z-index:20;pointer-events:auto;overflow:hidden;
+    background:linear-gradient(135deg, rgba(255,255,255,.16), rgba(255,255,255,.05) 45%, rgba(63,217,200,.06));
+    border:1px solid rgba(255,255,255,.2);border-radius:14px;
+    backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%);
+    box-shadow:0 14px 34px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.3);
+  }
+  .bci-hud-left{top:14px;left:14px;width:194px;padding:11px 12px}
+  .bci-hud-right{bottom:14px;right:14px;padding:8px 11px;min-width:102px;text-align:right}
+  .bci-hud-header{border-bottom:1px solid rgba(255,255,255,.12);padding-bottom:6px;margin-bottom:8px}
+  .bci-h1{font-size:9.5px;letter-spacing:2.2px;color:#3FD9C8;margin:0 0 3px;font-weight:700;text-transform:uppercase;text-shadow:0 0 10px rgba(63,217,200,.4)}
+  .bci-subtitle{font-size:7px;color:rgba(255,255,255,.42);letter-spacing:1.2px}
+  .bci-row{display:flex;justify-content:space-between;gap:14px;margin-bottom:6px;font-size:8.5px;letter-spacing:.7px}
+  .bci-label{color:rgba(255,255,255,.5);text-transform:uppercase}
+  .bci-value{font-weight:600;color:#3FD9C8;text-shadow:0 0 8px rgba(63,217,200,.5);font-variant-numeric:tabular-nums;transition:color .3s,text-shadow .3s}
+  .bci-value-active{color:#F6C445;text-shadow:0 0 10px rgba(246,196,69,.6)}
+  .bci-value-refract{color:#A455C4;text-shadow:0 0 10px rgba(164,85,196,.6)}
+  .bci-btn{
+    margin-top:10px;width:100%;padding:8px 9px;
+    background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.22);
+    color:#3FD9C8;font-size:8.5px;letter-spacing:1.8px;border-radius:999px;
+    cursor:pointer;text-transform:uppercase;transition:.2s;font-family:inherit;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.28), 0 0 14px rgba(63,217,200,.1);
+  }
+  .bci-btn:hover{background:rgba(63,217,200,.15);box-shadow:0 0 18px rgba(63,217,200,.38)}
+  .bci-btn.disabled{border-color:rgba(255,255,255,.1);color:rgba(255,255,255,.3);background:transparent;box-shadow:none;cursor:not-allowed}
+  .bci-hint{
+    position:absolute;left:50%;bottom:16px;transform:translateX(-50%);z-index:20;
+    font-size:8.5px;letter-spacing:1.5px;color:rgba(255,255,255,.42);
+    pointer-events:none;text-transform:uppercase;white-space:nowrap;
+    animation:bciPulseText 2s infinite;
+  }
+  @keyframes bciPulseText{0%,100%{opacity:.3}50%{opacity:.85}}
+  .bci-loader{
+    position:absolute;inset:0;z-index:9000;background:transparent;
+    display:flex;justify-content:center;align-items:center;flex-direction:column;
+    transition:opacity 1s ease;
+  }
+  .bci-spinner{
+    width:42px;height:42px;border:2px solid rgba(63,217,200,.12);border-top-color:#3FD9C8;
+    border-radius:50%;animation:bciSpin 1s cubic-bezier(.4,0,.2,1) infinite;margin-bottom:18px;
+    box-shadow:0 0 18px rgba(63,217,200,.2);
+  }
+  @keyframes bciSpin{100%{transform:rotate(360deg)}}
+  .bci-loader-text{color:rgba(255,255,255,.55);font-size:10px;letter-spacing:2px}
+  /* ===== 桌面端：把神经"抠"出卡片 =====
+     舞台整体向右、上、下溢出 110/46/46px（左侧留给文字，不动），
+     溢出的那部分是画布遮罩自然淡出的尾巴，于是神经穿过卡片边框、浮在页面底色上，
+     而卡片自身的圆角、描边、玻璃底一律保留。
+     舞台变大后，贴四角定位的 HUD / 提示 / 加载层要按溢出量回补，才能重新贴住卡片本体。 */
+  @media (min-width:901px){
+    .bci-stage{margin:-46px -140px -46px 0}
+    .bci-hud-left{top:60px}
+    .bci-hud-right{bottom:60px;right:154px}
+    .bci-hint{bottom:62px;left:calc(50% - 70px)}
+    .bci-loader{inset:0 140px 0 0}
+  }
+  @media (max-width:900px){
+    .bci-split{grid-template-columns:1fr}
+    .bci-text{padding:26px 26px 10px}
+    .bci-stage{min-height:420px}
+  }
+  @media (max-width:640px){
+    .bci-text{padding:22px 20px 8px}
+    .bci-text h3{font-size:17px;margin-bottom:10px}
+    .bci-text p{font-size:14px;line-height:1.72;margin-bottom:8px}
+    .bci-credit{padding-top:14px;font-size:11.5px}
+    .bci-stage{min-height:360px}
+    .bci-hud-left{top:10px;left:10px;width:170px;padding:9px 10px}
+    .bci-h1{font-size:9px;letter-spacing:1.6px}
+    .bci-subtitle{font-size:6.5px;letter-spacing:1px}
+    .bci-row{font-size:8px;gap:10px;margin-bottom:5px}
+    .bci-btn{margin-top:8px;padding:7px 8px;font-size:8px;letter-spacing:1.4px}
+    /* 关掉右下角相机读数：窄屏下会与底部提示文字重叠，且属非必要信息 */
+    .bci-hud-right{display:none}
+    .bci-hint{bottom:12px;font-size:8px;letter-spacing:1.1px}
+  }
+
+  /* ===== 明信片 ===== */
+  .postcard{
+    display:flex;align-items:stretch;gap:24px;
+  }
+  /* 左侧：介绍卡片 */
+  .postcard-card{
+    flex:0 0 320px;max-width:320px;
+    background:var(--glass);
+    border:1px solid var(--line);border-radius:16px;
+    padding:26px 28px;
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    display:flex;flex-direction:column;
+    position:relative;overflow:hidden;
+    box-shadow:0 3px 16px rgba(0,0,0,.22);
+    background-image:linear-gradient(var(--panel),var(--panel)),linear-gradient(90deg,var(--yellow),rgba(246,196,69,.3));
+    background-origin:border-box;background-clip:padding-box,border-box;
+    border-top:3px solid transparent;
+  }
+  .postcard-card::after{
+    content:"";position:absolute;top:0;right:0;width:200px;height:100%;
+    background:radial-gradient(160px 120px at 100% 0, rgba(246,196,69,.10), transparent 70%);
+    pointer-events:none;
+  }
+  .postcard-stamp{
+    flex:0 0 70px;width:70px;height:70px;border-radius:14px;
+    background:linear-gradient(135deg,var(--yellow),rgba(246,196,69,.55));
+    color:var(--blue-deep);font-size:32px;display:flex;align-items:center;justify-content:center;
+    box-shadow:0 8px 22px rgba(0,0,0,.28);position:relative;margin-bottom:20px;
+  }
+  .postcard-stamp::before{content:"";position:absolute;inset:6px;border:2px dashed rgba(21,45,70,.4);border-radius:9px}
+  .postcard-body{
+    flex:1;display:flex;flex-direction:column;min-height:0;
+  }
+  .postcard-text{
+    display:flex;flex-direction:column;justify-content:center;flex:1;
+  }
+  .postcard-body h3{font-size:19px;margin-bottom:10px;color:var(--ink);flex:0 0 auto}
+  .postcard-body p{font-size:14.5px;color:var(--ink);margin-bottom:10px;line-height:1.7;flex:0 0 auto}
+  .postcard-body b{color:var(--yellow-light)}
+  .link-btn{
+    display:inline-flex;align-items:center;gap:6px;margin-top:auto;align-self:flex-start;
+    background:var(--yellow);color:var(--blue-deep);
+    padding:9px 18px;border-radius:999px;font-weight:700;font-size:14px;
+    text-decoration:none;transition:.25s;box-shadow:0 6px 18px rgba(246,196,69,.25);
+  }
+  .link-btn:hover{background:var(--yellow-light);transform:translateY(-2px);box-shadow:0 10px 24px rgba(246,196,69,.35)}
+
+  /* 明信片收发地图 + 收到的明信片（右侧，占满剩余空间） */
+  .postcard-gallery{
+    flex:1;min-width:0;margin-top:0;
+  }
+  .postcard-map{
+    background:var(--glass);
+    border:1px solid var(--line);border-radius:16px;
+    padding:18px;
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    box-shadow:0 3px 16px rgba(0,0,0,.22);
+    background-image:linear-gradient(var(--panel),var(--panel)),linear-gradient(90deg,var(--yellow),rgba(246,196,69,.3));
+    background-origin:border-box;background-clip:padding-box,border-box;
+    border-top:3px solid transparent;
+    max-width:none;margin-left:0;margin-right:0;
+  }
+  .postcard-map-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+  .postcard-map-title{font-size:15px;font-weight:700;color:var(--ink)}
+  .postcard-map-sub{font-size:12px;color:var(--muted)}
+
+  /* 地图画布：明信片散落其上 */
+  .map-canvas{
+    position:relative;border-radius:12px;overflow:hidden;
+    border:1px solid rgba(255,255,255,.07);
+    box-shadow:0 8px 26px rgba(0,0,0,.3);
+  }
+  .map-canvas > img{width:100%;height:auto;display:block;cursor:zoom-in}
+  /* 地图放大提示角标（右下角） */
+  .map-canvas .map-zoom-hint{
+    position:absolute;right:16px;bottom:14px;z-index:3;
+    display:flex;align-items:center;gap:6px;
+    background:rgba(10,18,30,.62);color:#f4f6f8;
+    border:1px solid rgba(255,255,255,.18);border-radius:999px;
+    padding:7px 14px;font-size:12.5px;font-weight:500;letter-spacing:.4px;
+    backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+    pointer-events:none;transition:background .3s,transform .3s;
+  }
+  .map-canvas > img:hover ~ .map-zoom-hint{background:rgba(10,18,30,.82);transform:scale(1.05)}
+  .map-zoom-hint::before{content:"\26F6";font-size:14px}
+
+  /* 散落的明信片（绝对定位，随性旋转） */
+  .map-canvas .pc{
+    position:absolute;margin:0;border-radius:10px;overflow:hidden;cursor:zoom-in;
+    background:#fff;border:1px solid rgba(0,0,0,.14);
+    background-image:linear-gradient(180deg,rgba(255,255,255,.95),rgba(255,255,255,.88));
+    box-shadow:0 10px 30px rgba(0,0,0,.38);
+    z-index:2;
+    transition:transform .45s cubic-bezier(.2,.7,.3,1),box-shadow .45s;
+  }
+  .map-canvas .pc img{
+    width:100%;height:100%;object-fit:cover;display:block;
+  }
+  /* 竖版城堡：完整展示，避免裁切，加浅色衬底 */
+  .map-canvas .pc-poland img{object-fit:contain;background:linear-gradient(180deg,rgba(255,255,255,.6),rgba(255,255,255,.4))}
+  .map-canvas .pc figcaption{
+    text-align:center;padding:5px 8px 7px;font-size:12px;font-weight:600;
+    color:#3a4a5e;letter-spacing:.3px;line-height:1.2;
+    background:rgba(255,255,255,.9);
+    cursor:zoom-in;position:relative;z-index:4;
+    transition:color .25s,text-decoration-color .25s,text-decoration-thickness .25s,transform .25s;
+    text-decoration:underline transparent;text-decoration-thickness:1.5px;
+    text-underline-offset:2.5px;
+    transform:translateY(0);
+  }
+  .map-canvas .pc:hover figcaption{text-decoration-color:rgba(58,74,94,.5);transform:translateY(-4px)}
+  .map-canvas .pc::before{
+    content:"";position:absolute;inset:6px;border:1px dashed rgba(0,0,0,.14);
+    border-radius:6px;pointer-events:none;z-index:3;opacity:0;transition:opacity .4s;
+  }
+  /* 各自的位置和初始旋转角度（随性散布） */
+  .map-canvas .pc-poland{ left:13%; top:16%; width:17%; aspect-ratio:2/3; transform:rotate(-7deg); }
+  .map-canvas .pc-movie{ right:12%; top:20%; width:20%; aspect-ratio:4/3; transform:rotate(6deg); }
+  .map-canvas .pc-finland{ left:40%; bottom:14%; width:20%; aspect-ratio:4/3; transform:rotate(-4deg); }
+  .map-canvas .pc-reply{ right:20%; bottom:22%; width:21%; aspect-ratio:4/3; transform:rotate(8deg); }
+  /* hover：立起回正、放大、影子加深 */
+  .map-canvas .pc:hover{
+    transform:rotate(0deg) translateY(-8px) scale(1.08);
+    box-shadow:0 24px 60px rgba(0,0,0,.5);z-index:5;
+  }
+  .map-canvas .pc:hover::before{opacity:1}
+
+  /* 放大预览 lightbox */
+  .lightbox{
+    position:fixed;inset:0;z-index:9999;display:none;
+    align-items:center;justify-content:center;padding:30px;
+    background:rgba(5,12,20,.88);backdrop-filter:blur(6px);
+    -webkit-backdrop-filter:blur(6px);
+  }
+  .lightbox.open{display:flex}
+  .lightbox-panel{
+    position:relative;max-width:min(1000px,92vw);max-height:88vh;
+    background:#0e1a28;border:1px solid rgba(255,255,255,.12);
+    border-radius:16px;overflow:hidden;
+    box-shadow:0 30px 90px rgba(0,0,0,.6);
+    animation:lboxIn .3s cubic-bezier(.2,.7,.3,1);
+  }
+  @keyframes lboxIn{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
+  .lightbox-panel img{display:block;max-width:100%;max-height:78vh;margin:0 auto;object-fit:contain}
+  .lightbox-title{
+    padding:14px 18px;text-align:center;color:#f4f6f8;
+    font-size:14.5px;font-weight:600;letter-spacing:.4px;
+  }
+  .lightbox-close{
+    position:absolute;top:12px;right:14px;width:38px;height:38px;border-radius:50%;
+    background:rgba(255,255,255,.12);color:#fff;font-size:22px;line-height:38px;
+    text-align:center;cursor:pointer;transition:.25s;z-index:3;border:none;
+  }
+  .lightbox-close:hover{background:rgba(255,255,255,.28);transform:rotate(90deg)}
+  .lightbox-nav{
+    position:absolute;top:50%;transform:translateY(-50%);width:46px;height:46px;border-radius:50%;
+    background:rgba(255,255,255,.12);color:#fff;font-size:26px;line-height:46px;text-align:center;
+    cursor:pointer;transition:.25s;z-index:3;user-select:none;border:none;
+  }
+  .lightbox-nav:hover{background:rgba(255,255,255,.28)}
+  .lightbox-prev{left:14px}.lightbox-next{right:14px}
+  /* 地图散落卡片：小屏时适当调整位置/大小以减少重叠 */
+  @media(max-width:900px){
+    /* 明信片左右布局改回上下堆叠 */
+    .postcard{flex-direction:column;align-items:stretch}
+    .postcard-card{flex:1 1 auto;max-width:none;width:100%}
+    .postcard-card .postcard-stamp{margin-bottom:16px}
+    .postcard-gallery{margin-top:20px}
+    .postcard-map{max-width:720px;margin-left:auto;margin-right:auto}
+    .map-canvas .pc-poland{left:9%;top:12%;width:20%}
+    .map-canvas .pc-movie{right:8%;top:16%;width:24%}
+    .map-canvas .pc-finland{left:34%;bottom:12%;width:24%}
+    .map-canvas .pc-reply{right:14%;bottom:20%;width:25%}
+  }
+  @media(max-width:640px){
+    .postcard-map-head{flex-direction:column;align-items:flex-start;gap:6px}
+    .postcard-map-head .postcard-map-sub{font-size:12px}
+    /* 介绍卡片：内容紧凑，避免过高 */
+    .postcard-card{padding:22px}
+    .postcard-card .postcard-stamp{flex:0 0 60px;width:60px;height:60px;font-size:26px;margin-bottom:14px}
+    .postcard-card .postcard-text{justify-content:flex-start}
+    .postcard-card .postcard-text h3{font-size:17px}
+    .postcard-card .postcard-text p{font-size:14px;margin-bottom:8px}
+    .postcard-card .link-btn{margin-top:8px}
+    /* 散落明信片卡片更小，避免小屏重叠和挤压 */
+    .postcard-map{padding:12px}
+    .map-canvas .pc figcaption{display:none}
+    .map-canvas .pc-poland{left:6%;top:11%;width:22%}
+    .map-canvas .pc-movie{right:5%;top:16%;width:25%}
+    .map-canvas .pc-finland{left:30%;bottom:11%;width:26%}
+    .map-canvas .pc-reply{right:11%;bottom:20%;width:27%}
+    .map-canvas .map-zoom-hint{right:10px;bottom:10px;padding:5px 10px;font-size:11.5px}
+  }
+
+  /* ===== 绘画（明信片之后） =====
+     左边：方形作品图（图片本身已轻度模糊处理，中心压一个白色问号，点击弹“未完待续”）；
+     右边：文字卡片 + 一键催更按钮（随机玩笑 + 本机累计次数，每人每天只算一次）。 */
+  .draw-shell{display:grid;grid-template-columns:auto minmax(0,1fr);gap:22px;align-items:start}
+  .draw-stage{
+    --draw-w:262px;                 /* 作品图边长：约等于右侧文案卡片的高度 */
+    position:relative;margin:0;padding:0;overflow:hidden;
+    width:var(--draw-w);aspect-ratio:1/1;
+    border-radius:22px;background:rgba(20,23,28,.42);border:1px solid var(--line);
+    cursor:pointer;-webkit-tap-highlight-color:transparent;
+  }
+  .draw-stage img{display:block;width:100%;height:100%;object-fit:cover}
+  .draw-q{
+    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    font-size:calc(var(--draw-w) * .78);font-weight:800;line-height:1;color:#fff;
+    transform:translateY(-12%);
+    pointer-events:none;transition:opacity .25s;
+    text-shadow:0 10px 34px rgba(0,0,0,.55),0 2px 8px rgba(0,0,0,.4);
+  }
+  .draw-stage:hover .draw-q{opacity:.88}
+  .draw-stage:focus-visible{outline:2px solid var(--yellow);outline-offset:3px}
+  .draw-hint{
+    position:absolute;left:50%;bottom:14px;transform:translateX(-50%);white-space:nowrap;
+    padding:5px 13px;border-radius:999px;font-size:12.5px;color:rgba(255,255,255,.92);
+    background:rgba(10,12,15,.5);border:1px solid rgba(255,255,255,.2);
+    -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);pointer-events:none;
+  }
+  .draw-pop{
+    position:absolute;left:50%;top:50%;width:min(80%,330px);padding:18px 20px;
+    border-radius:16px;text-align:center;
+    background:rgba(10,12,15,.74);border:1px solid rgba(251,224,138,.42);
+    -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+    box-shadow:0 22px 50px rgba(0,0,0,.5);
+    opacity:0;visibility:hidden;transform:translate(-50%,-46%) scale(.96);
+    transition:opacity .22s,transform .22s,visibility .22s;pointer-events:none;
+  }
+  .draw-stage.pop .draw-pop{opacity:1;visibility:visible;transform:translate(-50%,-50%) scale(1)}
+  .draw-stage.pop .draw-q{opacity:0}
+  .draw-pop strong{display:block;font-size:17px;letter-spacing:.4px;color:var(--yellow-light);margin-bottom:7px}
+  .draw-pop span{display:block;font-size:13.5px;line-height:1.65;color:var(--ink)}
+  .draw-card h3{font-size:19px;margin-bottom:10px}
+  .draw-card p{font-size:14.5px;line-height:1.75}
+  .draw-foot{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:18px}
+  .hurry{
+    font:inherit;font-size:14px;font-weight:700;color:var(--blue-deep);background:var(--yellow);
+    border:0;border-radius:999px;padding:10px 20px;cursor:pointer;
+    box-shadow:0 6px 18px rgba(246,196,69,.25);transition:.25s;
+  }
+  .hurry:hover{background:var(--yellow-light);transform:translateY(-2px);box-shadow:0 10px 24px rgba(246,196,69,.35)}
+  .hurry:active{transform:translateY(0) scale(.985)}
+  /* 每天只能催一次：当天已催过 → 按钮置灰不可点 */
+  .hurry:disabled{
+    background:rgba(255,255,255,.10);color:var(--muted);border-color:rgba(255,255,255,.18);
+    box-shadow:none;cursor:default;
+  }
+  .hurry:disabled:hover{transform:none;box-shadow:none;background:rgba(255,255,255,.10);color:var(--muted)}
+  .hurry-note{font-size:12.5px;color:var(--muted)}
+  .hurry-note.bump{animation:hurryBump .55s ease}
+  @keyframes hurryBump{
+    0%{transform:scale(1);color:var(--muted)}
+    35%{transform:scale(1.14);color:var(--yellow-light)}
+    100%{transform:scale(1);color:var(--muted)}
+  }
+  .hurry-msg{
+    margin:12px 0 0;min-height:1.6em;font-size:13.5px;line-height:1.6;color:var(--yellow-light);
+    opacity:0;transform:translateY(-3px);transition:opacity .25s,transform .25s;
+  }
+  .hurry-msg.show{opacity:1;transform:none}
+  @media (max-width:820px){
+    .draw-shell{grid-template-columns:1fr}
+    .draw-stage{--draw-w:min(76vw,320px);justify-self:center}
+  }
+
+  /* ===== 音乐（绘画之后） =====
+     左列：配文卡片 + 推荐留声（推荐框正好在专辑左边）；右列：专辑幻灯片（封面 + 专辑名 + 短评）。
+     自动播放 + 轻点封面切下一张 + 左右箭头 + 圆点指示。
+     窄屏（≤820px）解除列定位，按「配文 → 专辑 → 推荐框」自然堆叠。 */
+  .music-shell{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:26px;align-items:start}
+  .music-intro{grid-column:1;grid-row:1}
+  .music-player{--music-w:300px;grid-column:2;grid-row:1/span 2;display:flex;flex-direction:column;align-items:center}
+  .music-cover{
+    position:relative;width:var(--music-w);aspect-ratio:1/1;overflow:hidden;
+    border-radius:18px;background:rgba(20,23,28,.5);border:1px solid var(--line);
+    box-shadow:0 22px 48px rgba(0,0,0,.44);
+    cursor:pointer;-webkit-tap-highlight-color:transparent;
+  }
+  .music-cover img{display:block;width:100%;height:100%;object-fit:cover;transition:opacity .28s}
+  .music-cover.fading img{opacity:0}
+  .music-cover:focus-visible{outline:2px solid var(--yellow);outline-offset:3px}
+  .music-idx{
+    position:absolute;right:10px;top:10px;padding:3px 10px;border-radius:999px;
+    font-size:12px;letter-spacing:.4px;color:rgba(255,255,255,.92);
+    background:rgba(10,12,15,.62);border:1px solid rgba(255,255,255,.18);
+    -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);pointer-events:none;
+  }
+  .music-cap{margin-top:12px;text-align:center;max-width:var(--music-w)}
+  .music-cap strong{display:block;font-size:17px;letter-spacing:.2px}
+  .music-tz{display:block;margin-top:4px;font-size:11.5px;font-weight:600;letter-spacing:1.6px;color:var(--muted)}
+  .music-artist{display:block;margin-top:5px;font-size:12.5px;color:var(--yellow-light)}
+  .music-note{display:block;margin-top:9px;font-size:13.5px;line-height:1.62;color:var(--ink)}
+  .music-bar{display:flex;align-items:center;gap:12px;margin-top:13px}
+  .music-nav{
+    width:34px;height:34px;padding:0;border-radius:50%;cursor:pointer;
+    font:inherit;font-size:17px;line-height:1;color:var(--ink);
+    background:rgba(255,255,255,.07);border:1px solid var(--line);transition:.22s;
+  }
+  .music-nav:hover{background:rgba(255,255,255,.16);transform:translateY(-1px)}
+  .music-dots{display:flex;align-items:center;gap:7px}
+  .music-dot{
+    width:7px;height:7px;padding:0;border:0;border-radius:50%;
+    background:rgba(255,255,255,.26);cursor:pointer;transition:.22s;
+  }
+  .music-dot:hover{background:rgba(255,255,255,.5)}
+  .music-dot.on{background:var(--yellow);transform:scale(1.3)}
+  .music-hint{margin:11px 0 0;font-size:12.5px;color:var(--muted);text-align:center}
+  @media (max-width:820px){
+    .music-shell{grid-template-columns:1fr}
+    .music-player{--music-w:min(80vw,340px)}
+  }
+
+  /* ===== 聊天区 ===== */
+  .chat-shell{
+    display:grid;grid-template-columns:280px 1fr;gap:0;
+    border:1px solid var(--line);border-radius:18px;overflow:hidden;
+    background:var(--panel);box-shadow:0 18px 50px rgba(0,0,0,.4);
+  }
+  .chat-side{
+    background:linear-gradient(180deg,var(--blue-deep),rgba(33,58,86,.92));
+    color:var(--paper);padding:24px 20px;
+    display:flex;flex-direction:column;gap:16px;
+  }
+  .bot-head{display:flex;align-items:center;gap:12px}
+  .bot-ava{width:46px;height:46px;border-radius:50%;background:radial-gradient(circle at 32% 28%, #FFF4C6, var(--yellow) 70%);color:var(--blue-deep);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:21px;box-shadow:0 0 0 3px rgba(246,196,69,.18);font-family:var(--font-display)}
+  .bot-name{font-weight:700;font-size:16px}
+  .bot-status{font-size:12px;color:var(--yellow-light)}
+  .quick-title{font-size:12px;letter-spacing:.6px;color:rgba(251,224,138,.8);margin-top:6px;text-transform:uppercase;font-weight:600}
+  .quick{border:1px solid rgba(251,224,138,.35);border-radius:12px;padding:11px 13px;font-size:14px;cursor:pointer;transition:.2s;background:rgba(255,255,255,.03);color:var(--paper);text-align:left;line-height:1.5}
+  .quick:hover{background:rgba(246,196,69,.16);border-color:var(--yellow);transform:translateX(2px)}
+  .chat-side .note{font-size:12px;color:rgba(250,246,236,.5);margin-top:auto;line-height:1.6}
+
+  .chat-main{display:flex;flex-direction:column;height:520px}
+  .chat-log{flex:1;overflow-y:auto;padding:22px;display:flex;flex-direction:column;gap:14px;background:rgba(10,12,15,.35)}
+  .msg{max-width:78%;padding:12px 16px;border-radius:14px;font-size:14.5px;line-height:1.75;white-space:pre-wrap;word-break:break-word;box-shadow:0 2px 10px rgba(0,0,0,.2)}
+  .msg.bot{align-self:flex-start;background:var(--blue-deep);color:var(--ink);border-top-left-radius:4px}
+  .msg.user{align-self:flex-end;background:linear-gradient(135deg,var(--blue),var(--blue-deep));color:var(--paper);border-bottom-right-radius:4px;border:1px solid rgba(255,255,255,.08)}
+  .msg .t{font-size:11px;color:var(--muted);margin-top:6px}
+  .typing{color:var(--muted);font-style:italic;font-size:14px}
+  .typing .dot{display:inline-block;animation:typingDot 1.2s infinite;font-style:normal}
+  .typing .dot:nth-child(2){animation-delay:.2s}
+  .typing .dot:nth-child(3){animation-delay:.4s}
+  @keyframes typingDot{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-3px);opacity:1}}
+
+  .chat-input{display:flex;gap:10px;padding:14px;border-top:1px solid var(--line);background:var(--panel)}
+  .chat-input input{
+    flex:1;border:1px solid var(--line);border-radius:11px;padding:12px 15px;font-size:14px;outline:none;
+    background:var(--blue-deep);color:var(--ink);transition:border-color .2s,box-shadow .2s;
+  }
+  .chat-input input::placeholder{color:var(--muted)}
+  .chat-input input:focus{border-color:var(--yellow);box-shadow:0 0 0 3px rgba(246,196,69,.12)}
+  .send{
+    background:linear-gradient(135deg,var(--yellow),#E8AE2E);color:var(--blue-deep);border:none;border-radius:11px;
+    padding:12px 22px;font-size:15px;font-weight:800;cursor:pointer;transition:.2s;
+    box-shadow:0 4px 14px rgba(246,196,69,.25);
+  }
+  .send:hover{background:linear-gradient(135deg,var(--yellow-light),var(--yellow));transform:translateY(-1px);box-shadow:0 8px 22px rgba(246,196,69,.35)}
+  .send:active{transform:translateY(0)}
+
+  /* ===== 联系方式 ===== */
+  .contact{
+    background:linear-gradient(135deg,var(--blue-deep),rgba(33,58,86,.9));
+    color:var(--paper);border-radius:18px;padding:36px;
+    display:flex;flex-wrap:wrap;gap:22px;align-items:center;justify-content:space-between;
+    border:1px solid var(--line);box-shadow:0 14px 40px rgba(0,0,0,.32);
+    position:relative;overflow:hidden;
+  }
+  .contact::after{content:"";position:absolute;right:-40px;top:-40px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(246,196,69,.16),transparent 70%);pointer-events:none}
+  .contact h3{font-size:22px;margin-bottom:8px;font-family:var(--font-display)}
+  .contact p{color:rgba(250,246,236,.78);font-size:14.5px}
+  .contact a.mail{
+    background:linear-gradient(135deg,var(--yellow),#E8AE2E);color:var(--blue-deep);padding:13px 24px;border-radius:11px;font-weight:800;font-size:15px;transition:.2s;box-shadow:0 4px 14px rgba(246,196,69,.25);
+  }
+  .contact a.mail:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(246,196,69,.4)}
+
+  footer{padding:36px 0;text-align:center;color:var(--muted);font-size:13px}
+  footer b{color:var(--yellow-light)}
+
+  /* ===== 入场动画（克制、不花哨） ===== */
+  /* 页面初始状态 */
+  body{opacity:0;transition:opacity .6s ease}
+  body.loaded{opacity:1}
+
+  /* 可滚动揭示的元素 */
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s cubic-bezier(.2,.7,.3,1),transform .7s cubic-bezier(.2,.7,.3,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  /* 顶部的名字/介绍等，加载时淡入上浮 */
+  .hero .avatar,.hero h1,.hero .tagline,.hero .hero-badges{opacity:0;transform:translateY(16px);animation:floatIn .8s cubic-bezier(.2,.7,.3,1) forwards}
+  .hero h1{animation-delay:.08s}
+  .hero .tagline{animation-delay:.18s}
+  .hero .hero-badges{animation-delay:.28s}
+  @keyframes floatIn{to{opacity:1;transform:none}}
+
+  /* 尊重减少动画偏好 */
+  @media (prefers-reduced-motion: reduce){
+    body{opacity:1}
+    .reveal,.hero .avatar,.hero h1,.hero .tagline,.hero .hero-badges{animation:none;opacity:1;transform:none;transition:none}
+  }
+
+  /* ===== 响应式 ===== */
+  @media(max-width:760px){
+    .topbar{padding:12px 60px 12px 14px}
+    .brand{font-size:16px;gap:8px}
+    .brand .dot{width:10px;height:10px}
+    .nav{gap:12px}
+    .nav a{font-size:12.5px}
+    .topbar-right{gap:12px}
+    .lang-btn{padding:5px 9px;font-size:11px}
+    .hero h1{font-size:40px}
+    .tagline{font-size:16px}
+    .chat-shell{grid-template-columns:1fr}
+    .chat-side{border-bottom:1px solid var(--line)}
+    .quick{text-align:center}
+  }
+  @media(max-width:440px){
+    .brand{font-size:15px}
+    .nav{gap:8px}
+    .nav a{font-size:11.5px}
+    .topbar-right{gap:8px}
+    .lang-btn{padding:4px 8px;font-size:10.5px}
+  }
+  /* 窄屏导航：导航项由 4 个增加到 5 个后单行放不下（英文项尤其长），
+     让导航独占一行并在必要时换行，避免标签文字被挤成竖排或溢出屏幕。 */
+  @media(max-width:620px){
+    .topbar{flex-wrap:wrap;row-gap:10px}
+    .topbar-right{flex-wrap:wrap;min-width:0;column-gap:12px;row-gap:8px}
+    .nav{flex:1 0 100%;flex-wrap:wrap;justify-content:flex-end;gap:8px 14px}
+    .nav a{white-space:nowrap}
+  }
+
+  /* ===== 黄色四芒星 hover 特效（带黄色边框/金色的标签与按钮） ===== */
+  /* 目标元素统一定位上下文，并预留两颗四芒星 */
+  @keyframes sparkle-pop{
+    0%{transform:translate(-50%,0) scale(0) rotate(-35deg);opacity:0}
+    35%{opacity:1}
+    100%{transform:translate(-50%,-16px) scale(1.15) rotate(90deg);opacity:0}
+  }
+  /* 主四芒星（元素上方居中，更大更亮） */
+  .badge,.quick,.send,.chip,.contact a.mail{
+    position:relative;
+  }
+  .badge::before,.quick::before,.send::before,.chip.y::before,.contact a.mail::before,
+  .badge::after,.quick::after,.send::after,.chip.y::after,.contact a.mail::after{
+    content:"";position:absolute;top:-9px;left:50%;width:18px;height:18px;
+    pointer-events:none;z-index:6;opacity:0;
+    background:radial-gradient(circle,#FFF8DC 0%,var(--yellow) 55%,rgba(246,196,69,0) 75%);
+    clip-path:polygon(50% 0%,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0% 50%,38% 38%);
+    transform-origin:center;
+  }
+  /* 副四芒星：略小、错开位置，延迟出现，增加层次 */
+  .badge::after,.quick::after,.send::after,.chip.y::after,.contact a.mail::after{
+    width:11px;height:11px;top:-5px;left:36%;
+  }
+  .badge:hover::before,.quick:hover::before,.send:hover::before,.chip.y:hover::before,.contact a.mail:hover::before{
+    animation:sparkle-pop .6s ease-out .08s both;
+  }
+  .badge:hover::after,.quick:hover::after,.send:hover::after,.chip.y:hover::after,.contact a.mail:hover::after{
+    animation:sparkle-pop .6s ease-out .2s both;
+  }
+  /* ===== 海鸥：经典 V 形纯白剪影，从按钮起飞，落灯塔顶，最多一只 ===== */
+  .seagull{
+    position:absolute;left:0;top:0;z-index:998;
+    width:94px;height:44px;pointer-events:none;
+    opacity:0;transform:translate(-50%,-50%);
+    filter:drop-shadow(0 3px 6px rgba(0,0,0,.18));
+  }
+  .seagull svg{width:100%;height:100%;display:block;overflow:visible}
+  .seagull svg .v{fill:#ffffff;fill-rule:evenodd}
+  /* 滑翔：纵向先升后降的弧线（周期放缓，更像随风飘） */
+  .seagull svg .glide{animation:gullArc 3s ease-in-out infinite}
+  @keyframes gullArc{0%,100%{transform:translateY(3px)}50%{transform:translateY(-4px)}}
+  /* 整个 V 形鸟：扑翼向下用力（整体下压+轻微压扁，不翻转），再抬回——还原真实扑翅 */
+  .seagull svg .v{
+    transform-box:view-box;transform-origin:50px 30px;
+    animation:gullFlap 2.1s ease-in-out infinite;
+  }
+  @keyframes gullFlap{
+    0%{transform:translateY(0) scaleY(1)}
+    12%{transform:translateY(6px) scaleY(.62)}
+    24%{transform:translateY(0) scaleY(1)}
+    36%{transform:translateY(6px) scaleY(.62)}
+    48%{transform:translateY(0) scaleY(1)}
+    60%{transform:translateY(5px) scaleY(.68)}
+    70%,100%{transform:translateY(0) scaleY(1)}   /* 收平滑翔 */
+  }
+  /* 落定：收拢栖息，缓慢呼吸 */
+  .seagull.land svg .v{animation:none;transform:scaleY(.6)}
+  .seagull.land svg .glide{animation:gullRest 3.4s ease-in-out infinite}
+  @keyframes gullRest{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
+
+  /* ===== 交互：海鸥落在塔顶 → 灯塔灯光"迎接"脉冲 ===== */
+  .lighthouse { transition:filter .4s ease }
+  .lighthouse.greet { filter:brightness(1.25) drop-shadow(0 0 22px rgba(255,214,90,.45)) }
+  .lighthouse.greet .lamp{ animation:glow .5s ease-in-out infinite }
+  .lighthouse.greet .lamp-halo{ animation:haloGreet 1.6s ease-out }
+  @keyframes haloGreet{ 0%{transform:scale(1);opacity:.9} 40%{transform:scale(1.9);opacity:.15} 100%{transform:scale(1);opacity:.4} }
+
+  /* =========================================================
+     ==============  LIQUID GLASS · 整站视觉层  ==============
+     追加覆盖：不改变结构、不改变任何 JS 依赖的类名/ID。
+     ========================================================= */
+  :root{
+    --lg-tint:        rgba(255,255,255,.07);
+    --lg-tint-strong: rgba(255,255,255,.13);
+    --lg-stroke:      rgba(255,255,255,.18);
+    --lg-stroke-soft: rgba(255,255,255,.10);
+    --lg-hi:          rgba(255,255,255,.55);
+    --lg-blur:        blur(26px) saturate(205%) brightness(1.30);
+    /* 让既有变量也带上玻璃调性 */
+    --panel: rgba(20,23,28,.42);
+    --glass: rgba(255,255,255,.07);
+    --glass-border: rgba(255,255,255,.18);
+    --line: rgba(255,255,255,.16);
+    --muted: #98A3B0;
+  }
+
+  /* ---- 环境光：流动的极光色团（玻璃“折射”的对象） ----
+     加入星空后各团不透明度从 .64/.68/.58/.48 降到 .30/.32/.28/.24：
+     极光退成远景底光，星点才压得住；极光 + 星空正是极夜的样子。 */
+  body{
+    background:radial-gradient(1400px 900px at 18% -6%, #1A2440 0%, transparent 60%),#0A0E15;
+    background-attachment:fixed;
+  }
+  body::before{
+    content:"";position:fixed;inset:-25vmax;z-index:-2;pointer-events:none;
+    background:
+      radial-gradient(40vmax 40vmax at 18% 20%, rgba(246,196,69,.30), transparent 62%),
+      radial-gradient(46vmax 46vmax at 84% 14%, rgba(96,132,255,.32), transparent 64%),
+      radial-gradient(50vmax 50vmax at 76% 86%, rgba(56,196,196,.28), transparent 66%),
+      radial-gradient(44vmax 44vmax at 20% 90%, rgba(255,120,180,.24), transparent 64%);
+    filter:blur(46px) saturate(170%);
+    animation:lg-aurora 30s ease-in-out infinite alternate;
+  }
+  body::after{
+    content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    mix-blend-mode:overlay;
+  }
+  @keyframes lg-aurora{
+    0%  {transform:translate3d(0,0,0) scale(1)}
+    50% {transform:translate3d(3.5%,-3%,0) scale(1.12)}
+    100%{transform:translate3d(-3%,3.5%,0) scale(1.06)}
+  }
+
+  /* ---- 星空：固定在视口上的多层星点 ----
+     层序：body::before 极光(-2) < .starfield(-1) < body::after 噪点(-1，树序在后)。
+     星星必须压在极光之上才会锐利；噪点只是 5% 的 overlay 叠加，盖在星星上无妨。
+     瓦片是可无缝平铺的 SVG（images/stars-*.svg，由 .deepworks/tmp/make_starfield.py 生成），
+     边缘的星都做过跨边界复制，所以看不出格子。
+     html/body 上没有 transform/will-change，position:fixed 正常以视口为参照。 */
+  .starfield{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+  .sf-layer{
+    position:absolute;inset:0;background-repeat:repeat;
+    will-change:background-position;   /* 提示合成器：这几层在长期极慢位移 */
+  }
+  /* 三层视差：远层星小且暗、漂得慢；近层星大且亮、漂得快 */
+  .sf-1{background-image:url("images/stars-far.svg");background-size:1200px 1200px;opacity:.62;animation:sf-drift-1 420s linear infinite}
+  .sf-2{background-image:url("images/stars-mid.svg");background-size:900px 900px;opacity:.78;animation:sf-drift-2 300s linear infinite}
+  .sf-3{background-image:url("images/stars-near.svg");background-size:700px 700px;animation:sf-drift-3 200s linear infinite}
+  /* 闪烁层不吃漂移动画：它靠瓦片内的 SMIL 逐颗闪，这里再叠一层整层呼吸兜底 */
+  .sf-tw{background-image:url("images/stars-twinkle.svg");background-size:1400px 1400px;animation:sf-breathe 7s ease-in-out infinite}
+  /* 位移量必须正好等于各自瓦片边长的整数倍，否则循环回起点时会"跳一下" */
+  @keyframes sf-drift-1{from{background-position:0 0}to{background-position:-1200px -1200px}}
+  @keyframes sf-drift-2{from{background-position:0 0}to{background-position:-900px -900px}}
+  @keyframes sf-drift-3{from{background-position:0 0}to{background-position:-700px -700px}}
+  @keyframes sf-breathe{0%,100%{opacity:.42}50%{opacity:1}}
+
+  /* 流星：一条左淡右亮的尾巴（亮头在前进方向），在一个长周期里只闪现一小段。
+     路径与角度用 CSS 变量给，三条各自不同；--dx/--dy 为正=朝右下飞，
+     角度取 atan(--dy/--dx) 即与轨迹平行。 */
+  .sf-meteor{
+    position:absolute;width:170px;height:1.6px;border-radius:2px;opacity:0;
+    background:linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.92));
+    transform:rotate(var(--a,33deg));
+    will-change:transform,opacity;
+    animation-name:sf-meteor;animation-timing-function:linear;animation-iteration-count:infinite;
+  }
+  @keyframes sf-meteor{
+    0%  {opacity:0;transform:translate3d(0,0,0) rotate(var(--a,33deg))}
+    4%  {opacity:1}
+    13% {opacity:0;transform:translate3d(var(--dx),var(--dy),0) rotate(var(--a,33deg))}
+    100%{opacity:0;transform:translate3d(var(--dx),var(--dy),0) rotate(var(--a,33deg))}
+  }
+  .sf-m1{left:6vw;top:4vh;--dx:46vw;--dy:30vh;--a:33deg;animation-duration:17s;animation-delay:3s}
+  .sf-m2{left:54vw;top:-2vh;--dx:34vw;--dy:26vh;--a:37deg;animation-duration:23s;animation-delay:9s;width:120px}
+  .sf-m3{left:-4vw;top:18vh;--dx:60vw;--dy:36vh;--a:31deg;animation-duration:31s;animation-delay:17s;width:210px;height:2px}
+
+  /* Hero 内部单独铺一层清晰星点：hero 自带 backdrop-filter:blur(28px)，
+     会把固定在视口上的 .starfield 糊成一片柔光，所以英雄区要自带星空，
+     才能真正成为一扇"夜空之窗"。z-index:1 夹在 hero 背景(0)、灯塔/光束(2)
+     与正文(3) 之间 —— 星星在灯塔之后，符合夜景的前后层次。
+     三层位移量同样各取自身瓦片边长的整数倍，循环无缝。 */
+  .hero-stars{
+    position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.9;
+    background-image:url("images/stars-mid.svg"),url("images/stars-near.svg"),url("images/stars-twinkle.svg");
+    background-size:820px 820px,640px 640px,1180px 1180px;
+    background-repeat:repeat,repeat,repeat;
+    background-position:0 0,-160px -90px,60px 40px;
+    animation:hero-stars-drift 260s linear infinite;
+  }
+  @keyframes hero-stars-drift{
+    from{background-position:0 0,-160px -90px,60px 40px}
+    to  {background-position:-820px -820px,-800px -730px,-1120px -1140px}
+  }
+
+  /* ---- 极光帘幕 ----
+     贴图 images/aurora.png 由 .deepworks/tmp/make_aurora.py 逐像素生成。
+     为什么不用 CSS radial-gradient：圆形色斑只是"彩色雾"，不是极光。真实极光要
+     竖直光柱织成帘幕、参差收顶、底边一条细亮线、青绿主导、下缘带品红辉光。
+     贴图是黑底不透明 RGB，靠 mix-blend-mode:screen 叠加 —— 黑色完全透出（等同透明），
+     又保留加法发光感，且比带 alpha 的图小得多。
+     贴图里所有波形都是整数频率正弦叠加，水平方向严格周期，所以 repeat-x 天生无缝；
+     因此位移量正好取一个瓦片宽 2400px，循环回起点不跳。
+     层序：本层在 DOM 里紧跟在 .starfield 之后，两者同为 z-index:-1、按树序绘制，
+     所以极光画在星星之上 —— 真实天空里极光就是在星星前面发光。
+     漂移用 transform 而非 background-position：整层走合成器，不逐帧重绘这张
+     2400px 宽的混合层（页面里还有 BCI 的 Three.js 渲染循环要抢资源）。 */
+  .aurora{
+    position:fixed;top:0;bottom:0;left:0;width:calc(100% + 2400px);
+    z-index:-1;pointer-events:none;
+    mix-blend-mode:screen;
+    background-image:url("images/aurora.png");
+    background-repeat:repeat-x;
+    background-size:2400px 624px;
+    background-position:0 bottom;   /* 帘幕落在视口下半部，正好从 hero 卡片下沿露出来 */
+    opacity:.58;   /* 用户反馈"太亮了"：贴图本身已乘 SOFT=0.72，这里再压一层 */
+    will-change:transform;
+    animation:aurora-drift 300s linear infinite,aurora-pulse 28s ease-in-out infinite;
+  }
+  @keyframes aurora-drift{from{transform:translate3d(0,0,0)}to{transform:translate3d(-2400px,0,0)}}
+  @keyframes aurora-pulse{0%,100%{opacity:.52}50%{opacity:.66}}
+
+  /* ---- 顶栏：悬浮玻璃胶囊 ---- */
+  .topbar{
+    top:8px;
+    margin:10px clamp(8px,1.6vw,18px) 0;
+    border-radius:18px;
+    background:linear-gradient(135deg,rgba(255,255,255,.13),rgba(255,255,255,.04));
+    border:1px solid var(--lg-stroke);
+    -webkit-backdrop-filter:var(--lg-blur);backdrop-filter:var(--lg-blur);
+    box-shadow:inset 0 1px 0 var(--lg-hi),inset 0 -1px 0 rgba(255,255,255,.06),0 14px 40px rgba(0,0,0,.42);
+    transition:padding .3s,box-shadow .3s,background .3s;
+  }
+  .topbar.scrolled{
+    background:linear-gradient(135deg,rgba(255,255,255,.17),rgba(255,255,255,.06));
+    box-shadow:inset 0 1px 0 var(--lg-hi),0 18px 46px rgba(0,0,0,.5);
+  }
+
+  /* ---- Hero：一块悬浮的液态玻璃场景 ---- */
+  .hero{
+    margin:clamp(10px,1.6vw,18px) clamp(8px,1.6vw,18px) 0;
+    border-radius:28px;
+    border:1px solid var(--lg-stroke);
+    border-bottom:1px solid var(--lg-stroke);
+    overflow:hidden;
+    background:
+      radial-gradient(60% 55% at 16% 10%, rgba(246,196,69,.26), transparent 70%),
+      radial-gradient(70% 70% at 88% 88%, rgba(255,255,255,.13), transparent 60%),
+      linear-gradient(180deg, rgba(46,80,120,.32) 0%, rgba(28,52,84,.18) 55%, rgba(10,14,22,.26) 100%);
+    -webkit-backdrop-filter:blur(28px) saturate(190%) brightness(1.22);
+    backdrop-filter:blur(28px) saturate(190%) brightness(1.22);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.55),
+      inset 0 0 70px rgba(255,255,255,.08),
+      0 30px 70px rgba(0,0,0,.50),
+      0 0 0 1px rgba(246,196,69,.07);
+  }
+
+  /* ---- 大块玻璃表面（卡片 / 面板） ---- */
+  .card,.about,.postcard-card,.postcard-map,.draw-stage{
+    background:
+      linear-gradient(180deg,rgba(255,255,255,.13),rgba(255,255,255,.026) 46%,rgba(255,255,255,.05) 100%),
+      linear-gradient(135deg,rgba(255,255,255,.035),rgba(255,255,255,.012));
+    background-image:
+      linear-gradient(180deg,rgba(255,255,255,.13),rgba(255,255,255,.026) 46%,rgba(255,255,255,.05) 100%),
+      linear-gradient(135deg,rgba(255,255,255,.035),rgba(255,255,255,.012));
+    background-origin:border-box;background-clip:padding-box;
+    border:1px solid rgba(255,255,255,.24);
+    border-top:1px solid rgba(255,255,255,.40);
+    border-radius:22px;
+    -webkit-backdrop-filter:blur(28px) saturate(215%) brightness(1.42);
+    backdrop-filter:blur(28px) saturate(215%) brightness(1.42);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.62),
+      inset 0 -1px 0 rgba(255,255,255,.09),
+      0 22px 52px rgba(0,0,0,.38);
+  }
+  .card:hover,.postcard-card:hover{
+    box-shadow:inset 0 1px 0 var(--lg-hi),inset 0 -1px 0 rgba(255,255,255,.06),0 30px 64px rgba(0,0,0,.5);
+  }
+
+  /* 徽章 / 标签：淡玻璃药丸 */
+  .badge{
+    background:linear-gradient(135deg,rgba(246,196,69,.22),rgba(246,196,69,.07));
+    border:1px solid rgba(251,224,138,.40);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 6px 16px rgba(0,0,0,.26);
+  }
+  .chip{
+    background:linear-gradient(135deg,rgba(122,162,222,.30),rgba(80,120,180,.14));
+    border:1px solid rgba(255,255,255,.20);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.30);
+  }
+  .chip.y{
+    background:linear-gradient(135deg,rgba(255,225,140,.94),rgba(232,174,46,.72));
+    border:1px solid rgba(255,255,255,.42);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.65),0 6px 16px rgba(246,196,69,.25);
+  }
+
+  /* 金色按钮：液态金玻璃 */
+  .link-btn,.send,.contact a.mail,.hurry{
+    background:linear-gradient(135deg,rgba(255,228,146,.96),rgba(246,196,69,.82));
+    border:1px solid rgba(255,255,255,.52);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.85),0 10px 26px rgba(246,196,69,.30);
+  }
+  .link-btn:hover,.send:hover,.contact a.mail:hover,.hurry:hover{
+    background:linear-gradient(135deg,rgba(255,238,182,.99),rgba(251,224,138,.92));
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 16px 34px rgba(246,196,69,.42);
+  }
+
+  /* 语言切换 / BGM 按钮 */
+  .lang-switch{
+    background:rgba(255,255,255,.08);
+    border:1px solid var(--lg-stroke);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.35);
+  }
+  .lang-btn.active{
+    background:linear-gradient(135deg,rgba(255,228,146,.96),rgba(246,196,69,.86));
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.78),0 4px 12px rgba(246,196,69,.30);
+  }
+  .bgm-btn{
+    background:linear-gradient(135deg,rgba(255,255,255,.15),rgba(255,255,255,.05));
+    border:1px solid var(--lg-stroke);
+    box-shadow:inset 0 1px 0 var(--lg-hi),0 10px 26px rgba(0,0,0,.40);
+  }
+  .bgm-btn:hover{
+    background:linear-gradient(135deg,rgba(255,225,140,.30),rgba(246,196,69,.14));
+    border-color:var(--yellow);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 10px 26px rgba(0,0,0,.4),0 0 18px rgba(246,196,69,.24);
+  }
+
+  /* 明信片：邮票 / 地图画布 */
+  .postcard-stamp{
+    background:linear-gradient(135deg,rgba(255,228,146,.96),rgba(246,196,69,.72));
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 12px 28px rgba(0,0,0,.35);
+  }
+  .map-canvas{border-radius:16px;border:1px solid var(--lg-stroke)}
+
+  /* 聊天区 */
+  .chat-shell{
+    background:linear-gradient(135deg,rgba(255,255,255,.09),rgba(255,255,255,.03));
+    border:1px solid var(--lg-stroke);
+    border-radius:26px;
+    -webkit-backdrop-filter:var(--lg-blur);backdrop-filter:var(--lg-blur);
+    box-shadow:inset 0 1px 0 var(--lg-hi),0 26px 60px rgba(0,0,0,.45);
+  }
+  .chat-side{
+    background:linear-gradient(180deg,rgba(46,74,102,.46),rgba(33,58,86,.22));
+    border-right:1px solid var(--lg-stroke-soft);
+    -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  }
+  .chat-log{background:rgba(10,14,20,.26)}
+  .msg.bot{
+    background:linear-gradient(135deg,rgba(255,255,255,.15),rgba(255,255,255,.05));
+    border:1px solid var(--lg-stroke-soft);
+    color:var(--ink);
+    -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 8px 20px rgba(0,0,0,.3);
+  }
+  .msg.user{
+    background:linear-gradient(135deg,rgba(246,196,69,.28),rgba(46,74,102,.52));
+    border:1px solid rgba(251,224,138,.35);
+    -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 8px 20px rgba(0,0,0,.3);
+  }
+  .quick{
+    background:linear-gradient(135deg,rgba(255,255,255,.11),rgba(255,255,255,.03));
+    border:1px solid rgba(251,224,138,.32);
+    -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  }
+  .chat-input{
+    background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));
+    border-top:1px solid var(--lg-stroke-soft);
+  }
+  .chat-input input{
+    background:rgba(255,255,255,.07);
+    border:1px solid var(--lg-stroke);
+    color:var(--ink);
+  }
+
+  /* 音乐 · 推荐留声（复用聊天区输入框与气泡皮肤）
+     桌面：排在左列第二行，紧贴着配文卡片的下沿（就在专辑左边）；
+     与配文之间的间距＝下面「大屏收紧行距」里的 row-gap，这里用 margin-top:0 不去干扰它。 */
+  .rec{margin-top:0;padding:0;overflow:hidden;grid-column:1;grid-row:2}
+  .rec .rec-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:20px 22px 0}
+  .rec .rec-head h3{margin:0;font-size:17px;color:var(--ink)}
+  .rec .rec-count{font-size:12.5px;color:var(--muted);letter-spacing:.4px}
+  .rec .rec-desc{padding:8px 22px 16px;font-size:14.5px;line-height:1.75;color:var(--muted)}
+  .rec .rec-log{padding:16px 22px;gap:10px;border-top:1px solid var(--line)}
+  .rec .rec-log:empty{display:none}
+  .rec .rec-log .msg{max-width:82%}
+  .rec .chat-input{border-top:1px solid var(--line);flex-wrap:wrap}
+  .rec .chat-input input{min-width:170px}
+  .rec .send:disabled{opacity:.55;cursor:default;transform:none;box-shadow:none}
+  /* 空状态：还没人留言时，占住中间那块「聊天记录区」，居中一句浅色提示 */
+  .rec .rec-empty{margin:0;padding:14px 22px;text-align:center;font-size:13.5px;line-height:1.7;color:var(--muted)}
+  /* 有留言后（.rec-log 紧挨在它前面）自动让位，JS 也会同步 hidden */
+  .rec .rec-log:not(:empty) + .rec-empty{display:none}
+
+  /* ===== 反馈（Feedback）：复用卡片/输入框的玻璃语言，新增 select 与 textarea 皮肤 =====
+     线上数据写进 Supabase（外部后台，匿名只能 INSERT）；本地开发回退到 /api/feedback。 */
+  .fb{padding:0;overflow:hidden}
+  .fb .fb-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:22px 24px 0}
+  .fb .fb-head h3{margin:0;font-size:19px;color:var(--ink)}
+  .fb .fb-badge{font-size:12px;color:var(--yellow-light);border:1px solid rgba(246,196,69,.32);border-radius:999px;padding:4px 11px;letter-spacing:.3px;white-space:nowrap}
+  .fb .fb-desc{padding:9px 24px 18px;font-size:14.5px;line-height:1.8;color:var(--muted)}
+  .fb .fb-form{padding:18px 24px 24px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:14px}
+  .fb .fb-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .fb .fb-row{display:flex;flex-direction:column;gap:7px;min-width:0}
+  .fb .fb-label{font-size:13px;color:var(--muted);letter-spacing:.3px}
+  .fb .fb-form input,.fb .fb-form select,.fb .fb-form textarea{
+    width:100%;border:1px solid var(--lg-stroke);border-radius:11px;padding:12px 15px;font-size:14px;outline:none;
+    background:rgba(255,255,255,.07);color:var(--ink);font-family:inherit;
+    transition:border-color .2s,box-shadow .2s;
+  }
+  .fb .fb-form input::placeholder,.fb .fb-form textarea::placeholder{color:var(--muted)}
+  .fb .fb-form input:focus,.fb .fb-form select:focus,.fb .fb-form textarea:focus{border-color:var(--yellow);box-shadow:0 0 0 3px rgba(246,196,69,.12)}
+  .fb .fb-form select{
+    appearance:none;-webkit-appearance:none;cursor:pointer;padding-right:40px;
+    background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23FBF0D5' fill-opacity='.72' d='M6 8 0 0h12z'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:right 15px center;
+  }
+  .fb .fb-form select option{background:var(--blue-deep);color:var(--ink)}
+  .fb .fb-form textarea{resize:vertical;min-height:108px;line-height:1.75}
+  .fb .fb-foot{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .fb .fb-status{margin:0;font-size:13.5px;line-height:1.65;color:var(--muted);flex:1;min-width:180px}
+  .fb .fb-status.ok{color:var(--yellow-light)}
+  .fb .fb-status.err{color:#FFB9A6}
+  .fb .send:disabled{opacity:.55;cursor:default;transform:none;box-shadow:none}
+  /* 数字分身 → 反馈 的一句话引导（放在聊天区下方） */
+  .fb-cta{margin-top:16px;text-align:center;font-size:14px}
+  .fb-cta a{display:inline-block;color:var(--yellow-light);border-bottom:1px dashed rgba(246,196,69,.45);padding:9px 8px 6px;transition:.2s}
+  .fb-cta a:hover{color:var(--yellow);border-bottom-color:var(--yellow)}
+  /* 角落入口：固定右下角，随时可点，满足「清晰的反馈入口」 */
+  .fb-fab{
+    position:fixed;right:16px;bottom:16px;z-index:60;display:inline-flex;align-items:center;gap:7px;
+    padding:11px 16px;border-radius:999px;border:1px solid rgba(246,196,69,.36);cursor:pointer;text-decoration:none;
+    background:linear-gradient(135deg,rgba(246,196,69,.94),rgba(232,174,46,.94));color:var(--blue-deep);
+    font-family:inherit;font-size:14px;font-weight:800;letter-spacing:.3px;
+    box-shadow:0 10px 26px rgba(0,0,0,.42);transition:transform .2s,box-shadow .2s,opacity .25s;
+  }
+  /* 第一屏收起：那里正文一直铺到屏幕下边缘，浮动按钮会压住卡片末尾的文字 */
+  .fb-fab.hide{opacity:0;transform:translateY(10px);pointer-events:none}
+  .fb-fab:hover{transform:translateY(-2px);box-shadow:0 14px 32px rgba(0,0,0,.5)}
+  .fb-fab .fb-fab-ico{font-size:15px;line-height:1}
+  @media (max-width:620px){
+    .fb .fb-head{padding:18px 18px 0}
+    .fb .fb-head h3{font-size:17px}
+    .fb .fb-desc{padding:8px 18px 15px;font-size:14px}
+    .fb .fb-form{padding:16px 18px 20px;gap:13px}
+    .fb .fb-grid{grid-template-columns:1fr}
+    .fb .fb-foot .send{width:100%}
+    .fb .fb-status{min-width:0}
+    /* 手机上收成紧凑圆形，避免悬浮按钮压住正文（尤其第一屏的学校那行） */
+    .fb-fab{right:12px;bottom:12px;width:48px;height:48px;padding:0;justify-content:center;border-radius:50%}
+    .fb-fab .fb-fab-ico{font-size:18px}
+    .fb-fab .fb-fab-txt{display:none}
+  }
+
+  /* 大屏：只把「配文 → 推荐框」这一行距收紧到 8px，让它紧挨着配文卡片；
+     左右两列之间仍是 26px（column-gap 不动），窄屏堆叠也还是 26px。
+     第二行用 1fr + 推荐框 align-self:stretch：跨两行的专辑比左列自然高度高，
+     余量全部落进第二行内部，推荐框顺势长高，底边与专辑底边齐平；
+     卡片内部改成纵向 flex：中间的聊天记录区（.rec-log / .rec-empty）用 flex:1 撑满，
+     表单紧跟其后，底边自然与卡片底部齐平。 */
+  @media (min-width:821px){
+    .music-shell{grid-template-rows:auto 1fr;row-gap:8px}
+    .rec{align-self:stretch;display:flex;flex-direction:column}
+    .rec .rec-log{flex:1;min-height:0;overflow-y:auto}
+    .rec .rec-empty:not([hidden]){flex:1;display:flex;align-items:center;justify-content:center;min-height:0}
+  }
+
+  @media (max-width:820px){
+    .music-intro,.music-player,.rec{grid-column:auto;grid-row:auto}
+  }
+
+  /* 联系区 */
+  .contact{
+    background:linear-gradient(135deg,rgba(46,74,102,.42),rgba(33,58,86,.20));
+    border:1px solid var(--lg-stroke);
+    border-radius:26px;
+    -webkit-backdrop-filter:var(--lg-blur);backdrop-filter:var(--lg-blur);
+    box-shadow:inset 0 1px 0 var(--lg-hi),0 24px 56px rgba(0,0,0,.42);
+  }
+
+  /* 灯箱 */
+  .lightbox{background:rgba(4,8,14,.82)}
+  .lightbox-panel{
+    background:linear-gradient(135deg,rgba(30,40,56,.72),rgba(14,20,30,.60));
+    border:1px solid var(--lg-stroke);
+    border-radius:22px;
+    -webkit-backdrop-filter:var(--lg-blur);backdrop-filter:var(--lg-blur);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 40px 100px rgba(0,0,0,.7);
+  }
+
+  /* 页脚 & 滚动条 */
+  footer{border-top:1px solid var(--lg-stroke-soft)}
+  ::-webkit-scrollbar-track{background:transparent}
+  ::-webkit-scrollbar-thumb{background:rgba(255,255,255,.20);border-radius:8px;border:3px solid transparent;background-clip:padding-box}
+  ::-webkit-scrollbar-thumb:hover{background:rgba(246,196,69,.5);background-clip:padding-box}
+
+  @media (prefers-reduced-motion: reduce){
+    body::before{animation:none}
+    /* 星空：停掉所有位移与呼吸，流星直接不渲染，只留静态星点。
+       （瓦片内部的 SMIL 逐颗闪烁无法用 CSS 关掉，但它只是不透明度渐变、不产生位移，
+         对"减弱动效"偏好的用户是可接受的。） */
+    .sf-layer,.hero-stars{animation:none}
+    .sf-tw{animation:none;opacity:1}
+    .sf-meteor{display:none}
+    /* 极光：停掉漂移与呼吸，保留静态帘幕（它本身是氛围光，静止亦自然） */
+    .aurora{animation:none;opacity:.58}
+  }
+
+  /* ===== 手机版（≤620px）：整页按手机尺寸重排，消除「框被遮挡、比例不对」=====
+     三个根因与对策：
+       ① 顶栏原本折成多行 → 高 153px（占手机屏 18%）且 sticky，滚动时压住每个框的顶部。
+          对策：导航在手机上隐藏（手指滑动即可浏览），顶栏只剩「名字 + 语言」单行 ≈50px。
+       ② 两个声音悬浮按钮原本 42px 挤在右上角。对策：缩到 36px（≥36px 可点）并排收回顶栏预留带内，
+          既仍在右上角，也不再压住导航/正文。
+       ③ 版面留白与控件尺寸是桌面值直接缩出来的：版块间距 70px、hero 内边距 80/124px、
+          聊天框固定 520px、专辑圆点 7px、HUD 字号 6.5–10px。对策：逐项收到手机尺寸，
+          圆点/箭头补足点击热区。 */
+  @media (max-width: 620px){
+    /* ① 顶栏：单行，导航隐藏（右侧留 94px 给两个 36px 声音按钮） */
+    .topbar{flex-wrap:nowrap;row-gap:0;gap:10px;padding:8px 94px 8px 12px}
+    .nav{display:none}
+    .brand{font-size:15px;gap:7px}
+    .brand .dot{width:9px;height:9px}
+    .topbar-right{gap:8px}
+    .lang-switch{padding:2px}
+    .lang-btn{padding:8px 12px;font-size:11.5px;min-height:38px;display:inline-flex;align-items:center;justify-content:center}
+
+    /* ② 声音按钮：36px，并排留在右上角顶栏带内 */
+    .bgm-btn{width:36px;height:36px;top:9px;right:10px}
+    .bgm-btn .note{font-size:17px}
+    .bgm-btn::after{width:21px;height:2.5px;margin:-1.25px 0 0 -10.5px}
+    .bgm-btn.sea-btn{top:9px;right:54px}
+    .sound-hint{top:60px;right:10px;height:34px;padding:0 11px;font-size:11.5px}
+
+    /* ③ 版面留白收成手机尺寸 */
+    .wrap{padding:0 14px}
+    .section{padding:38px 0}
+    .section-title{font-size:21px;margin-bottom:18px}
+    .card{padding:20px}
+    .about{padding:22px}
+    .interests{gap:8px;margin-top:13px}
+    .chip{font-size:12.5px;padding:6px 12px}
+    .hero-inner{padding:34px 16px 84px}
+    .hero h1{font-size:34px}
+    .tagline{font-size:15px}
+    .hero-badges{gap:8px;margin-top:22px}
+
+    /* 聊天区：固定 520px 在手机上过高 */
+    .chat-main{height:min(520px,68vh)}
+    .chat-side{padding:18px 16px;gap:13px}
+    .chat-log{padding:14px;gap:11px}
+    .msg{max-width:88%;font-size:14px;padding:11px 14px}
+    .chat-input{padding:10px;gap:8px}
+    .chat-input input{padding:11px 13px;font-size:14px}
+    .send{padding:11px 18px;font-size:14.5px}
+    .quick{padding:10px 12px;font-size:13.5px}
+
+    /* 音乐：箭头 34px → 40px（≥36px 可点）；圆点 7px → 9px + 伪元素热区 37px。
+       这两项都不要再加大：390px 下 .music-bar 只剩约 17px 余量，箭头 44px + 圆点间距 14px
+       会把播放条撑到 401px 并连带把音乐卡片顶出屏幕（实测溢出到 415px）。 */
+    .music-nav{width:40px;height:40px;font-size:17px}
+    .music-dots{gap:10px}
+    .music-dot{position:relative;width:9px;height:9px}
+    .music-dot::before{content:"";position:absolute;inset:-14px}
+    .music-bar{gap:14px}
+    .music-hint{font-size:12px}
+
+    /* BCI：HUD 原字号 6.5–10px 手机上无法辨读，整体放大 */
+    .bci-text{padding:20px 18px 6px}
+    .bci-text h3{font-size:16.5px}
+    .bci-text p{font-size:13.5px;line-height:1.7}
+    .bci-hud-left{width:192px;padding:11px 12px}
+    .bci-h1{font-size:11px;letter-spacing:1.8px}
+    .bci-subtitle{font-size:10px;letter-spacing:1px}
+    .bci-row{font-size:10.5px;gap:10px;margin-bottom:5px}
+    .bci-btn{margin-top:9px;padding:10px;font-size:10.5px;letter-spacing:1.2px}
+    .bci-hint{font-size:10.5px;letter-spacing:1px}
+    .bci-stage{min-height:330px}
+
+    /* 明信片：介绍卡片与地图留白收窄，墙上小图略放大（原本约 80px 见方偏小） */
+    .postcard{gap:18px}
+    .postcard-card{padding:20px}
+    .postcard-card .postcard-text h3{font-size:16.5px}
+    .postcard-map{padding:11px}
+    .map-canvas .pc-poland{width:24%}
+    .map-canvas .pc-movie{width:28%}
+    .map-canvas .pc-finland{width:29%}
+    .map-canvas .pc-reply{width:30%}
+    .map-canvas .map-zoom-hint{right:9px;bottom:9px;padding:5px 10px;font-size:11px}
+
+    /* 绘画 / 联系 / 页脚 */
+    .draw-shell{gap:16px}
+    .draw-card h3{font-size:17.5px}
+    .draw-card p{font-size:14px}
+    .draw-foot{gap:10px;margin-top:14px}
+    .hurry{padding:11px 18px}
+    .contact{padding:24px 20px;gap:16px}
+    .contact h3{font-size:19px}
+    .contact p{font-size:14px}
+    .contact a.mail{padding:12px 20px;font-size:14.5px}
+    footer{padding:26px 0;font-size:12.5px}
+  }
+</style>
+</head>
+<body>
+
+<!-- 星空背景：固定在视口上的四层星点（远/中/近景做纵深 + 闪烁层）加三条流星。
+     整层 pointer-events:none 且 aria-hidden，纯装饰，不影响任何交互与读屏。
+     瓦片见 images/stars-*.svg；每层漂移位移量都取该层瓦片边长的整数倍，循环无缝。 -->
+<div class="starfield" aria-hidden="true">
+  <span class="sf-layer sf-1"></span>
+  <span class="sf-layer sf-2"></span>
+  <span class="sf-layer sf-3"></span>
+  <span class="sf-layer sf-tw"></span>
+  <span class="sf-meteor sf-m1"></span>
+  <span class="sf-meteor sf-m2"></span>
+  <span class="sf-meteor sf-m3"></span>
+</div>
+
+<!-- 极光帘幕：同样 pointer-events:none + aria-hidden，纯装饰。
+     故意排在 .starfield 之后 —— 同 z-index 按树序绘制，极光压在星星之上。 -->
+<div class="aurora" aria-hidden="true"></div>
+
+<!-- BGM 音频元素：必须放在脚本之前，否则脚本取不到它、点击监听无法绑定 -->
+<audio id="bgm" preload="auto" loop src="bgm/Cold (Salt) Water.mp3"></audio>
+<!-- 海浪声：与 BGM 完全相同的机制（首次交互自动播放 / 按钮切换 / 循环 / 淡入） -->
+<audio id="sea" preload="auto" loop src="bgm/sea-waves.mp3"></audio>
+
+<div class="seagull" id="seagull" aria-hidden="true">
+  <svg viewBox="0 0 100 48" xmlns="http://www.w3.org/2000/svg">
+    <!-- 经典海鸥 V 形：左右严格镜像双翼，厚度一致，向下交汇成尖角，整体纯白 -->
+    <g class="glide">
+      <path class="v" d="
+        M3 13
+        C 24 15 41 31 50 46
+        C 46 50 26 34 5 25
+        Z
+        M97 13
+        C 76 15 59 31 50 46
+        C 54 50 74 34 95 25
+        Z
+        "/>
+    </g>
+  </svg>
+</div>
+
+<header class="topbar">
+  <div class="brand"><span class="dot"></span>Fledglynn</div>
+  <div class="topbar-right">
+    <nav class="nav">
+      <a href="#about" data-i18n="nav.about">关于我</a>
+      <a href="#study" data-i18n="nav.study">学习</a>
+      <a href="#bci" data-i18n="nav.bci">脑机接口</a>
+      <a href="#postcard" data-i18n="nav.postcard">明信片</a>
+      <a href="#drawing" data-i18n="nav.drawing">绘画</a>
+      <a href="#music" data-i18n="nav.music">音乐</a>
+      <a href="#chat" data-i18n="nav.chat">数字分身</a>
+      <a href="#feedback" data-i18n="nav.feedback">反馈</a>
+      <a href="#contact" data-i18n="nav.contact">联系</a>
+    </nav>
+    <div class="lang-switch" id="langSwitch" role="group" aria-label="Language">
+      <button class="lang-btn active" data-lang="zh">中</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+    <button class="bgm-btn" id="bgmBtn" type="button" aria-label="播放背景音乐" data-i18n-title="bgm.title" aria-pressed="false" title="播放背景音乐">
+      <span class="note">🎵</span>
+    </button>
+    <button class="bgm-btn sea-btn" id="seaBtn" type="button" aria-label="播放海浪声" data-i18n-title="sea.title" aria-pressed="false" title="播放海浪声">
+      <span class="note">🌊</span>
+    </button>
+    <div class="sound-hint" id="soundHint" data-i18n="sound.hint">点击开启声音</div>
+  </div>
+</header>
+
+<!-- ===== 反馈 · 角落入口（固定右下，点一下跳到 #feedback 版块）===== -->
+<a class="fb-fab" href="#feedback" data-i18n-title="fb.fabTitle" title="给我留条反馈" aria-label="反馈 / Feedback">
+  <span class="fb-fab-ico" aria-hidden="true">&#9997;</span><span class="fb-fab-txt" data-i18n="fb.fab">反馈</span>
+</a>
+
+
+<!-- ===== Hero ===== -->
+<section class="hero">
+  <!-- 英雄区自带一层锐利星点：hero 的 backdrop-filter:blur(28px) 会把外层固定星空
+       糊成柔光，所以这里单独铺一份，让 hero 真正成为一扇「夜空之窗」。
+       z-index:1，位于灯塔/光束(2) 之后、正文(3) 之前。 -->
+  <div class="hero-stars" aria-hidden="true"></div>
+  <div class="hero-inner">
+    <div class="avatar planet-holder">
+      <div class="sphere"></div>
+      <div class="planet">
+        <div class="meridian m0"></div>
+        <div class="meridian m1"></div>
+        <div class="meridian m2"></div>
+        <div class="meridian m3"></div>
+        <div class="parallel p1"></div>
+        <div class="parallel p2"></div>
+        <div class="parallel p3"></div>
+        <div class="shine"></div>
+      </div>
+      <div class="ring"></div>
+      <div class="core">F</div>
+    </div>
+    <h1>Fledglynn</h1>
+    <p class="tagline" data-i18n="hero.tagline">一个勇于探索未知领域并深耕的大一新生</p>
+    <div class="hero-badges">
+      <span class="badge" data-i18n="hero.bio">智能医学工程</span>
+      <span class="badge" data-i18n="hero.bci">脑机接口方向</span>
+      <span class="badge">Vibe Coding</span>
+      <span class="badge" data-i18n="hero.hobbies">绘画 · 音乐 · 街舞 · 看书</span>
+    </div>
+  </div>
+
+  <!-- 灯塔（右侧）：塔身侧视剪影 + 光束绕垂直轴(水平面)旋转，带透视纵深 -->
+  <div class="lighthouse" aria-hidden="true">
+    <!-- 3D 光束层：从塔顶灯黄圈圆心射出，绕垂直轴旋转 -->
+    <div class="beam-spin">
+      <div class="beam"></div>
+    </div>
+    <!-- 塔身（侧视） -->
+    <svg viewBox="0 0 180 220" class="tower-svg">
+      <!-- 塔底基座 -->
+      <rect class="base" x="55" y="150" width="70" height="26" rx="4"/>
+      <rect class="base2" x="60" y="176" width="60" height="18" rx="4"/>
+      <!-- 梯形塔身（标准灯塔上窄下宽） -->
+      <polygon class="tower" points="78,60 102,60 112,152 68,152"/>
+      <!-- 塔身环带条纹 -->
+      <polygon class="stripe" points="77,96 103,96 104,112 76,112"/>
+      <polygon class="base-strip" points="75,129 105,129 106,140 74,140"/>
+      <!-- 顶灯室 -->
+      <rect class="gallery" x="78" y="42" width="24" height="18" rx="3"/>
+      <rect class="glass" x="82" y="45" width="16" height="12" rx="2"/>
+      <!-- 圆顶 -->
+      <polygon class="roof" points="76,42 104,42 90,26"/>
+      <!-- 塔顶灯 -->
+      <circle class="lamp-halo" cx="90" cy="50" r="12"/>
+      <circle class="lamp" cx="90" cy="50" r="6"/>
+    </svg>
+  </div>
+
+  <!-- 左侧 · 垂直海浪（线条纵向起伏，缓慢呼吸） -->
+  <div class="sea-left" id="seaLeft"></div>
+</section>
+
+<div class="wrap">
+
+  <!-- ===== 关于我 ===== -->
+  <section class="section" id="about">
+    <h2 class="section-title reveal"><span>·</span><span data-i18n="about.title">关于我</span></h2>
+    <div class="about reveal" data-i18n-html="about.intro">
+      你好，我是 <b>Fledglynn</b>，<span class="hl">话不多、有点佛系</span>，但在感兴趣的事情上愿意沉下心去深耕。
+      目前是 <b>天津大学·香港理工大学深圳未来技术学院</b> 智能医学工程专业的大一新生，
+      正一边夯实专业基础、一边学习 <span class="hl">vibe coding</span>，并借助 AI 工具做知识整理。
+    </div>
+    <div class="cards">
+      <div class="card reveal">
+        <div class="k" data-i18n="card1.k">现在的我</div>
+        <h3 data-i18n="card1.h">在做的事</h3>
+        <p data-i18n="card1.p">完善个人主页、整理作品集；学习专业基础知识与编程，同时拓展绘画、音乐、街舞、阅读等业余爱好。</p>
+      </div>
+      <div class="card reveal" style="transition-delay:.1s">
+        <div class="k" data-i18n="card2.k">我关心的方向</div>
+        <h3 data-i18n="card2.h">擅长领域</h3>
+        <p data-i18n="card2.p">非侵入式脑机接口、AI 应用、知识整理。希望能把技术与兴趣结合，做出让人 0 压力的科技产品。</p>
+        <div class="interests">
+          <span class="chip" data-i18n="chip.bci">脑机接口</span><span class="chip" data-i18n="chip.ai">AI 应用</span><span class="chip" data-i18n="chip.kn">知识整理</span>
+        </div>
+      </div>
+      <div class="card reveal" style="transition-delay:.2s">
+        <div class="k" data-i18n="card3.k">我的兴趣</div>
+        <h3 data-i18n="card3.h">爱好</h3>
+        <p data-i18n="card3.p">喜欢安静，用线条和色块记录世界。</p>
+        <div class="interests">
+          <span class="chip y" data-i18n="chip.paint">绘画</span>
+          <span class="chip y" data-i18n="chip.music">音乐</span>
+          <span class="chip y" data-i18n="chip.dance">街舞</span>
+          <span class="chip y" data-i18n="chip.read">看书</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 学习（竖向时间轴：中轴 + 左右交替节点，滚动点亮） =====
+       先把「入学」这一个真实节点立在这里，后面的经历发生了再往下加一条。 -->
+  <section class="section" id="study">
+    <h2 class="section-title reveal"><span>·</span><span data-i18n="study.title">学习</span></h2>
+
+    <div class="timeline reveal">
+      <div class="tl-item">
+        <span class="tl-dot" aria-hidden="true"></span>
+        <div class="card tl-card">
+          <div class="k" data-i18n="study.n1.k">2026.8</div>
+          <h3 data-i18n="study.n1.h">进入天津大学（深圳校区）学习</h3>
+          <p data-i18n="study.n1.p">2026 年 8 月，我进入天津大学（深圳校区），成为智能医学工程专业的一名学生。这里是我大学这条路的起点——先把基础打扎实，再慢慢找到真正想深入的方向。</p>
+          <div class="interests">
+            <span class="chip" data-i18n="study.n1.c1">智能医学工程</span>
+            <span class="chip" data-i18n="study.n1.c2">脑机接口方向</span>
+            <span class="chip" data-i18n="study.n1.c3">Vibe Coding</span>
+          </div>
+        </div>
+        <!-- 照片：源图 1535×2048 竖幅，量出天空分界在 1060px 处，
+             按 4:3 横向裁 600–1751（顶部留约四成天空），输出 1400×1050（191 KB）与卡片等宽对置。
+             四版裁切对比留在 outputs/timeline-photo/compare.html。 -->
+        <div class="tl-photo">
+          <img src="images/study.jpg" alt="天津大学（深圳校区）" loading="lazy" decoding="async">
+        </div>
+      </div>
+
+      <div class="tl-item tl-more">
+        <span class="tl-dot" aria-hidden="true"></span>
+        <div class="card tl-card">
+          <div class="k" data-i18n="study.more.k">持续更新中</div>
+          <p data-i18n="study.more.p">时间轴才刚起步，之后发生的事，我会一条条补上。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 脑机接口（左文右 3D 演示） ===== -->
+  <section class="section" id="bci">
+    <h2 class="section-title reveal"><span>·</span><span data-i18n="bci.title">脑机接口</span></h2>
+
+    <div class="bci-split reveal">
+      <!-- 左：文字说明 -->
+      <div class="bci-text">
+        <h3 data-i18n="bci.h">我最想深入的方向</h3>
+        <p data-i18n-html="bci.p1">脑机接口是我目前最感兴趣的方向——它把<b>神经信号</b>与机器直接连在一起，让一个念头不必经过手指和键盘，就能变成屏幕上的动作、文字或声音。</p>
+        <p data-i18n="bci.p2">作为智能医学工程专业的学生，我尤其好奇它在医疗里的可能：让失去行动能力的人重新控制肢体，让无法开口的人重新“说话”。右边这个演示，是我对这条路径的一点想象。</p>
+        <div class="interests">
+          <span class="chip y" data-i18n="bci.chip1">神经信号解码</span>
+          <span class="chip y" data-i18n="bci.chip2">脑电 EEG</span>
+          <span class="chip y" data-i18n="bci.chip3">人机交互</span>
+          <span class="chip y" data-i18n="bci.chip4">智能医学工程</span>
+        </div>
+        <div class="bci-credit">
+          Bioelectric Consciousness Engine · <a href="https://codepen.io/VoXelo/pen/xbgpJre" target="_blank" rel="noopener">Techartist (VoXelo)</a> · MIT License
+        </div>
+      </div>
+
+      <!-- 右：实时 3D 神经网络（源码已本地化内联，不再是 iframe） -->
+      <div class="bci-stage" id="bciStage">
+        <div class="bci-loader" id="bciLoader">
+          <div class="bci-spinner"></div>
+          <div class="bci-loader-text">INITIALIZING BIOELECTRIC ENGINE</div>
+        </div>
+        <div class="bci-canvas-wrap"></div>
+        <div class="bci-overlay"></div>
+
+        <div class="bci-hud bci-hud-left">
+          <div class="bci-hud-header">
+            <div class="bci-h1">Neural Cathedral</div>
+            <div class="bci-subtitle">ID: NC-09 // BIOELECTRIC ENGINE</div>
+          </div>
+          <div class="bci-row"><span class="bci-label">Membrane V</span><span class="bci-value" id="bciValMembrane">-70.0 mV</span></div>
+          <div class="bci-row"><span class="bci-label">Dendrite State</span><span class="bci-value" id="bciValDendrites">CALM</span></div>
+          <div class="bci-row"><span class="bci-label">Axon Load</span><span class="bci-value" id="bciValAxon">02%</span></div>
+          <div class="bci-row"><span class="bci-label">Signal Phase</span><span class="bci-value" id="bciValState">RESTING</span></div>
+          <div class="bci-row"><span class="bci-label">Synaptic Coh</span><span class="bci-value" id="bciValSync">24%</span></div>
+          <button class="bci-btn" id="bciFire" type="button">Manual Override</button>
+        </div>
+
+        <div class="bci-hud bci-hud-right">
+          <div class="bci-row"><span class="bci-label">Cam X</span><span class="bci-value" id="bciCamX">0.00</span></div>
+          <div class="bci-row"><span class="bci-label">Cam Y</span><span class="bci-value" id="bciCamY">0.00</span></div>
+          <div class="bci-row"><span class="bci-label">Cam Z</span><span class="bci-value" id="bciCamZ">0.00</span></div>
+        </div>
+
+        <div class="bci-hint" data-i18n="bci.hint">点击触发神经脉冲</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 脑机接口演示依赖：本地 Three.js（importmap 必须早于下面的 module） -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "./vendor/three/build/three.module.js",
+      "three/addons/": "./vendor/three/examples/jsm/"
+    }
+  }
+  </script>
+
+  <script type="module">
+  // ============================================================
+  //  Bioelectric Consciousness Engine
+  //  Original by Techartist — https://codepen.io/VoXelo/pen/xbgpJre
+  //  Copyright (c) 2026 Techartist · MIT License（署名已保留）
+  //  本地化改造：依赖改为本地 vendor/three；样式与脚本全部限定在 #bciStage 内；
+  //  画布透明 + 边缘遮罩淡出，使其自然融入页面深色背景。
+  // ============================================================
+  import * as THREE from 'three';
+  import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+  import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+  import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+  import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+
+  const stage = document.getElementById('bciStage');
+  const canvasWrap = stage.querySelector('.bci-canvas-wrap');
+  const loaderEl = document.getElementById('bciLoader');
+  const btnFire = document.getElementById('bciFire');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const shaderNoise = `
+      vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+      vec4 mod289(vec4 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+      vec4 permute(vec4 x) { return mod289(((x*34.0)+1.0)*x); }
+      vec4 taylorInvSqrt(vec4 r) { return 1.79284291400159 - 0.85373472095314 * r; }
+      float snoise(vec3 v) {
+          const vec2  C = vec2(1.0/6.0, 1.0/3.0) ;
+          const vec4  D = vec4(0.0, 0.5, 1.0, 2.0);
+          vec3 i  = floor(v + dot(v, C.yyy) );
+          vec3 x0 = v - i + dot(i, C.xxx) ;
+          vec3 g = step(x0.yzx, x0.xyz);
+          vec3 l = 1.0 - g;
+          vec3 i1 = min( g.xyz, l.zxy );
+          vec3 i2 = max( g.xyz, l.zxy );
+          vec3 x1 = x0 - i1 + C.xxx;
+          vec3 x2 = x0 - i2 + C.yyy;
+          vec3 x3 = x0 - D.yyy;
+          i = mod289(i);
+          vec4 p = permute( permute( permute(
+                      i.z + vec4(0.0, i1.z, i2.z, 1.0 ))
+                  + i.y + vec4(0.0, i1.y, i2.y, 1.0 ))
+                  + i.x + vec4(0.0, i1.x, i2.x, 1.0 ));
+          float n_ = 0.142857142857;
+          vec3  ns = n_ * D.wyz - D.xzx;
+          vec4 j = p - 49.0 * floor(p * ns.z * ns.z);
+          vec4 x_ = floor(j * ns.z);
+          vec4 y_ = floor(j - 7.0 * x_ );
+          vec4 x = x_ *ns.x + ns.yyyy;
+          vec4 y = y_ *ns.x + ns.yyyy;
+          vec4 h = 1.0 - abs(x) - abs(y);
+          vec4 b0 = vec4( x.xy, y.xy );
+          vec4 b1 = vec4( x.zw, y.zw );
+          vec4 s0 = floor(b0)*2.0 + 1.0;
+          vec4 s1 = floor(b1)*2.0 + 1.0;
+          vec4 sh = -step(h, vec4(0.0));
+          vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy ;
+          vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww ;
+          vec3 p0 = vec3(a0.xy,h.x);
+          vec3 p1 = vec3(a0.zw,h.y);
+          vec3 p2 = vec3(a1.xy,h.z);
+          vec3 p3 = vec3(a1.zw,h.w);
+          vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2, p2), dot(p3,p3)));
+          p0 *= norm.x;
+          p1 *= norm.y;
+          p2 *= norm.z;
+          p3 *= norm.w;
+          vec4 m = max(0.6 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);
+          m = m * m;
+          return 42.0 * dot( m*m, vec4( dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3) ) );
+      }
+  `;
+
+  const CONFIG = {
+    somaRadius: 4.0,
+    dendriteTrees: 14,
+    axonTrees: 4,
+    maxDistDendrite: 35.0,
+    maxDistAxon: 50.0,
+    // 调色板：原来那组（#00e5ff / #0033aa / #ffaa00 / #ff4400 / #ff0066 / #6600ff）
+    // 是强饱和撞色，在星空+极光的夜景里最跳、融不进去。现在整体降饱和压暗，
+    // 金色直接沿用站点主色 --yellow，和星空里的金色点缀星、页面黄色强调呼应；
+    // 品红靠近极光下缘那层品红，青绿靠近极光主体青绿。
+    colors: {
+      cyan: new THREE.Color('#3FD9C8'),     // 极光青绿
+      blue: new THREE.Color('#1F4C6B'),     // 午夜深蓝
+      gold: new THREE.Color('#F6C445'),     // 站点主色 --yellow
+      orange: new THREE.Color('#C9762F'),   // 压暗的琥珀
+      magenta: new THREE.Color('#A455C4'),  // 与极光下缘品红呼应
+      violet: new THREE.Color('#4B3FA8')    // 深靛
+    }
+  };
+
+  const STATE = {
+    phase: 0,
+    progress: 0,
+    membraneV: -70.0,
+    axonLoad: 2,
+    sync: 24,
+    isAnimating: false
+  };
+
+  const uniforms = {
+    uTime: { value: 0 },
+    uPhase: { value: 0 },
+    uProgress: { value: 0 },
+    uColCyan: { value: CONFIG.colors.cyan },
+    uColBlue: { value: CONFIG.colors.blue },
+    uColGold: { value: CONFIG.colors.gold },
+    uColOrange: { value: CONFIG.colors.orange },
+    uColMagenta: { value: CONFIG.colors.magenta },
+    uColViolet: { value: CONFIG.colors.violet },
+    uSomaRadius: { value: CONFIG.somaRadius },
+    uMaxDistDendrite: { value: CONFIG.maxDistDendrite },
+    uMaxDistAxon: { value: CONFIG.maxDistAxon }
+  };
+
+  const scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(0x0A0C0F, 0.015);  // 雾色 = 页面底色 --bg，远处枝干淡出时与页面无缝相融
+
+  /* 桌面相机：视距 ≈66.7。（最初 (30,20,40) 视距 ≈53.9，分两档拉远：
+     53.9 → 60.5 → 66.7，累计约 +24%。）视野更大、神经更小、四周留白更多，
+     伸出框外的那一截也跟着自然变短。 */
+  const desktopCameraPosition = new THREE.Vector3(37, 24, 50);
+  const mobileCameraPosition = new THREE.Vector3(34, 24, 62);
+
+  const stageW = () => Math.max(stage.clientWidth, 1);
+  const stageH = () => Math.max(stage.clientHeight, 1);
+
+  const camera = new THREE.PerspectiveCamera(45, stageW() / stageH(), 0.1, 500);
+  camera.position.copy(desktopCameraPosition);
+
+  let renderer;
+  try {
+    renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true, powerPreference: 'high-performance' });
+  } catch (err) {
+    const t = loaderEl.querySelector('.bci-loader-text');
+    if (t) t.textContent = 'WEBGL NOT AVAILABLE';
+    throw err;
+  }
+  renderer.setClearColor(0x000000, 0);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(stageW(), stageH(), false);
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.2;
+  canvasWrap.appendChild(renderer.domElement);
+
+  const composer = new EffectComposer(renderer);
+  const renderPass = new RenderPass(scene, camera);
+  composer.addPass(renderPass);
+
+  const bloomPass = new UnrealBloomPass(new THREE.Vector2(stageW(), stageH()), 1.8, 0.6, 0.1);
+  composer.addPass(bloomPass);
+
+  const controls = new OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.04;
+  controls.autoRotate = true;
+  controls.autoRotateSpeed = 0.6;
+  controls.enablePan = false;
+  controls.minDistance = 15;
+  controls.maxDistance = 120;
+
+  // 触屏设备：关闭轨道旋转，让页面在演示区域也能正常上下滑动
+  //（否则 OrbitControls 会把 touch-action 设为 none，使 3D 区域变成"滑动死区"）。
+  // 自动旋转仍保留（update() 不受 enabled 影响），轻触画面依旧可触发神经脉冲。
+  const coarsePointer = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+  if (coarsePointer) {
+    controls.enabled = false;
+    renderer.domElement.style.touchAction = 'pan-y';
+  }
+
+  const isCompactViewport = () => stageW() <= 620;
+
+  function applyResponsiveScene(resetCamera = false) {
+    const width = stageW();
+    const height = stageH();
+    const compact = isCompactViewport();
+    const targetPosition = compact ? mobileCameraPosition : desktopCameraPosition;
+
+    camera.aspect = width / height;
+    camera.fov = compact ? 52 : 45;
+    camera.updateProjectionMatrix();
+
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, compact ? 1.5 : 2));
+    renderer.setSize(width, height, false);
+    composer.setSize(width, height);
+
+    controls.minDistance = compact ? 24 : 15;
+    controls.maxDistance = compact ? 140 : 120;
+
+    if (resetCamera) {
+      camera.position.copy(targetPosition);
+    } else if (compact && camera.position.length() < targetPosition.length() * 0.8) {
+      camera.position.setLength(targetPosition.length());
+    }
+
+    controls.update();
+  }
+
+  applyResponsiveScene(true);
+
+  const somaMaterial = new THREE.ShaderMaterial({
+    uniforms: uniforms,
+    transparent: true,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false,
+    side: THREE.DoubleSide,
+    vertexShader: `
+        ${shaderNoise}
+        uniform float uTime;
+        uniform int uPhase;
+        uniform float uProgress;
+
+        varying vec3 vNormal;
+        varying vec3 vViewPosition;
+        varying float vNoise;
+
+        void main() {
+            vec3 pos = position;
+            float noise = snoise(pos * 0.5 + uTime * 0.3) * 0.5;
+            float burst = 0.0;
+            if(uPhase == 2) {
+                burst = sin(uProgress * 3.14159) * 0.4;
+            }
+            pos += normal * (noise + burst);
+            vNoise = noise;
+            vNormal = normalize(normalMatrix * normal);
+            vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
+            vViewPosition = -mvPosition.xyz;
+            gl_Position = projectionMatrix * mvPosition;
+        }
+    `,
+    fragmentShader: `
+        uniform int uPhase;
+        uniform float uProgress;
+        uniform float uTime;
+
+        uniform vec3 uColCyan;
+        uniform vec3 uColBlue;
+        uniform vec3 uColGold;
+        uniform vec3 uColMagenta;
+
+        varying vec3 vNormal;
+        varying vec3 vViewPosition;
+        varying float vNoise;
+
+        void main() {
+            vec3 normal = normalize(vNormal);
+            vec3 viewDir = normalize(vViewPosition);
+            float fresnel = pow(1.0 - max(dot(normal, viewDir), 0.0), 2.5);
+            vec3 color = mix(uColBlue * 0.2, uColCyan, fresnel);
+            color += uColCyan * (vNoise * 0.5 + 0.5) * 0.3;
+            if(uPhase == 2) {
+                float intensity = sin(uProgress * 3.14159);
+                color = mix(color, uColGold * 2.0 + uColCyan, intensity * fresnel * 2.0);
+                color += uColGold * intensity * (1.0 - fresnel);
+            } else if(uPhase == 4) {
+                float intensity = 1.0 - uProgress;
+                color = mix(color, uColMagenta, intensity * fresnel * 1.5);
+            }
+            gl_FragColor = vec4(color, 0.8 * fresnel + 0.2);
+        }
+    `
+  });
+
+  const branchMaterial = new THREE.ShaderMaterial({
+    uniforms: Object.assign({}, uniforms, { uIsAxon: { value: 0 } }),
+    transparent: true,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false,
+    vertexShader: `
+        ${shaderNoise}
+        uniform float uTime;
+        varying vec3 vWorldPos;
+        varying vec3 vNormal;
+        varying vec3 vViewPosition;
+        varying vec2 vUv;
+
+        void main() {
+            vUv = uv;
+            vec3 pos = position;
+            float wiggle = snoise(pos * 0.2 + uTime * 0.5) * 0.1;
+            pos += normal * wiggle;
+            vec4 worldPosition = modelMatrix * vec4(pos, 1.0);
+            vWorldPos = worldPosition.xyz;
+            vNormal = normalize(normalMatrix * normal);
+            vec4 mvPosition = viewMatrix * worldPosition;
+            vViewPosition = -mvPosition.xyz;
+            gl_Position = projectionMatrix * mvPosition;
+        }
+    `,
+    fragmentShader: `
+        ${shaderNoise}
+        uniform float uTime;
+        uniform int uPhase;
+        uniform float uProgress;
+        uniform int uIsAxon;
+
+        uniform vec3 uColCyan;
+        uniform vec3 uColBlue;
+        uniform vec3 uColGold;
+        uniform vec3 uColOrange;
+        uniform vec3 uColMagenta;
+        uniform vec3 uColViolet;
+
+        uniform float uSomaRadius;
+        uniform float uMaxDistDendrite;
+        uniform float uMaxDistAxon;
+
+        varying vec3 vWorldPos;
+        varying vec3 vNormal;
+        varying vec3 vViewPosition;
+        varying vec2 vUv;
+
+        void main() {
+            vec3 normal = normalize(vNormal);
+            vec3 viewDir = normalize(vViewPosition);
+            float edge = pow(1.0 - abs(vUv.y - 0.5) * 2.0, 2.0);
+            float fresnel = pow(1.0 - max(dot(normal, viewDir), 0.0), 2.0);
+            float dist = length(vWorldPos);
+            vec3 baseColor = mix(uColBlue * 0.1, uColCyan * 0.5, fresnel * edge);
+            vec3 pulseColor = vec3(0.0);
+            float flowNoise = snoise(vec3(vUv.x * 20.0 - uTime * 2.0, vUv.y * 10.0, uTime)) * 0.5 + 0.5;
+            float axialFlow = 0.65 + 0.35 * sin(vUv.x * 34.0 - uTime * 8.0);
+            if (uIsAxon == 0) {
+                if (uPhase == 1) {
+                    float currentWaveDist = mix(uMaxDistDendrite, uSomaRadius, uProgress);
+                    float head = 1.0 - smoothstep(0.0, 2.3, abs(dist - currentWaveDist));
+                    float outerTrail = step(currentWaveDist, dist) * exp(-(dist - currentWaveDist) * 0.18);
+                    float mergeGlow = (1.0 - smoothstep(uSomaRadius, uSomaRadius + 8.0, dist)) * smoothstep(0.65, 1.0, uProgress);
+                    float pulse = max(head * 1.6, outerTrail * 0.65) + mergeGlow * 0.8;
+                    pulseColor = uColGold * pulse * flowNoise * axialFlow * 3.2;
+                }
+            } else {
+                if (uPhase == 3) {
+                    float currentWaveDist = mix(uSomaRadius, uMaxDistAxon + 18.0, uProgress);
+                    float head = 1.0 - smoothstep(0.0, 3.4, abs(dist - currentWaveDist));
+                    float innerTrail = step(dist, currentWaveDist) * exp(-(currentWaveDist - dist) * 0.1);
+                    float somaLaunch = (1.0 - smoothstep(uSomaRadius, uSomaRadius + 7.0, dist)) * (1.0 - smoothstep(0.0, 0.28, uProgress));
+                    float pulse = max(head * 2.0, innerTrail * 0.9) + somaLaunch * 1.2;
+                    pulseColor = (uColOrange + uColGold * 0.45) * pulse * flowNoise * axialFlow * 4.6;
+                }
+            }
+            if (uPhase == 4) {
+                float intensity = 1.0 - uProgress;
+                pulseColor += uColViolet * intensity * edge * 1.5;
+            }
+            gl_FragColor = vec4(baseColor + pulseColor, 1.0);
+        }
+    `
+  });
+
+  const axonMaterial = branchMaterial.clone();
+  Object.keys(uniforms).forEach((key) => {
+    axonMaterial.uniforms[key] = uniforms[key];
+  });
+  axonMaterial.uniforms.uIsAxon = { value: 1 };
+
+  const networkGroup = new THREE.Group();
+  scene.add(networkGroup);
+
+  const somaGeo = new THREE.IcosahedronGeometry(CONFIG.somaRadius, 32);
+  const somaMesh = new THREE.Mesh(somaGeo, somaMaterial);
+  networkGroup.add(somaMesh);
+
+  const coreGeo = new THREE.IcosahedronGeometry(CONFIG.somaRadius * 0.8, 16);
+  const coreMat = new THREE.MeshBasicMaterial({ color: CONFIG.colors.cyan, transparent: true, opacity: 0.1, blending: THREE.AdditiveBlending, wireframe: true });
+  networkGroup.add(new THREE.Mesh(coreGeo, coreMat));
+
+  function buildBranch(startPt, dir, length, radius, level, maxLevels, isAxon) {
+    const segments = 12;
+    const points = [startPt.clone()];
+    let cur = startPt.clone();
+    let cDir = dir.clone();
+
+    for(let i=0; i<segments; i++) {
+      let curl = new THREE.Vector3(
+        Math.random() - 0.5,
+        Math.random() - 0.5,
+        Math.random() - 0.5
+      ).multiplyScalar(isAxon ? 0.3 : 0.8);
+      cDir.add(curl).normalize();
+      cur.add(cDir.clone().multiplyScalar(length / segments));
+      points.push(cur.clone());
+    }
+
+    const curve = new THREE.CatmullRomCurve3(points);
+    const tubeGeo = new THREE.TubeGeometry(curve, segments * 2, radius, 6, false);
+    const mesh = new THREE.Mesh(tubeGeo, isAxon ? axonMaterial : branchMaterial);
+    networkGroup.add(mesh);
+
+    if (level < maxLevels) {
+      const childCount = isAxon ? (Math.random() > 0.3 ? 1 : 2) : (Math.random() > 0.2 ? 2 : 3);
+      for(let j=0; j<childCount; j++) {
+        let splitDir = cDir.clone().add(new THREE.Vector3(
+          Math.random()-0.5, Math.random()-0.5, Math.random()-0.5
+        ).multiplyScalar(0.8)).normalize();
+
+        buildBranch(
+          cur,
+          splitDir,
+          length * (0.6 + Math.random()*0.3),
+          radius * 0.65,
+          level + 1,
+          maxLevels,
+          isAxon
+        );
+      }
+    } else {
+      addSynapse(cur);
+    }
+  }
+
+  const synapsePositions = [];
+  function addSynapse(pos) {
+    synapsePositions.push(pos.x, pos.y, pos.z);
+  }
+
+  for(let i=0; i<CONFIG.dendriteTrees; i++) {
+    let dir = new THREE.Vector3(Math.random()-0.5, Math.random()-0.5, Math.random()-0.5).normalize();
+    if (dir.z > 0.3) dir.z -= 0.8;
+    dir.normalize();
+    let start = dir.clone().multiplyScalar(CONFIG.somaRadius - 0.5);
+    buildBranch(start, dir, 12 + Math.random()*5, 0.4, 0, 2, false);
+  }
+
+  for(let i=0; i<CONFIG.axonTrees; i++) {
+    let dir = new THREE.Vector3((Math.random()-0.5)*0.5, (Math.random()-0.5)*0.5, 1.0).normalize();
+    let start = dir.clone().multiplyScalar(CONFIG.somaRadius - 0.5);
+    buildBranch(start, dir, 25 + Math.random()*10, 0.6, 0, 2, true);
+  }
+
+  const synGeo = new THREE.BufferGeometry();
+  synGeo.setAttribute('position', new THREE.Float32BufferAttribute(synapsePositions, 3));
+
+  const synSizes = new Float32Array(synapsePositions.length / 3);
+  for(let i=0; i<synSizes.length; i++) synSizes[i] = Math.random();
+  synGeo.setAttribute('aSize', new THREE.BufferAttribute(synSizes, 1));
+
+  const synMat = new THREE.ShaderMaterial({
+    uniforms: uniforms,
+    transparent: true,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false,
+    vertexShader: `
+        attribute float aSize;
+        uniform float uTime;
+        varying float vSize;
+        void main() {
+            vSize = aSize;
+            vec3 pos = position;
+            pos.y += sin(uTime * 2.0 + pos.x) * 0.5;
+            vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
+            gl_PointSize = (20.0 + aSize * 15.0) * (100.0 / -mvPosition.z);
+            gl_Position = projectionMatrix * mvPosition;
+        }
+    `,
+    fragmentShader: `
+        uniform int uPhase;
+        uniform float uProgress;
+        uniform vec3 uColCyan;
+        uniform vec3 uColGold;
+        uniform vec3 uColMagenta;
+        varying float vSize;
+
+        void main() {
+            vec2 coord = gl_PointCoord - vec2(0.5);
+            float dist = length(coord);
+            if (dist > 0.5) discard;
+            float alpha = (0.5 - dist) * 2.0;
+            vec3 color = uColCyan * 0.5;
+            if (uPhase == 1 || uPhase == 3) {
+                float spark = step(0.8, fract(vSize * 10.0 + uProgress * 5.0));
+                color = mix(color, uColGold, spark * 2.0);
+            } else if (uPhase == 4) {
+                color = mix(color, uColMagenta, (1.0 - uProgress));
+            }
+            gl_FragColor = vec4(color, alpha);
+        }
+    `
+  });
+  const synapses = new THREE.Points(synGeo, synMat);
+  networkGroup.add(synapses);
+
+  const dustGeo = new THREE.BufferGeometry();
+  const dustCount = 800;
+  const dustPos = new Float32Array(dustCount * 3);
+  for(let i=0; i<dustCount * 3; i++) {
+    dustPos[i] = (Math.random() - 0.5) * 150;
+  }
+  dustGeo.setAttribute('position', new THREE.BufferAttribute(dustPos, 3));
+  const dustMat = new THREE.PointsMaterial({
+    color: CONFIG.colors.cyan,
+    size: 0.2,
+    transparent: true,
+    opacity: 0.3,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false
+  });
+  const dust = new THREE.Points(dustGeo, dustMat);
+  scene.add(dust);
+
+  function triggerImpulse(e) {
+    if (e && e.target && e.target.closest && e.target.closest('.bci-hud')) {
+      if (e.target !== btnFire) return;
+    }
+    if (STATE.isAnimating) return;
+    STATE.isAnimating = true;
+    STATE.phase = 1;
+    STATE.progress = 0;
+    btnFire.classList.add('disabled');
+    btnFire.innerText = 'FIRING SEQUENCE...';
+  }
+
+  stage.addEventListener('pointerdown', triggerImpulse);
+
+  const clock = new THREE.Clock();
+
+  const elMembrane = document.getElementById('bciValMembrane');
+  const elDendrites = document.getElementById('bciValDendrites');
+  const elAxon = document.getElementById('bciValAxon');
+  const elState = document.getElementById('bciValState');
+  const elSync = document.getElementById('bciValSync');
+
+  const elCamX = document.getElementById('bciCamX');
+  const elCamY = document.getElementById('bciCamY');
+  const elCamZ = document.getElementById('bciCamZ');
+
+  function updateUI() {
+    elCamX.innerText = camera.position.x.toFixed(2);
+    elCamY.innerText = camera.position.y.toFixed(2);
+    elCamZ.innerText = camera.position.z.toFixed(2);
+
+    let targetMembrane = -70.0;
+    let targetAxon = 2;
+    let targetSync = 24 + Math.sin(uniforms.uTime.value * 2) * 5;
+
+    let stateText = "RESTING";
+    let denText = "CALM";
+
+    elMembrane.className = "bci-value";
+    elAxon.className = "bci-value";
+    elState.className = "bci-value";
+
+    switch(STATE.phase) {
+      case 1:
+        stateText = "INCOMING STIMULUS";
+        denText = "ACTIVE LOAD";
+        targetMembrane = -55.0;
+        targetSync = 45;
+        elState.classList.add('bci-value-active');
+        break;
+      case 2:
+        stateText = "SOMA MERGE";
+        denText = "CONVERGED";
+        targetMembrane = +40.0;
+        targetSync = 85;
+        elMembrane.classList.add('bci-value-active');
+        elState.classList.add('bci-value-active');
+        break;
+      case 3:
+        stateText = "AXON OUTFLOW";
+        targetMembrane = +20.0;
+        targetAxon = 98;
+        targetSync = 99;
+        elAxon.classList.add('bci-value-active');
+        elState.classList.add('bci-value-active');
+        break;
+      case 4:
+        stateText = "REFRACTORY PERIOD";
+        targetMembrane = -80.0;
+        targetAxon = 15;
+        targetSync = 15;
+        elMembrane.classList.add('bci-value-refract');
+        elState.classList.add('bci-value-refract');
+        break;
+    }
+
+    STATE.membraneV += (targetMembrane - STATE.membraneV) * 0.15;
+    STATE.axonLoad += (targetAxon - STATE.axonLoad) * 0.15;
+    STATE.sync += (targetSync - STATE.sync) * 0.15;
+
+    elMembrane.innerText = `${STATE.membraneV > 0 ? '+' : ''}${STATE.membraneV.toFixed(1)} mV`;
+    elAxon.innerText = `${Math.round(STATE.axonLoad).toString().padStart(2, '0')}%`;
+    elSync.innerText = `${Math.round(STATE.sync).toString().padStart(2, '0')}%`;
+    elState.innerText = stateText;
+    elDendrites.innerText = denText;
+  }
+
+  let elapsed = 0;
+  let isVisible = true;
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver((entries) => {
+      isVisible = entries[0].isIntersecting;
+    }, { threshold: 0.01 }).observe(stage);
+  }
+
+  function animate() {
+    requestAnimationFrame(animate);
+
+    const dt = Math.min(clock.getDelta(), 0.1);
+    if (!isVisible) return;
+
+    elapsed += dt;
+    uniforms.uTime.value = elapsed;
+
+    controls.update();
+
+    dust.rotation.y = elapsed * 0.02;
+    dust.rotation.x = Math.sin(elapsed * 0.01) * 0.05;
+
+    if (STATE.isAnimating) {
+      let speed = 1.0;
+      if (STATE.phase === 1) speed = 0.8;
+      if (STATE.phase === 2) speed = 2.5;
+      if (STATE.phase === 3) speed = 0.95;
+      if (STATE.phase === 4) speed = 0.5;
+
+      STATE.progress += dt * speed;
+
+      if (STATE.progress >= 1.0) {
+        STATE.progress = 0.0;
+        STATE.phase++;
+
+        if (STATE.phase === 2) {
+          const target = camera.position.clone().multiplyScalar(0.85);
+          camera.position.lerp(target, 0.5);
+          bloomPass.strength = 2.5;
+        }
+        if (STATE.phase === 3) {
+          const target = camera.position.clone().multiplyScalar(1.2);
+          camera.position.lerp(target, 0.5);
+        }
+
+        if (STATE.phase > 4) {
+          STATE.phase = 0;
+          STATE.isAnimating = false;
+          btnFire.classList.remove('disabled');
+          btnFire.innerText = 'MANUAL OVERRIDE';
+        }
+      }
+    } else {
+      bloomPass.strength += (1.8 - bloomPass.strength) * 0.05;
+    }
+
+    uniforms.uPhase.value = STATE.phase;
+    uniforms.uProgress.value = STATE.progress;
+
+    updateUI();
+
+    composer.render();
+  }
+
+  function hideLoader(delay) {
+    setTimeout(() => {
+      loaderEl.style.opacity = '0';
+      setTimeout(() => { loaderEl.style.display = 'none'; }, 1000);
+    }, delay);
+  }
+
+  if (reduceMotion) {
+    controls.autoRotate = false;
+    applyResponsiveScene(true);
+    updateUI();
+    composer.render();
+    hideLoader(300);
+  } else {
+    animate();
+    hideLoader(1200);
+  }
+
+  if ('ResizeObserver' in window) {
+    new ResizeObserver(() => applyResponsiveScene()).observe(stage);
+  } else {
+    window.addEventListener('resize', () => applyResponsiveScene());
+  }
+  </script>
+
+  <!-- ===== 明信片 ===== -->
+  <section class="section" id="postcard">
+    <h2 class="section-title reveal"><span>·</span><span data-i18n="postcard.title">明信片旅行</span></h2>
+    <div class="postcard reveal">
+      <div class="postcard-card">
+        <div class="postcard-stamp">✉</div>
+        <div class="postcard-body">
+          <div class="postcard-text">
+            <h3 data-i18n="postcard.collect">收集世界各地的明信片</h3>
+            <p data-i18n-html="postcard.p1">我喜欢通过 <b>Postcrossing</b> 和世界各地的朋友交换明信片，用一张张纸质卡片，让遥远的国家、街道和故事，真实地抵达我手里。</p>
+            <p data-i18n="postcard.p2">每寄出一张，就有一份期待；每收到一张，就打开一扇关于远方的小小窗口。这是我的另一种旅行。</p>
+          </div>
+          <a class="link-btn" href="https://www.postcrossing.com/" target="_blank" rel="noopener"><span data-i18n="postcard.link">去看看 Postcrossing</span> ↗</a>
+        </div>
+      </div>
+      <div class="postcard-gallery reveal">
+        <div class="postcard-map">
+          <div class="postcard-map-head">
+            <span class="postcard-map-title" data-i18n="postcard.mapTitle">我的明信片地图</span>
+            <span class="postcard-map-sub" data-i18n-html="postcard.mapSub">红色 · 我寄出的 &nbsp;|&nbsp; 蓝色 · 我收到的</span>
+          </div>
+          <div class="map-canvas">
+            <img src="images/postcard-map.jpg" alt="Postcrossing 明信片收发地图" loading="lazy">
+            <div class="map-zoom-hint" data-i18n="postcard.zoomHint">点击查看大图</div>
+            <figure class="pc pc-poland" data-full="images/postcard-poland.jpg" data-i18n-title="postcard.poland.full">
+              <img src="images/postcard-poland.jpg" alt="波兰 · 克拉科夫瓦维尔城堡" loading="lazy">
+              <figcaption data-i18n="postcard.poland.cap">波兰 · 克拉科夫</figcaption>
+            </figure>
+            <figure class="pc pc-movie" data-full="images/postcard-movie.jpg" data-i18n-title="postcard.movie.full">
+              <img src="images/postcard-movie.jpg" alt="电影《沙丘》明信片" loading="lazy">
+              <figcaption data-i18n="postcard.movie.cap">电影《沙丘》</figcaption>
+            </figure>
+            <figure class="pc pc-finland" data-full="images/postcard-finland.jpg" data-i18n-title="postcard.finland.full">
+              <img src="images/postcard-finland.jpg" alt="芬兰 · 赫尔辛基" loading="lazy">
+              <figcaption data-i18n="postcard.finland.cap">芬兰 · 赫尔辛基</figcaption>
+            </figure>
+            <figure class="pc pc-reply" data-full="images/postcard-reply.jpg" data-i18n-title="postcard.reply.full">
+              <img src="images/postcard-reply.jpg" alt="moxel 给我的明信片回复" loading="lazy">
+              <figcaption data-i18n="postcard.reply.cap">来自 moxel 的回复</figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 绘画 ===== -->
+  <section class="section" id="drawing">
+    <h2 class="section-title reveal"><span>·</span><span data-i18n="drawing.title">绘画</span></h2>
+    <div class="draw-shell">
+      <figure class="draw-stage reveal" id="drawStage" tabindex="0" role="button"
+              aria-label="板绘作品（模糊预览），点击查看提示" data-i18n-title="drawing.hint" title="点击看看">
+        <img src="images/drawing.jpg" alt="板绘作品（模糊预览）" loading="lazy" decoding="async">
+        <span class="draw-q" aria-hidden="true">?</span>
+        <figcaption class="draw-hint" data-i18n="drawing.hint">点击看看</figcaption>
+        <div class="draw-pop" id="drawPop" aria-hidden="true">
+          <strong>To be continued…</strong>
+          <span id="drawPopP"></span>
+        </div>
+      </figure>
+      <div class="card draw-card reveal">
+        <h3 data-i18n="drawing.h">颜色还在路上</h3>
+        <p data-i18n="drawing.p1">从 5 岁起，我就很喜欢绘画。现在正在学习板绘——不过速度特别慢，一张要磨很久。所以先放一张模糊的在这里，画完再揭晓。</p>
+        <div class="draw-foot">
+          <button class="hurry" id="hurryBtn" type="button" data-i18n="drawing.hurry">一键催更</button>
+          <span class="hurry-note" id="hurryNote"></span>
+        </div>
+        <p class="hurry-msg" id="hurryMsg" role="status" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 音乐 ===== -->
+  <section class="section" id="music">
+    <h2 class="section-title reveal"><span>·</span><span data-i18n="music.title">音乐</span></h2>
+    <div class="music-shell">
+      <div class="card music-intro reveal">
+        <h3 data-i18n="music.h">一整张，从头听到尾</h3>
+        <p data-i18n="music.p1">我特别喜欢听各种类型的歌，主要听 R&amp;B 和嘻哈说唱。个人习惯是一次性听完整张专辑，也会去了解创作者背后的故事——对我来说，一张专辑更像一段完整的话，得从头听到尾。</p>
+      </div>
+      <div class="music-player reveal">
+        <div class="music-cover" id="musicCover" role="button" tabindex="0"
+             title="轻点封面看下一张" data-i18n-title="music.hint" aria-label="轻点封面看下一张">
+          <img id="musicImg" src="images/albums/05.jpg" alt="专辑封面" loading="lazy" decoding="async">
+          <span class="music-idx" id="musicIdx">01 / 13</span>
+        </div>
+        <div class="music-cap">
+          <strong id="musicTitle">专辑 01</strong>
+          <span class="music-tz" id="musicTz"></span>
+          <span class="music-artist" id="musicArtist"></span>
+          <span class="music-note" id="musicNote"></span>
+        </div>
+        <div class="music-bar">
+          <button class="music-nav" id="musicPrev" type="button" title="上一张" data-i18n-title="music.prev" aria-label="上一张">&#8249;</button>
+          <div class="music-dots" id="musicDots"></div>
+          <button class="music-nav" id="musicNext" type="button" title="下一张" data-i18n-title="music.next" aria-label="下一张">&#8250;</button>
+        </div>
+        <p class="music-hint" data-i18n="music.hint">轻点封面看下一张</p>
+      </div>
+      <!-- 推荐留声：访客把喜欢的歌 / 专辑推荐给我（桌面排左列＝专辑左边；窄屏自动堆到最下） -->
+      <div class="card rec reveal">
+        <div class="rec-head">
+          <h3 data-i18n="music.recTitle">把好歌推荐给我</h3>
+          <span class="rec-count" id="recCount"></span>
+        </div>
+        <p class="rec-desc" data-i18n="music.recDesc">你有什么喜欢的歌曲或者专辑想推荐给我吗？我很乐意收听。写下名字就行，想说的话也可以留一句。</p>
+        <div class="rec-log chat-log" id="recLog" aria-live="polite"></div>
+        <p class="rec-empty" id="recEmpty">还没有人留言 —— 你可以是第一句。</p>
+        <div class="rec-form">
+          <div class="chat-input">
+            <input id="recItem" type="text" maxlength="120" autocomplete="off"
+                   data-i18n-placeholder="music.recPh" placeholder="歌名 / 专辑名（必填）">
+          </div>
+          <div class="chat-input">
+            <input id="recNote" type="text" maxlength="400" autocomplete="off"
+                   data-i18n-placeholder="music.recPh2" placeholder="想对我说的一句话（可不填）">
+            <button class="send" id="recSend" type="button" data-i18n="music.recSend">发送</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 数字分身 ===== -->
+  <section class="section" id="chat">
+    <h2 class="section-title reveal"><span>·</span><span data-i18n="chat.title">数字分身问答</span></h2>
+    <div class="chat-shell reveal">
+      <aside class="chat-side">
+        <div class="bot-head">
+          <div class="bot-ava">F</div>
+          <div>
+            <div class="bot-name" data-i18n="chat.name">Fledglynn 的数字分身</div>
+            <div class="bot-status" data-i18n="chat.status">在线 · 基于已知资料回答</div>
+          </div>
+        </div>
+        <div>
+          <div class="quick-title" data-i18n="chat.quickTitle">常见问题</div>
+          <button class="quick" data-q="chat.q1"><span data-i18n="chat.q1">你现在在做什么？</span></button>
+          <button class="quick" data-q="chat.q2"><span data-i18n="chat.q2">你有哪些作品？</span></button>
+          <button class="quick" data-q="chat.q3"><span data-i18n="chat.q3">怎么联系你？</span></button>
+        </div>
+        <p class="note" data-i18n="chat.note">这是一个负责转述我真实信息的数字分身，不会编造超出我背景的回答。</p>
+      </aside>
+
+      <div class="chat-main">
+        <div class="chat-log" id="log">
+          <div class="msg bot" id="welcomeMsg"></div>
+        </div>
+        <div class="chat-input">
+          <input id="q" type="text" data-i18n-placeholder="chat.placeholder" placeholder="输入你的问题…" autocomplete="off">
+          <button class="send" id="send" data-i18n="chat.send">发送</button>
+        </div>
+      </div>
+    </div>
+    <p class="fb-cta reveal"><a href="#feedback" data-i18n="chat.cta">看完还有话说？给我留条反馈 →</a></p>
+  </section>
+
+  <!-- ===== 反馈（Feedback）=====
+       数据流：访客浏览器 → Supabase(Postgres + RLS，匿名只能 INSERT) → 站主在控制台查看。
+       配置在 supabase-config.js（只放可公开的 Project URL + publishable key）；
+       本地开发未配置时自动回退到 server.py 的 /api/feedback。 -->
+  <section class="section" id="feedback">
+    <h2 class="section-title reveal"><span>·</span><span data-i18n="fb.title">反馈</span></h2>
+    <div class="card fb reveal">
+      <div class="fb-head">
+        <h3 data-i18n="fb.h">这个主页还有哪里可以更好？</h3>
+        <span class="fb-badge" data-i18n="fb.private">不会公开，只有我能看到</span>
+      </div>
+      <p class="fb-desc" data-i18n="fb.desc">欢迎指出一个看不懂、不好找或者用着别扭的地方——比如某个版块在哪、手机上字是不是太小、某个按钮点了没反应。写一句就够，我会认真看。</p>
+
+      <form class="fb-form" id="fbForm" novalidate>
+        <div class="fb-grid">
+          <div class="fb-row">
+            <label class="fb-label" for="fbName" data-i18n="fb.name">名字或昵称（可不填）</label>
+            <input id="fbName" name="name" type="text" maxlength="60" autocomplete="off"
+                   data-i18n-placeholder="fb.namePh" placeholder="怎么称呼你？">
+          </div>
+          <div class="fb-row">
+            <label class="fb-label" for="fbRelation" data-i18n="fb.relation">你和我的关系</label>
+            <select id="fbRelation" name="relation">
+              <option value="" data-i18n="fb.rel.none">不选也行</option>
+              <option value="同学" data-i18n="fb.rel.classmate">同学</option>
+              <option value="老师" data-i18n="fb.rel.teacher">老师</option>
+              <option value="家人" data-i18n="fb.rel.family">家人</option>
+              <option value="朋友" data-i18n="fb.rel.friend">朋友</option>
+              <option value="同事" data-i18n="fb.rel.colleague">同事</option>
+              <option value="其他" data-i18n="fb.rel.other">其他</option>
+              <option value="不便透露" data-i18n="fb.rel.private">不便透露</option>
+            </select>
+          </div>
+        </div>
+        <div class="fb-row">
+          <label class="fb-label" for="fbDevice" data-i18n="fb.device">你用什么设备看的</label>
+          <select id="fbDevice" name="device">
+            <option value="" data-i18n="fb.dev.none">不选也行</option>
+            <option value="电脑" data-i18n="fb.dev.desktop">电脑</option>
+            <option value="手机" data-i18n="fb.dev.phone">手机</option>
+            <option value="平板" data-i18n="fb.dev.tablet">平板</option>
+            <option value="其他" data-i18n="fb.dev.other">其他</option>
+          </select>
+        </div>
+        <div class="fb-row">
+          <label class="fb-label" for="fbMessage" data-i18n="fb.message">反馈内容（必填）</label>
+          <textarea id="fbMessage" name="message" rows="4" maxlength="2000" required
+                    data-i18n-placeholder="fb.messagePh" placeholder="哪里可以更好？一句话就够…"></textarea>
+        </div>
+        <div class="fb-foot">
+          <button class="send" id="fbSend" type="submit" data-sfx="confirm" data-i18n="fb.send">提交反馈</button>
+          <p class="fb-status" id="fbStatus" role="status" aria-live="polite"></p>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ===== 联系 ===== -->
+  <section class="section" id="contact">
+    <div class="contact reveal">
+      <div>
+        <h3 data-i18n="contact.title">认识一下 / 保持联系</h3>
+        <p data-i18n="contact.desc">无论你是朋友、同学、潜在合作伙伴，还是面试官，都欢迎来信交流。</p>
+      </div>
+      <a class="mail" href="mailto:lynn3540@163.com">lynn3540@163.com</a>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  © <span id="year"></span> <b>Fledglynn</b> · <span data-i18n="footer.line">用灯塔的光，照亮想做的事</span>
+</footer>
+
+<script>
+/* ===== 中英语言切换 · 翻译字典与引擎 ===== */
+const I18N = {
+  zh: {
+    "nav.about": "关于我",
+    "nav.study": "学习",
+    "nav.bci": "脑机接口",
+    "nav.postcard": "明信片",
+    "nav.drawing": "绘画",
+    "nav.music": "音乐",
+    "nav.chat": "数字分身",
+    "nav.contact": "联系",
+    "hero.tagline": "一个勇于探索未知领域并深耕的大一新生",
+    "hero.bio": "智能医学工程",
+    "hero.bci": "脑机接口方向",
+    "hero.hobbies": "绘画 · 音乐 · 街舞 · 看书",
+    "about.title": "关于我",
+    "about.intro": "你好，我是 <b>Fledglynn</b>，<span class=\"hl\">话不多、有点佛系</span>，但在感兴趣的事情上愿意沉下心去深耕。目前是 <b>天津大学·香港理工大学深圳未来技术学院</b> 智能医学工程专业的大一新生，正一边夯实专业基础、一边学习 <span class=\"hl\">vibe coding</span>，并借助 AI 工具做知识整理。",
+    "card1.k": "现在的我",
+    "card1.h": "在做的事",
+    "card1.p": "完善个人主页、整理作品集；学习专业基础知识与编程，同时拓展绘画、音乐、街舞、阅读等业余爱好。",
+    "card2.k": "我关心的方向",
+    "card2.h": "擅长领域",
+    "card2.p": "非侵入式脑机接口、AI 应用、知识整理。希望能把技术与兴趣结合，做出让人 0 压力的科技产品。",
+    "chip.bci": "脑机接口",
+    "chip.ai": "AI 应用",
+    "chip.kn": "知识整理",
+    "card3.k": "我的兴趣",
+    "card3.h": "爱好",
+    "card3.p": "喜欢安静，用线条和色块记录世界。",
+    "chip.paint": "绘画",
+    "chip.music": "音乐",
+    "chip.dance": "街舞",
+    "chip.read": "看书",
+    "study.title": "学习",
+    "study.n1.k": "2026.8",
+    "study.n1.h": "进入天津大学（深圳校区）学习",
+    "study.n1.p": "2026 年 8 月，我进入天津大学（深圳校区），成为智能医学工程专业的一名学生。这里是我大学这条路的起点——先把基础打扎实，再慢慢找到真正想深入的方向。",
+    "study.n1.c1": "智能医学工程",
+    "study.n1.c2": "脑机接口方向",
+    "study.n1.c3": "Vibe Coding",
+    "study.more.k": "持续更新中",
+    "study.more.p": "时间轴才刚起步，之后发生的事，我会一条条补上。",
+    "bci.title": "脑机接口",
+    "bci.h": "我最想深入的方向",
+    "bci.p1": "脑机接口是我目前最感兴趣的方向——它把<b>神经信号</b>与机器直接连在一起，让一个念头不必经过手指和键盘，就能变成屏幕上的动作、文字或声音。",
+    "bci.p2": "作为智能医学工程专业的学生，我尤其好奇它在医疗里的可能：让失去行动能力的人重新控制肢体，让无法开口的人重新“说话”。右边这个演示，是我对这条路径的一点想象。",
+    "bci.chip1": "神经信号解码",
+    "bci.chip2": "脑电 EEG",
+    "bci.chip3": "人机交互",
+    "bci.chip4": "智能医学工程",
+    "bci.hint": "点击触发神经脉冲",
+    "postcard.title": "明信片旅行",
+    "postcard.collect": "收集世界各地的明信片",
+    "postcard.p1": "我喜欢通过 <b>Postcrossing</b> 和世界各地的朋友交换明信片，用一张张纸质卡片，让遥远的国家、街道和故事，真实地抵达我手里。",
+    "postcard.p2": "每寄出一张，就有一份期待；每收到一张，就打开一扇关于远方的小小窗口。这是我的另一种旅行。",
+    "postcard.link": "去看看 Postcrossing",
+    "postcard.mapTitle": "我的明信片地图",
+    "postcard.mapSub": "红色 · 我寄出的 &nbsp;|&nbsp; 蓝色 · 我收到的",
+    "postcard.zoomHint": "点击查看大图",
+    "postcard.poland.full": "波兰 · 克拉科夫瓦维尔城堡",
+    "postcard.poland.cap": "波兰 · 克拉科夫",
+    "postcard.movie.full": "电影《沙丘》明信片",
+    "postcard.movie.cap": "电影《沙丘》",
+    "postcard.finland.full": "芬兰 · 赫尔辛基",
+    "postcard.finland.cap": "芬兰 · 赫尔辛基",
+    "postcard.reply.full": "来自 moxel 的回复",
+    "postcard.reply.cap": "来自 moxel 的回复",
+    "drawing.title": "绘画",
+    "drawing.h": "颜色还在路上",
+    "drawing.p1": "从 5 岁起，我就很喜欢绘画。现在正在学习板绘——不过速度特别慢，一张要磨很久。所以先放一张模糊的在这里，画完再揭晓。",
+    "drawing.hint": "点击看看",
+    "drawing.pop1": "笔还插在笔座里，别急。",
+    "drawing.pop2": "进度条卡在 1%，但心态很稳。",
+    "drawing.pop3": "已经在画了（大概）。",
+    "drawing.hurry": "一键催更",
+    "drawing.hurryDone": "今天已催过",
+    "drawing.hurryDay": "今天已经催过啦，明天再来",
+    "drawing.hurry1": "催更成功！已经转达到本人桌上。",
+    "drawing.hurry2": "收到，TA 说：在画了在画了。",
+    "drawing.hurry3": "催更 +1，进度条动了 0.5%。",
+    "drawing.count": "已被催 {n} 次",
+    "drawing.count0": "还没人催过",
+    "drawing.countTip": "谢谢你来催，我会努力画完的",
+    "drawing.count0Tip": "我还在慢慢画，不急",
+    "music.title": "音乐",
+    "music.h": "一整张，从头听到尾",
+    "music.p1": "我特别喜欢听各种类型的歌，主要听 R&B 和嘻哈说唱。个人习惯是一次性听完整张专辑，也会去了解创作者背后的故事——对我来说，一张专辑更像一段完整的话，得从头听到尾。",
+    "music.hint": "轻点封面看下一张",
+    "music.prev": "上一张",
+    "music.next": "下一张",
+    "music.dot": "第 {n} 张",
+    "music.recTitle": "把好歌推荐给我",
+    "music.recDesc": "你有什么喜欢的歌曲或者专辑想推荐给我吗？我很乐意收听。写下名字就行，想说的话也可以留一句。",
+    "music.recEmpty": "还没有人留言 —— 你可以是第一句。",
+    "music.recEmptySome": "已经收到 {n} 条推荐了 —— 你写的这条发出去后，会显示在上面的框里。",
+    "music.recPh": "歌名 / 专辑名（必填）",
+    "music.recPh2": "想对我说的一句话（可不填）",
+    "music.recSend": "发送",
+    "music.recThanks": "收到啦，谢谢你，我会去听的。",
+    "music.recErr": "没能送出去（本地服务可能没在运行）。也可以直接邮件我：lynn3540@163.com",
+    "music.recCount": "已收到 {n} 条推荐",
+    "chat.title": "数字分身问答",
+    "chat.name": "Fledglynn 的数字分身",
+    "chat.status": "在线 · 基于已知资料回答",
+    "chat.quickTitle": "常见问题",
+    "chat.q1": "你现在在做什么？",
+    "chat.q2": "你有哪些作品？",
+    "chat.q3": "怎么联系你？",
+    "chat.note": "这是一个负责转述我真实信息的数字分身，不会编造超出我背景的回答。",
+    "chat.welcome": "你好，我是 Fledglynn 的数字分身 👋<br>你可以问我关于我的身份、在做什么、作品或兴趣的问题。想从「你现在在做什么？」开始吗？",
+    "chat.placeholder": "输入你的问题…",
+    "chat.send": "发送",
+    "chat.typing": "正在回忆…",
+    "chat.empty": "想聊点什么？可以直接点左边的常见问题，或者随便问我。",
+    "chat.noKey": "（数字分身暂时离线：服务端还没配置 OpenRouter API Key。请在 outputs/personal-homepage/.env 里填入 OPENROUTER_API_KEY 后重启服务。）",
+    "chat.err": "（我这边的 AI 服务出了点问题，稍后再试试。）",
+    "chat.timeout": "（AI 服务暂时没回应，可能是免费模型有点慢。稍等几秒再试一次。）",
+    "chat.network": "（连接数字分身服务失败：请确认已运行 python server.py。稍后再试。）",
+    "nav.feedback": "反馈",
+    "fb.title": "反馈",
+    "fb.h": "这个主页还有哪里可以更好？",
+    "fb.private": "不会公开，只有我能看到",
+    "fb.desc": "欢迎指出一个看不懂、不好找或者用着别扭的地方——比如某个版块在哪、手机上字是不是太小、某个按钮点了没反应。写一句就够，我会认真看。",
+    "fb.name": "名字或昵称（可不填）",
+    "fb.namePh": "怎么称呼你？",
+    "fb.relation": "你和我的关系",
+    "fb.rel.none": "不选也行",
+    "fb.rel.classmate": "同学",
+    "fb.rel.teacher": "老师",
+    "fb.rel.family": "家人",
+    "fb.rel.friend": "朋友",
+    "fb.rel.colleague": "同事",
+    "fb.rel.other": "其他",
+    "fb.rel.private": "不便透露",
+    "fb.device": "你用什么设备看的",
+    "fb.dev.none": "不选也行",
+    "fb.dev.desktop": "电脑",
+    "fb.dev.phone": "手机",
+    "fb.dev.tablet": "平板",
+    "fb.dev.other": "其他",
+    "fb.message": "反馈内容（必填）",
+    "fb.messagePh": "哪里可以更好？一句话就够…",
+    "fb.send": "提交反馈",
+    "fb.sending": "正在提交…",
+    "fb.thanks": "收到啦，谢谢你——你的反馈已经进我的后台了。",
+    "fb.needMsg": "先写一句反馈内容再提交吧。",
+    "fb.err": "没能提交成功，可能是网络问题——你写的内容还在，可以直接再点一次。",
+    "fb.errLocal": "本地服务没在运行，没能存下来。也可以直接邮件我：lynn3540@163.com",
+    "fb.noConfig": "反馈后台还没接上（正在配置中）。也可以直接邮件我：lynn3540@163.com",
+    "fb.fab": "反馈",
+    "fb.fabTitle": "给我留条反馈",
+    "chat.cta": "看完还有话说？给我留条反馈 →",
+    "chat.offlineStatic": "（数字分身只在本地演示环境开放，公开版本暂不提供在线问答。欢迎用下面的「反馈」给我留言。）",
+    "music.recErrStatic": "（公开版本暂不接收在线推荐——欢迎到下面的「反馈」版块给我留言。）",
+    "contact.title": "认识一下 / 保持联系",
+    "contact.desc": "无论你是朋友、同学、潜在合作伙伴，还是面试官，都欢迎来信交流。",
+    "footer.line": "用灯塔的光，照亮想做的事",
+    "bgm.title": "轻音乐 · Cold (Salt) Water",
+    "bgm.play": "播放背景音乐",
+    "bgm.pause": "暂停背景音乐",
+    "sea.title": "海浪声 · 海阔天空的阿尔塔",
+    "sea.play": "播放海浪声",
+    "sea.pause": "暂停海浪声",
+    "sound.hint": "点击开启声音",
+    "lightbox.close": "关闭",
+    "lightbox.prev": "上一张",
+    "lightbox.next": "下一张"
+  },
+  en: {
+    "nav.about": "About",
+    "nav.study": "Learning",
+    "nav.bci": "BCI",
+    "nav.postcard": "Postcards",
+    "nav.drawing": "Art",
+    "nav.music": "Music",
+    "nav.chat": "Twin",
+    "nav.contact": "Contact",
+    "hero.tagline": "A freshman who boldly explores the unknown and digs deep",
+    "hero.bio": "Intelligent Medical Engineering",
+    "hero.bci": "Brain-Computer Interface",
+    "hero.hobbies": "Painting · Music · Dancing · Reading",
+    "about.title": "About Me",
+    "about.intro": "Hi, I'm <b>Fledglynn</b> — <span class=\"hl\">quiet and a bit of a free spirit</span>, but I'm happy to settle in and go deep on things I care about. I'm a freshman in <b>Intelligent Medical Engineering</b> at the Tianjin University · Hong Kong Polytechnic University Shenzhen Future Technology Institute, building my foundation while learning <span class=\"hl\">vibe coding</span> and organizing knowledge with AI tools.",
+    "card1.k": "Me Now",
+    "card1.h": "What I'm Doing",
+    "card1.p": "Polishing my personal site and curating a portfolio; studying core knowledge and programming while exploring hobbies like painting, music, dancing, and reading.",
+    "card2.k": "My Focus",
+    "card2.h": "Fields I Explore",
+    "card2.p": "Non-invasive brain-computer interfaces, AI applications, and knowledge organization. I want to blend technology with my interests to build low-stress tech products.",
+    "chip.bci": "BCI",
+    "chip.ai": "AI Apps",
+    "chip.kn": "Knowledge",
+    "card3.k": "My Interests",
+    "card3.h": "Hobbies",
+    "card3.p": "I like quiet moments, capturing the world with lines and color blocks.",
+    "chip.paint": "Painting",
+    "chip.music": "Music",
+    "chip.dance": "Dancing",
+    "chip.read": "Reading",
+    "study.title": "Learning",
+    "study.n1.k": "Aug 2026",
+    "study.n1.h": "Started at Tianjin University (Shenzhen Campus)",
+    "study.n1.p": "In August 2026 I entered Tianjin University (Shenzhen Campus) as a student of Intelligent Medical Engineering. This is where the road begins — build the foundation solid first, then slowly find the direction I really want to dig into.",
+    "study.n1.c1": "Intelligent Medical Engineering",
+    "study.n1.c2": "Brain-Computer Interface",
+    "study.n1.c3": "Vibe Coding",
+    "study.more.k": "To be continued",
+    "study.more.p": "The timeline has only just started — I'll add each new step as it happens.",
+    "bci.title": "Brain-Computer Interface",
+    "bci.h": "The field I want to dig into",
+    "bci.p1": "Brain-computer interfaces are the direction I'm most drawn to — they wire <b>neural signals</b> straight into machines, so an intention can become an action, a word or a sound on screen without going through fingers and a keyboard.",
+    "bci.p2": "As a student of Intelligent Medical Engineering, I'm especially curious about what it can do in medicine: helping people who have lost motor control move again, and giving a voice back to those who can no longer speak. The demo on the right is a small piece of that imagination.",
+    "bci.chip1": "Neural Decoding",
+    "bci.chip2": "EEG",
+    "bci.chip3": "Human-Computer Interaction",
+    "bci.chip4": "Intelligent Medical Engineering",
+    "bci.hint": "CLICK TO TRIGGER NEURAL IMPULSE",
+    "postcard.title": "Postcard Journey",
+    "postcard.collect": "Collecting postcards from around the world",
+    "postcard.p1": "I love swapping postcards with friends worldwide through <b>Postcrossing</b>, letting distant countries, streets and stories truly reach me through paper cards.",
+    "postcard.p2": "Every one I send carries a little hope; every one I receive opens a tiny window to somewhere far away. It's another way I travel.",
+    "postcard.link": "Explore Postcrossing",
+    "postcard.mapTitle": "My Postcard Map",
+    "postcard.mapSub": "Red · Sent by me &nbsp;|&nbsp; Blue · Received",
+    "postcard.zoomHint": "Click to view full size",
+    "postcard.poland.full": "Poland · Wawel Castle, Krakow",
+    "postcard.poland.cap": "Poland · Krakow",
+    "postcard.movie.full": "Dune Movie Postcard",
+    "postcard.movie.cap": "Dune (Movie)",
+    "postcard.finland.full": "Finland · Helsinki",
+    "postcard.finland.cap": "Finland · Helsinki",
+    "postcard.reply.full": "A Reply from moxel",
+    "postcard.reply.cap": "A Reply from moxel",
+    "drawing.title": "Art",
+    "drawing.h": "The colors are still on their way",
+    "drawing.p1": "I've loved drawing since I was 5. These days I'm learning digital painting on a tablet — but I'm painfully slow, one piece takes forever. So here's a blurred one for now; the reveal comes when it's done.",
+    "drawing.hint": "Tap to peek",
+    "drawing.pop1": "The pen isn't even out of the case yet.",
+    "drawing.pop2": "Progress bar stuck at 1%, but the mindset is solid.",
+    "drawing.pop3": "Already drawing (probably).",
+    "drawing.hurry": "Nudge for updates",
+    "drawing.hurryDone": "Nudged today",
+    "drawing.hurryDay": "You already nudged today — come back tomorrow",
+    "drawing.hurry1": "Nudge delivered straight to the desk.",
+    "drawing.hurry2": "Got it. Reply: still drawing, still drawing.",
+    "drawing.hurry3": "Nudge +1. Progress bar moved 0.5%.",
+    "drawing.count": "Nudged {n} times so far",
+    "drawing.count0": "No nudges yet",
+    "drawing.countTip": "Thanks for nudging — I'll do my best to finish it",
+    "drawing.count0Tip": "Still painting, slowly — no rush",
+    "music.title": "Music",
+    "music.h": "Whole albums, start to finish",
+    "music.p1": "I listen to all kinds of music, mostly R&B and hip-hop. My habit is to take a whole album in one sitting, and to read up on the stories behind the people who made it — to me an album is one complete statement, best heard from start to finish.",
+    "music.hint": "Tap the cover for the next one",
+    "music.prev": "Previous",
+    "music.next": "Next",
+    "music.dot": "Album {n}",
+    "music.recTitle": "Send me a song",
+    "music.recDesc": "Any song or album you love and want to recommend to me? I'd be glad to listen. The name is enough — one line about why is welcome too.",
+    "music.recEmpty": "No messages yet — yours could be the first.",
+    "music.recEmptySome": "{n} recommendation(s) have come in — once you send yours, it will show up in the box above.",
+    "music.recPh": "Song / album name (required)",
+    "music.recPh2": "Anything you want to tell me (optional)",
+    "music.recSend": "Send",
+    "music.recThanks": "Got it — thank you, I'll give it a listen.",
+    "music.recErr": "That didn't go through (the local server may be off). You can also just email me: lynn3540@163.com",
+    "music.recCount": "{n} recommendation(s) so far",
+    "chat.title": "AI Twin Q&A",
+    "chat.name": "Fledglynn's AI Twin",
+    "chat.status": "Online · answers from known info",
+    "chat.quickTitle": "Common Questions",
+    "chat.q1": "What are you doing now?",
+    "chat.q2": "What works do you have?",
+    "chat.q3": "How can I reach you?",
+    "chat.note": "This twin relays my real information and won't invent answers beyond my background.",
+    "chat.welcome": "Hi, I'm Fledglynn's AI twin 👋<br>Ask me about who I am, what I'm doing, my work, or my interests. Want to start with \"What are you doing now?\"?",
+    "chat.placeholder": "Type your question…",
+    "chat.send": "Send",
+    "chat.typing": "Recalling…",
+    "chat.empty": "What would you like to talk about? Try a common question, or just ask me anything.",
+    "chat.noKey": "(The AI twin is offline: the server hasn't been configured with an OpenRouter API Key yet. Add OPENROUTER_API_KEY to outputs/personal-homepage/.env and restart the service.)",
+    "chat.err": "(My AI service hit a problem. Try again in a moment.)",
+    "chat.timeout": "(The AI service is taking a while — the free model can be slow. Try again in a few seconds.)",
+    "chat.network": "(Failed to reach the AI service: make sure python server.py is running. Try again later.)",
+    "nav.feedback": "Feedback",
+    "fb.title": "Feedback",
+    "fb.h": "Where could this site be better?",
+    "fb.private": "Not public — only I can see it",
+    "fb.desc": "Point out anything confusing, hard to find, or awkward to use — a section you couldn't locate, text that's too small on your phone, a button that did nothing. One line is plenty, and I'll read every word.",
+    "fb.name": "Name or nickname (optional)",
+    "fb.namePh": "What should I call you?",
+    "fb.relation": "How you know me",
+    "fb.rel.none": "Optional",
+    "fb.rel.classmate": "Classmate",
+    "fb.rel.teacher": "Teacher",
+    "fb.rel.family": "Family",
+    "fb.rel.friend": "Friend",
+    "fb.rel.colleague": "Colleague",
+    "fb.rel.other": "Other",
+    "fb.rel.private": "Rather not say",
+    "fb.device": "Which device you're on",
+    "fb.dev.none": "Optional",
+    "fb.dev.desktop": "Computer",
+    "fb.dev.phone": "Phone",
+    "fb.dev.tablet": "Tablet",
+    "fb.dev.other": "Other",
+    "fb.message": "Your feedback (required)",
+    "fb.messagePh": "What could be better? One line is enough…",
+    "fb.send": "Send feedback",
+    "fb.sending": "Sending…",
+    "fb.thanks": "Got it — thank you. Your feedback is in my dashboard now.",
+    "fb.needMsg": "Please write a line of feedback first.",
+    "fb.err": "That didn't go through — possibly a network issue. Your text is still here, so just hit send again.",
+    "fb.errLocal": "The local server isn't running, so nothing was saved. You can also email me: lynn3540@163.com",
+    "fb.noConfig": "The feedback backend isn't connected yet (still being set up). You can also email me: lynn3540@163.com",
+    "fb.fab": "Feedback",
+    "fb.fabTitle": "Leave me a line of feedback",
+    "chat.cta": "Anything else on your mind? Leave me a line of feedback →",
+    "chat.offlineStatic": "(The AI twin is only available in the local demo build — the public version doesn't offer live Q&A. Feel free to leave a line via the Feedback section below.)",
+    "music.recErrStatic": "(The public version doesn't take online recommendations — feel free to leave a line via the Feedback section below.)",
+    "contact.title": "Say Hi / Stay in Touch",
+    "contact.desc": "Whether you're a friend, classmate, potential collaborator, or interviewer — you're welcome to reach out.",
+    "footer.line": "With the lighthouse's light, illuminating what you set out to do",
+    "bgm.title": "Soft Music · Cold (Salt) Water",
+    "bgm.play": "Play background music",
+    "bgm.pause": "Pause background music",
+    "sea.title": "Sea Waves · Alta",
+    "sea.play": "Play sea waves",
+    "sea.pause": "Pause sea waves",
+    "sound.hint": "Tap to enable sound",
+    "lightbox.close": "Close",
+    "lightbox.prev": "Previous",
+    "lightbox.next": "Next"
+  }
+};
+
+let LANG = localStorage.getItem('site-lang') || 'zh';
+function t(key){ return (I18N[LANG] && I18N[LANG][key]) || (I18N.zh[key]) || key; }
+
+/* ===== 运行环境：本地服务器（有 Python 接口）还是纯静态托管（如 GitHub Pages）=====
+   纯静态时 /api/chat 与 /api/recommend 不存在，相关功能要优雅降级成一句友好说明，
+   不能让访客看到「请确认已运行 python server.py」这种开发者提示。 */
+const SITE_ENV = (function(){
+  const h = (location.hostname || '').toLowerCase();
+  const local = h === 'localhost' || h === '[::1]' || /\.local$/.test(h)
+    || /^127\./.test(h) || /^10\./.test(h) || /^192\.168\./.test(h)
+    || /^172\.(1[6-9]|2\d|3[01])\./.test(h);
+  return { local: local };
+})();
+
+
+function applyLang(lang){
+  LANG = lang;
+  localStorage.setItem('site-lang', lang);
+  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+
+  // 遍历所有 data-i18n（纯文本）与 data-i18n-html（富文本）元素
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    el.textContent = t(el.getAttribute('data-i18n'));
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    el.innerHTML = t(el.getAttribute('data-i18n-html'));
+  });
+  // placeholder 用翻译
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    el.setAttribute('placeholder', t(el.getAttribute('data-i18n-placeholder')));
+  });
+
+  // 更新欢迎消息
+  const w = document.getElementById('welcomeMsg');
+  if(w){ w.innerHTML = t('chat.welcome'); }
+
+  // 更新切换按钮高亮状态
+  document.querySelectorAll('#langSwitch .lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+  });
+
+  // 通知已打开的灯箱刷新标题（如明信片放大预览）
+  document.dispatchEvent(new CustomEvent('langchange', { detail: lang }));
+}
+
+// 语言切换按钮交互
+(function(){
+  const sw = document.getElementById('langSwitch');
+  if(!sw) return;
+  sw.addEventListener('click', (e) => {
+    const btn = e.target.closest('.lang-btn');
+    if(!btn) return;
+    applyLang(btn.getAttribute('data-lang'));
+  });
+})();
+
+// 应用初始语言
+applyLang(LANG);
+
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* ===== 入场动画 ===== */
+window.addEventListener('load', ()=>{ document.body.classList.add('loaded'); });
+
+// 顶部导航滚动态：下移一点加投影
+(function(){
+  const bar = document.querySelector('.topbar');
+  if(!bar) return;
+  window.addEventListener('scroll', ()=>{
+    bar.classList.toggle('scrolled', window.scrollY > 8);
+  }, {passive:true});
+})();
+
+// 滚动揭示：元素进入视口时淡入上浮
+(function(){
+  const els = document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)){
+    els.forEach(el=>el.classList.add('in'));
+    return;
+  }
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, {threshold:.15, rootMargin:'0px 0px -40px 0px'});
+  els.forEach(el=>io.observe(el));
+})();
+
+/* ===== 学习 · 时间轴：中轴随滚动点亮 =====
+   只写 CSS 变量 --tl（亮轨高度）和 .tl-item.lit，视觉全交给 CSS。
+   阅读线取视口 72% 处：线走过哪一段，哪一段就亮。rAF 节流，滚动时只做两次取值。 */
+(function(){
+  const tl = document.querySelector('.timeline');
+  if(!tl) return;
+
+  const items = Array.prototype.slice.call(tl.querySelectorAll('.tl-item'));
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let ticking = false;
+
+  function apply(){
+    ticking = false;
+    const line = (window.innerHeight || 1) * 0.72;
+    const r = tl.getBoundingClientRect();
+    const p = (line - r.top) / (r.height || 1);
+    tl.style.setProperty('--tl', (Math.max(0, Math.min(1, p)) * 100).toFixed(1) + '%');
+    for(let i=0; i<items.length; i++){
+      items[i].classList.toggle('lit', items[i].getBoundingClientRect().top + 18 < line);
+    }
+  }
+  function onScroll(){ if(!ticking){ ticking = true; requestAnimationFrame(apply); } }
+
+  if(reduce){            // 系统要求减少动态效果 → 不做滚动跟随，直接全亮
+    tl.style.setProperty('--tl', '100%');
+    items.forEach(function(it){ it.classList.add('lit'); });
+    return;
+  }
+  apply();
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', onScroll, {passive:true});
+})();
+
+/* ===== Hero 分层视差 =====
+   随滚动让 hero 各层以不同速度错开位移，制造纵深：远景慢、近景快。
+   只写 CSS 变量 --py，由各层自己的 transform 组合消费，绝不覆盖已有位移。
+   性能：rAF 节流 + 仅在 hero 可见区间计算，滚出即停。 */
+(function(){
+  const hero = document.querySelector('.hero');
+  if(!hero) return;
+
+  const mq = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
+  if(mq && mq.matches) return;              // 系统要求减少动态效果 → 整个效果不启用
+
+  const LAYERS = [
+    { sel:'.lighthouse', k: 0.15, fade:false },   // 远景：最慢，几乎黏在原地
+    { sel:'.sea-left',   k: 0.08, fade:false },   // 中景
+    { sel:'.hero-inner', k:-0.03, fade:true  }    // 近景：略快 + 淡出
+  ];
+  const layers = LAYERS.map(function(l){
+    return { el: hero.querySelector(l.sel), k: l.k, fade: l.fade };
+  }).filter(function(l){ return l.el; });
+  if(!layers.length) return;
+
+  let heroH = 1, ticking = false, lastY = -1;
+
+  function measure(){ heroH = hero.offsetHeight || 1; }
+
+  function apply(){
+    ticking = false;
+    const y = window.scrollY || window.pageYOffset || 0;
+    if(y === lastY) return;
+    lastY = y;
+    if(y > heroH) return;                   // 已完全滚出，保持最后状态即可
+
+    const scale = window.innerWidth < 768 ? 0.6 : 1;   // 小屏减半，避免视差过头
+    const p = y / heroH;
+
+    for(let i=0; i<layers.length; i++){
+      const l = layers[i];
+      l.el.style.setProperty('--py', (y * l.k * scale).toFixed(2) + 'px');
+      if(l.fade){
+        // 滚过 hero 的 35% 起淡出，85% 处完全隐没
+        const op = Math.max(0, 1 - Math.max(0, (p - 0.35) / 0.5));
+        l.el.style.opacity = op.toFixed(3);
+      }
+    }
+  }
+
+  function onScroll(){ if(!ticking){ ticking = true; requestAnimationFrame(apply); } }
+
+  measure();
+  apply();
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', function(){ measure(); lastY = -1; onScroll(); }, {passive:true});
+})();
+
+/* ===== 左侧实心海：填满左侧区域，右缘为平缓正弦波浪线，错落进退 ===== */
+(function(){
+  const wrap = document.getElementById('seaLeft');
+  if(!wrap) return;
+
+  const SVG_NS = 'http://www.w3.org/2000/svg';
+  // 宽高比：宽视作水平轴，高为纵向；maxX 为最右侧基准线(占视图比例)
+  const W = 1000, H = 800, MAX = 0.58;
+
+  // 每层：右缘基准 x(比例)、波浪起伏高度(px)、波长(px)、相位、颜色
+  // 振幅调小、波长拉长 → 更接近平缓的正弦曲线；整体基准右缘左移
+  // 颜色：原来是"白天海水的蓝"（最亮一层到 rgb(84,148,196)），配现在的星空+极光
+  // 明显融不进去。整体压暗、去饱和成"午夜海"，最亮一层只到 rgb(44,92,112) 并略带
+  // 青绿 —— 这样它像是极光下的夜海，而不是白天的海。深色在前仍保留原有层次。
+  const layers = [
+    { ex: MAX,      amp: 26, wave: 520, phase: 0.0, c: 'rgba(16,38,58,.76)' },
+    { ex: MAX-0.08, amp: 30, wave: 560, phase: 1.5, c: 'rgba(21,49,71,.64)' },
+    { ex: MAX-0.16, amp: 34, wave: 600, phase: 3.0, c: 'rgba(29,63,86,.52)' },
+    { ex: MAX-0.24, amp: 38, wave: 640, phase: 4.5, c: 'rgba(44,92,112,.42)' },
+  ];
+
+  // 右缘波浪线：沿 y 方向波动位移 x，形成竖直起伏的浪缘
+  // 生成一层实心海：右缘波浪 → 沿底回到左缘 → 沿顶回到右缘起点，闭合
+  function solidPath(baseX, amp, wave, phase){
+    const step = 8;
+    let d = '';
+    // 自上而下画右缘波浪线
+    for(let y=0; y<=H; y+=step){
+      const px = baseX + amp * Math.sin((y / wave) * Math.PI * 2 + phase);
+      d += (y===0 ? 'M' : 'L') + px.toFixed(1) + ',' + y.toFixed(1);
+    }
+    // 沿底部到左缘(x=0)，沿顶部回到起点
+    d += ' L0,' + H + ' L0,0 Z';
+    return d;
+  }
+
+  const svg = document.createElementNS(SVG_NS, 'svg');
+  svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+  svg.setAttribute('preserveAspectRatio', 'none');
+  // 由后(浅/近左)到前(深/远右)渲染，深色在前形成层次
+  layers.slice().reverse().forEach(li=>{
+    const p = document.createElementNS(SVG_NS, 'path');
+    p.setAttribute('d', solidPath(li.ex*W, li.amp, li.wave, li.phase));
+    p.setAttribute('fill', li.c);
+    p.setAttribute('class', 'swell');
+    svg.appendChild(p);
+  });
+
+  wrap.appendChild(svg);
+})();
+
+/* ===== 数字分身 · 真实 AI 模型 ===== */
+// 前端只调用本地代理 /api/chat，API Key 由后端 server.py 从 .env 读取，绝不出现在前端。
+// 若后端未配置 Key，代理会返回 {error:"no_key"}，前端会优雅降级提示。
+
+// 请求超时控制：用 AbortController 在 25s 后放弃，避免一直转圈
+const CHAT_TIMEOUT_MS = 25000;
+
+async function answer(q, history){
+  q = q.trim();
+  if(!q) return t("chat.empty");
+  const controller = new AbortController();
+  const timer = setTimeout(()=>controller.abort(), CHAT_TIMEOUT_MS);
+  try{
+    const res = await fetch('/api/chat', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ message: q, history: history }),
+      signal: controller.signal
+    });
+    clearTimeout(timer);
+    const data = await res.json();
+    if(res.ok && data.reply){
+      return data.reply;
+    }
+    if(data.error === 'no_key'){
+      return SITE_ENV.local ? t("chat.noKey") : t("chat.offlineStatic");
+    }
+    return SITE_ENV.local ? t("chat.err") : t("chat.offlineStatic");
+  }catch(e){
+    clearTimeout(timer);
+    // 主动中断（超时）与网络失败都归为连接提示
+    if(e && e.name === 'AbortError'){
+      return SITE_ENV.local ? t("chat.timeout") : t("chat.offlineStatic");
+    }
+    return SITE_ENV.local ? t("chat.network") : t("chat.offlineStatic");
+  }
+}
+
+/* ===== 海鸥：点击发送/预设问题 → 从按钮起飞，扇着翅膀翱翔，最后栖息在灯塔顶上（最多一只） ===== */
+const gull = document.getElementById('seagull');
+const spire = document.querySelector('.lighthouse .roof');  // 灯塔圆顶（着陆点）
+const lighthouseEl = document.querySelector('.lighthouse'); // 灯塔容器（迎接交互）
+const GULLW = 47;   // 海鸥半宽（94px 宽的一半），用于中心对齐
+const GULLH = 22;   // 海鸥半高（44px 高的一半）
+let gullActive = false;   // 是否已有海鸥在场（飞行中或已停驻）
+
+// 返回元素的页面坐标（视口坐标 + 滚动偏移），供 absolute 定位用
+function pageCenterOf(el){
+  const r = el.getBoundingClientRect();
+  return { x: r.left + window.scrollX + r.width/2, y: r.top + window.scrollY + r.height/2 };
+}
+
+function launchGull(fromEl){
+  if(!spire) return;
+  // 最多一只：清掉上一只，再从新按钮起飞
+  if(gullActive){
+    gull.classList.remove('land');
+    gull.style.transition = 'none';
+    gull.style.opacity = '0';
+  }
+
+  const from = pageCenterOf(fromEl);            // 按钮中心（页面坐标）
+  const sr   = spire.getBoundingClientRect();   // 圆顶顶点的页面坐标
+  const to   = { x: sr.left + window.scrollX + sr.width/2,
+                 y: sr.top + window.scrollY + 6 };   // 停在圆顶尖峰
+
+  // 海鸥先回到按钮处、缩小隐藏（滑翔开始前先收拢一点）
+  gull.style.transition = 'none';
+  gull.style.opacity = '0';
+  gull.style.transform = 'translate(' + (from.x - GULLW) + 'px,' + (from.y - GULLH) + 'px) scale(.5)';
+  gull.classList.remove('land');               // 保持扇翅
+  void gull.offsetWidth;                       // 强制重排，让下面的过渡生效
+
+  // 舒缓翱翔：时长加大、缓动更悠长（慢起慢滑慢收），飞行全程翅膀按扑动-滑翔节奏
+  gull.style.transition = 'transform 7.5s cubic-bezier(.55,.04,.42,.98), opacity .8s ease';
+  requestAnimationFrame(()=>{
+    requestAnimationFrame(()=>{
+      gull.style.opacity = '1';
+      gull.style.transform = 'translate(' + (to.x - GULLW) + 'px,' + (to.y - GULLH - 2) + 'px) scale(1)';
+    });
+  });
+
+  // 抵达塔顶后：收翅栖息（收翅动画在 .land 里）
+  clearTimeout(gull._land);
+  gull._land = setTimeout(()=>{
+    gull.classList.add('land');
+    // 收翅后重新按栖息位置对齐
+    gull.style.transform = 'translate(' + (to.x - GULLW) + 'px,' + (to.y - GULLH + 4) + 'px) scale(1)';
+    // 交互：海鸥落定 → 灯塔灯光"迎接"脉冲（海鸥的到来点亮了灯塔）
+    if(lighthouseEl){
+      lighthouseEl.classList.add('greet');
+      setTimeout(()=>{ lighthouseEl.classList.remove('greet'); }, 1800);
+    }
+  }, 7600);
+
+  gullActive = true;
+  clearTimeout(gull._t);
+  gull._t = setTimeout(()=>{ gullActive = false; }, 12000);
+}
+
+/* ===== 聊天交互 ===== */
+const log = document.getElementById('log');
+const q = document.getElementById('q');
+const send = document.getElementById('send');
+
+function add(text, who){
+  const d = document.createElement('div');
+  d.className = 'msg ' + who;
+  d.innerHTML = text;
+  log.appendChild(d);
+  log.scrollTop = log.scrollHeight;
+  return d;
+}
+
+function respond(text){
+  const t_ = add('', 'bot');
+  t_.innerHTML = '<span class="typing"><span data-i18n="chat.typing">正在回忆</span><span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></span>';
+  setTimeout(()=>{ t_.textContent = text; t_.classList.remove('bot'); t_.className='msg bot'; log.scrollTop=log.scrollHeight; }, 500);
+}
+
+// 对话历史（发送给后端作为上下文）
+const history = [];
+
+function submit(){
+  const v = q.value.trim();
+  if(!v) return;
+  add(escapeHtml(v), 'user');
+  history.push({role:'user', content:v});
+  q.value = '';
+  respond(''); // 先显示"正在回忆…"
+  answer(v, history)
+    .then(reply=>{
+      history.push({role:'assistant', content:reply});
+      // 替换占位气泡为正式回复
+      const last = log.lastElementChild;
+      last.textContent = reply;
+      last.className = 'msg bot';
+      log.scrollTop = log.scrollHeight;
+    })
+    .catch(err=>{
+      // 兜底：确保占位气泡不会永远卡在"正在回忆…"
+      const last = log.lastElementChild;
+      last.textContent = t("chat.network");
+      last.className = 'msg bot';
+      log.scrollTop = log.scrollHeight;
+    });
+}
+
+function escapeHtml(s){ return s.replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+send.addEventListener('click', ()=>{ launchGull(send); submit(); });
+q.addEventListener('keydown', e=>{ if(e.key==='Enter'){ launchGull(send); submit(); } });
+document.querySelectorAll('.quick').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const v = t(btn.dataset.q);
+    launchGull(btn);
+    add(escapeHtml(v), 'user');
+    history.push({role:'user', content:v});
+    respond('');
+    answer(v, history)
+      .then(reply=>{
+        history.push({role:'assistant', content:reply});
+        const last = log.lastElementChild;
+        last.textContent = reply;
+        last.className = 'msg bot';
+        log.scrollTop = log.scrollHeight;
+      })
+      .catch(err=>{
+        const last = log.lastElementChild;
+        last.textContent = t("chat.network");
+        last.className = 'msg bot';
+        log.scrollTop = log.scrollHeight;
+      });
+  });
+});
+
+/* ===== 灯塔扫射：单束光绕垂直轴(水平面)旋转，带透视纵深；转到朝左海面时照亮海浪 ===== */
+(function(){
+  const spin = document.querySelector('.beam-spin');
+  const beams = document.querySelectorAll('.beam');
+  const sea   = document.querySelector('.sea-left');
+
+  // 0°=光束朝右(横向，可见)，90°=转到正对/背对纵深(透视收窄)，180°=朝左(横向，可见)，270°=纵深。
+  // 真实灯塔：光束扫过可见横向时亮，转到纵深/背向时因透视收窄并渐隐。
+  // 用 |cos(n)|：横向(0°/180°)=最亮，纵深(90°/270°)=渐隐。
+  function beamIntensity(deg){
+    const n = ((deg % 360) + 360) % 360;
+    const t = Math.abs(Math.cos(n * Math.PI / 180)); // 0°/180°->1，90°/270°->0
+    return (0.30 + 0.70 * t).toFixed(3);             // opacity 0.30 ~ 1.0
+  }
+  // 海面亮度：光束朝左扫到海面时提升最明显
+  function seaGlow(deg){
+    const n = ((deg % 360) + 360) % 360;
+    const d = Math.abs(n - 180);
+    const t = Math.max(0, 1 - d / 110);       // ±110°聚焦
+    return (1 + t * 1.25).toFixed(3);          // brightness 1.0 ~ 2.25
+  }
+
+  let angle = 0, last = null;
+  function tick(ts){
+    if(last !== null){
+      angle = (angle + (ts - last) * 0.05) % 360; // 约30°/s，约12s转一圈
+    }
+    last = ts;
+    // 绕垂直轴(rotateY)旋转：光束在水平面上转圈，带透视纵深 + 缩放(转进纸面时收窄)
+    if(spin){
+      spin.style.transform = 'rotateY(' + angle.toFixed(2) + 'deg)';
+    }
+    // 光束明暗：转向观察者侧亮、转离渐隐（配合透视更真实）
+    const op = beamIntensity(angle);
+    beams.forEach(b => { b.style.opacity = op; });
+    // 海面被照亮
+    if(sea){ sea.style.filter = 'brightness(' + seaGlow(angle) + ')'; }
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+})();
+
+// ===== 明信片画廊 · 点击放大预览 =====
+(function(){
+  const shelf = document.querySelector('.map-canvas');
+  if(!shelf) return;
+
+  // 画廊条目：第 0 项是地图（可放大预览），其后是散落的明信片
+  const items = [];
+  const mapImg = shelf.querySelector(':scope > img');
+  if(mapImg){
+    items.push({
+      full: mapImg.getAttribute('src'),
+      titleKey: 'postcard.mapTitle',
+      el: mapImg
+    });
+  }
+  Array.from(shelf.querySelectorAll('.pc')).forEach(pc => {
+    items.push({
+      full: pc.getAttribute('data-full') || pc.querySelector('img').getAttribute('src'),
+      titleKey: pc.getAttribute('data-i18n-title') || 'postcard.reply.full',
+      el: pc
+    });
+  });
+  if(items.length < 2) return;
+
+  let lb = document.querySelector('.lightbox');
+  if(!lb){
+    lb = document.createElement('div');
+    lb.className = 'lightbox';
+    lb.innerHTML =
+      '<button class="lightbox-close" data-i18n="lightbox.close" aria-label="关闭">&times;</button>' +
+      '<button class="lightbox-nav lightbox-prev" data-i18n="lightbox.prev" aria-label="上一张">&#8249;</button>' +
+      '<div class="lightbox-panel"><img alt="放大预览"><div class="lightbox-title"></div></div>' +
+      '<button class="lightbox-nav lightbox-next" data-i18n="lightbox.next" aria-label="下一张">&#8250;</button>';
+    document.body.appendChild(lb);
+  }
+  const lbImg = lb.querySelector('.lightbox-panel img');
+  const lbTitle = lb.querySelector('.lightbox-title');
+  const closeBtn = lb.querySelector('.lightbox-close');
+  const prevBtn = lb.querySelector('.lightbox-prev');
+  const nextBtn = lb.querySelector('.lightbox-next');
+
+  let current = 0;
+
+  function openAt(i){
+    current = (i + items.length) % items.length;
+    const item = items[current];
+    lbImg.src = item.full;
+    lbImg.alt = t(item.titleKey);
+    lbTitle.textContent = t(item.titleKey);
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function close(){ lb.classList.remove('open'); document.body.style.overflow = ''; }
+
+  items.forEach((item, idx) => {
+    item.el.addEventListener('click', () => openAt(idx));
+  });
+  closeBtn.addEventListener('click', close);
+  prevBtn.addEventListener('click', (e) => { e.stopPropagation(); openAt(current - 1); });
+  nextBtn.addEventListener('click', (e) => { e.stopPropagation(); openAt(current + 1); });
+  lb.addEventListener('click', (e) => {
+    if(e.target === lb) close();
+  });
+  // 语言切换时，若灯箱处于打开状态，刷新标题
+  document.addEventListener('langchange', () => {
+    if(!lb.classList.contains('open')) return;
+    lbImg.alt = t(items[current].titleKey);
+    lbTitle.textContent = t(items[current].titleKey);
+  });
+  document.addEventListener('keydown', (e) => {
+    if(!lb.classList.contains('open')) return;
+    if(e.key === 'Escape') close();
+    else if(e.key === 'ArrowLeft') openAt(current - 1);
+    else if(e.key === 'ArrowRight') openAt(current + 1);
+  });
+})();
+
+/* ===== 绘画：点击作品弹「未完待续」 + 一键催更（随机玩笑 + 本机累计次数） ===== */
+(function(){
+  const stage = document.getElementById('drawStage');
+  const pop = document.getElementById('drawPop');
+  const popP = document.getElementById('drawPopP');
+  const btn = document.getElementById('hurryBtn');
+  const note = document.getElementById('hurryNote');
+  const msg = document.getElementById('hurryMsg');
+  if(!stage || !btn) return;
+
+  const KEY = 'site-hurry-count';   // 本机累计催更次数
+  const LAST = 'site-hurry-last';   // 本机最后一次催更日期（Y-M-D），用于「每人每天一次」
+  let count = 0, lastDay = '';
+  try {
+    count = parseInt(localStorage.getItem(KEY) || '0', 10) || 0;
+    lastDay = localStorage.getItem(LAST) || '';
+  } catch(err) { count = 0; lastDay = ''; }
+
+  function todayKey(){
+    const d = new Date();
+    return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+  }
+  function nudgedToday(){ return lastDay === todayKey(); }
+
+  // 从若干句里随机挑一句，尽量不跟上一句重复
+  let lastLine = '';
+  function pick(keys){
+    const list = keys.map(k => t(k)).filter(Boolean);
+    if(!list.length) return '';
+    if(list.length === 1) return list[0];
+    let v = list[0], guard = 0;
+    do { v = list[Math.floor(Math.random() * list.length)]; } while (v === lastLine && guard++ < 10);
+    lastLine = v;
+    return v;
+  }
+
+  // 点击作品图 / 键盘回车：弹出「To be continued…」+ 一句玩笑
+  let popTimer = 0;
+  function closePop(){
+    stage.classList.remove('pop');
+    pop.setAttribute('aria-hidden', 'true');
+  }
+  function openPop(){
+    popP.textContent = pick(['drawing.pop1', 'drawing.pop2', 'drawing.pop3']);
+    stage.classList.add('pop');
+    pop.setAttribute('aria-hidden', 'false');
+    clearTimeout(popTimer);
+    popTimer = setTimeout(closePop, 3000);
+  }
+  stage.addEventListener('click', openPop);
+  stage.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar'){ e.preventDefault(); openPop(); }
+  });
+
+  // 刷新次数文案 + 按钮状态（当天已催过就置灰；切语言时也会重跑）
+  function render(){
+    if(note){
+      const base = count > 0 ? t('drawing.count').replace('{n}', String(count)) : t('drawing.count0');
+      const tip  = count > 0 ? t('drawing.countTip') : t('drawing.count0Tip');
+      note.textContent = tip ? base + ' · ' + tip : base;
+    }
+    const done = nudgedToday();
+    btn.disabled = done;
+    btn.textContent = t(done ? 'drawing.hurryDone' : 'drawing.hurry');
+    btn.title = done ? t('drawing.hurryDay') : '';
+  }
+
+  let msgTimer = 0;
+  function showMsg(text){
+    if(!msg || !text) return;
+    msg.textContent = text;
+    msg.classList.add('show');
+    clearTimeout(msgTimer);
+    msgTimer = setTimeout(() => msg.classList.remove('show'), 3200);
+  }
+
+  btn.addEventListener('click', () => {
+    if(nudgedToday()) return;                              // 每人每天只算一次
+    const day = todayKey();
+    count += 1;
+    lastDay = day;
+    try {
+      localStorage.setItem(KEY, String(count));
+      localStorage.setItem(LAST, day);
+    } catch(err) {}
+    render();
+    if(note){ note.classList.remove('bump'); void note.offsetWidth; note.classList.add('bump'); }
+    showMsg(pick(['drawing.hurry1', 'drawing.hurry2', 'drawing.hurry3']));
+  });
+
+  render();
+  document.addEventListener('langchange', render);
+})();
+
+/* ===== 音乐：专辑幻灯片 =====
+   自动播放（5.2s）+ 轻点封面切下一张 + 左右箭头 + 圆点 + 手机左右滑；
+   鼠标悬停、切到后台标签、系统「减弱动态效果」时都不自动切。
+   专辑内容全部集中在 ALBUMS：改顺序、补专辑名/歌手/短评只动这个数组即可。 */
+(function(){
+  const cover   = document.getElementById('musicCover');
+  const img     = document.getElementById('musicImg');
+  const idxEl   = document.getElementById('musicIdx');
+  const titleEl = document.getElementById('musicTitle');
+  const artistEl= document.getElementById('musicArtist');
+  const noteEl  = document.getElementById('musicNote');
+  const dotsEl  = document.getElementById('musicDots');
+  const prevBtn = document.getElementById('musicPrev');
+  const nextBtn = document.getElementById('musicNext');
+  if(!cover || !img || !dotsEl) return;
+  const player = cover.closest ? cover.closest('.music-player') : null;
+
+  const ALBUMS = [
+    /* t = 专辑名，a = 歌手，r = 短评，tz = 中文译名（只写在 zh 里，EN 模式不显示）。
+       改顺序/换短评/加译名只动这里。 */
+    { img:'images/albums/05.jpg', zh:{ t:"NEVER ENOUGH", tz:"永不足够", a:"Daniel Caesar", r:"福音和声铺底，编曲刻意留白，人声在混音里被推得很前；比前作松弛，也更接近他现场的样子。" },
+      en:{ t:"NEVER ENOUGH", a:"Daniel Caesar", r:"Gospel harmony underneath, arrangements deliberately sparse, vocals pushed far forward in the mix — looser than his earlier work, closer to how he sounds live." } },
+    { img:'images/albums/06.jpg', zh:{ t:"First Love", tz:"初恋", a:"宇多田光", r:"把 R&B 的和声与日语的语感接在一起，编曲干净、留出呼吸；二十多年后再听，制作水准依然不显旧。" },
+      en:{ t:"First Love", a:"Hikaru Utada", r:"R&B voicings meeting the cadence of Japanese head-on, arranged cleanly with room to breathe — two decades on, the production still does not sound dated." } },
+    { img:'images/albums/07.jpg', zh:{ t:"11:11", a:"Chris Brown", r:"按 R&B 传统做的专辑：鼓组轻律动、和声层叠，曲目顺序排得像一张连贯的深夜歌单。" },
+      en:{ t:"11:11", a:"Chris Brown", r:"Built on R&B orthodoxy: light-touch drum programming, stacked harmonies, a sequence that plays like one continuous late-night set." } },
+    { img:'images/albums/08.jpg', zh:{ t:"FEAR", tz:"恐惧", a:"NF", r:"沿用他惯用的钢琴、弦乐与 808 编制，主题直指恐惧本身；整体比上一张更暗，留白更少。它和紧接的 HOPE 是同一条线的两半——先往下把恐惧摊开，再往上谈希望，连着按顺序听才完整。" },
+      en:{ t:"FEAR", a:"NF", r:"His usual piano, strings and 808 setup, aimed straight at fear itself — darker than the last record, with fewer places to breathe. Together with the HOPE entry that follows it forms two halves of one line — the fear opened up first, the climb after — best heard in order, in one sitting." } },
+    { img:'images/albums/09.jpg', zh:{ t:"HOPE", tz:"希望", a:"NF", r:"钢琴与弦乐仍是骨架，但节奏组比前作更靠前；如果 FEAR 是往下沉的那一半，这张就是往上爬的那一半。" },
+      en:{ t:"HOPE", a:"NF", r:"Piano and strings still carry the frame, but the rhythm section sits further forward — where FEAR sinks, this half climbs." } },
+    { img:'images/albums/10.jpg', zh:{ t:"SOS", a:"SZA", r:"23 首把 R&B、独立摇滚与流行的边界推开，碎片化的结构本身就是情绪结构；混音层次和客串安排都很讲究。" },
+      en:{ t:"SOS", a:"SZA", r:"Twenty-three tracks pushing R&B into indie rock and pop; the fragmentation is itself the emotional structure, with mixes and features handled carefully throughout." } },
+    { img:'images/albums/11.jpg', zh:{ t:"The Ride: Part 1", tz:"旅程 · 第一部", a:"Johnny Orlando", r:"作为系列的第一部分，编曲以轻量电子和吉他为主，人声位置很前；能听出他在流行与创作歌手之间找平衡。" },
+      en:{ t:"The Ride: Part 1", a:"Johnny Orlando", r:"First instalment of a series: light electronics and guitar under a very forward vocal — a young writer balancing pop and singer-songwriter instincts." } },
+    { img:'images/albums/12.jpg', zh:{ t:"Groupies 吉他手", a:"陈绮贞", r:"吉他主导的编制，词曲常从小场景切入，把民谣叙述和流行旋律缝在一起；中文创作女声里的一个坐标。" },
+      en:{ t:"Groupies 吉他手", a:"Cheer Chen", r:"Guitar-led arrangements and lyrics that enter from small scenes, folk narrative stitched to pop melody — a landmark in Chinese-language songwriting." } },
+    { img:'images/albums/13.jpg', zh:{ t:"Flower Boy", tz:"花男孩", a:"Tyler, The Creator", r:"编曲从粗糙取样转向弦乐与和声的铺展，花田与蜜蜂的封面上写的其实是孤独——也是他第一次把脆弱放进正式作品。" },
+      en:{ t:"Flower Boy", a:"Tyler, The Creator", r:"Arrangements move from scrappy samples to spread-out strings and vocal harmony; beneath the flower-field cover the subject is loneliness, and it is the first time he let that into a record." } },
+    { img:'images/albums/01.jpg', zh:{ t:"CHROMAKOPIA", a:"Tyler, The Creator", r:"开场三首连成一体，整张围绕父亲、婚姻与身份展开；合成器与弦乐之间收放得很克制，比以往任何一张都更少炫技。" },
+      en:{ t:"CHROMAKOPIA", a:"Tyler, The Creator", r:"A three-part opening gives way to his father, his marriage and his identity; synths and strings are traded with more restraint than anything he has made." } },
+    { img:'images/albums/02.jpg', zh:{ t:"DAMN.", a:"Kendrick Lamar", r:"取样偏极简的鼓组，把康普顿视角收进一张能倒放的概念专辑；最后一首 DUCKWORTH. 用一个家庭故事回收了整张的伏笔。" },
+      en:{ t:"DAMN.", a:"Kendrick Lamar", r:"Minimal drum samples fold a Compton narrative into a concept album that also plays in reverse — the closing DUCKWORTH. rewinds the whole record with one family story." } },
+    { img:'images/albums/03.jpg', zh:{ t:"Late Registration", a:"Kanye West", r:"Jon Brion 参与管弦乐与合唱编排，弦乐和取样互相穿插，把说唱做到电影配乐的规格；两张唱片长度却几乎不显冗长。" },
+      en:{ t:"Late Registration", a:"Kanye West", r:"With Jon Brion co-producing, orchestras and choirs trade places with samples and push rap to film-score scale — and it rarely drags for a double record." } },
+    { img:'images/albums/04.jpg', zh:{ t:"Dawn FM", tz:"黎明电台", a:"The Weeknd", r:"用一整张电台节目做叙事框架，Jim Carrey 串场，合成器音色偏八十年代；把「死前最后一夜」做成了连续的收听体验。" },
+      en:{ t:"Dawn FM", a:"The Weeknd", r:"A whole radio broadcast as narrative frame, voiced by Jim Carrey over decidedly eighties synth tones — the last night before death, built as one continuous listen." } },
+  ];
+  if(!ALBUMS.length) return;
+
+  const AUTOPLAY_MS = 5200;
+  const FADE_MS = 200;
+  const reduceMotion = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+  let i = 0, timer = 0, busy = false, queued = null, hover = false, swipedAt = 0;
+
+  function lang(){ return (typeof LANG === 'string' && LANG === 'en') ? 'en' : 'zh'; }
+  function pad(n){ return (n < 10 ? '0' : '') + n; }
+
+  /* 圆点只建一次 */
+  const dots = ALBUMS.map(function(_, n){
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'music-dot';
+    b.addEventListener('click', function(e){ e.stopPropagation(); go(n); });
+    dotsEl.appendChild(b);
+    return b;
+  });
+
+  function paint(){
+    const a = ALBUMS[i] || {};
+    const d = a[lang()] || a.zh || {};
+    titleEl.textContent  = d.t || '';
+    const tzEl = document.getElementById('musicTz');
+    if(tzEl){ var tz = (lang() === 'zh') ? (d.tz || '') : '';
+              tzEl.textContent = tz; tzEl.style.display = tz ? '' : 'none'; }
+    artistEl.textContent = d.a || '';
+    noteEl.textContent   = d.r || '';
+    const z = a.zh || {};
+    img.alt = [z.t, z.a].filter(Boolean).join(' · ') || t('music.title');
+    idxEl.textContent = pad(i + 1) + ' / ' + ALBUMS.length;
+    dots.forEach(function(b, n){
+      b.classList.toggle('on', n === i);
+      b.setAttribute('aria-label', t('music.dot').replace('{n}', n + 1));
+    });
+  }
+
+  function preload(n){
+    const a = ALBUMS[(n % ALBUMS.length + ALBUMS.length) % ALBUMS.length];
+    if(!a) return;
+    const im = new Image();
+    im.src = a.img;          // 只预热浏览器缓存，不插入页面
+  }
+
+  function schedule(){
+    window.clearTimeout(timer);
+    if(reduceMotion || document.hidden) return;
+    timer = window.setTimeout(function(){
+      if(hover || document.hidden){ schedule(); return; }
+      go(i + 1);
+    }, AUTOPLAY_MS);
+  }
+
+  function go(n){
+    const next = (n % ALBUMS.length + ALBUMS.length) % ALBUMS.length;
+    if(busy){ queued = next; return; }        // 连点时只保留最后一次，不堆动画
+    if(next === i && n !== i){ /* 归一化后同张，直接跳过 */ }
+    busy = true;
+    cover.classList.add('fading');
+    window.setTimeout(function(){
+      i = next;
+      img.src = ALBUMS[i].img;
+      paint();
+      cover.classList.remove('fading');
+      busy = false;
+      preload(i + 1);
+      if(queued !== null){ const q = queued; queued = null; go(q); }
+    }, reduceMotion ? 0 : FADE_MS);
+    schedule();                                // 手动切换后重新计时
+  }
+
+  cover.addEventListener('click', function(){
+    if(Date.now() - swipedAt < 400) return;    // 刚划过，忽略随之而来的 click
+    go(i + 1);
+  });
+  cover.addEventListener('keydown', function(e){
+    if(e.key === 'ArrowLeft'){ e.preventDefault(); go(i - 1); }
+    else if(e.key === 'ArrowRight' || e.key === 'Enter' || e.key === ' '){ e.preventDefault(); go(i + 1); }
+  });
+  if(prevBtn) prevBtn.addEventListener('click', function(e){ e.stopPropagation(); go(i - 1); });
+  if(nextBtn) nextBtn.addEventListener('click', function(e){ e.stopPropagation(); go(i + 1); });
+
+  /* 手机：左右滑（竖向位移更大时当作页面滚动，不拦） */
+  let tx = 0, ty = 0, tracking = false;
+  cover.addEventListener('touchstart', function(e){
+    if(e.touches.length !== 1) return;
+    tx = e.touches[0].clientX; ty = e.touches[0].clientY; tracking = true;
+  }, { passive: true });
+  cover.addEventListener('touchend', function(e){
+    if(!tracking) return;
+    tracking = false;
+    const t0 = e.changedTouches[0];
+    const dx = t0.clientX - tx, dy = t0.clientY - ty;
+    if(Math.abs(dx) < 42 || Math.abs(dx) < Math.abs(dy) * 1.4) return;
+    swipedAt = Date.now();
+    go(dx < 0 ? i + 1 : i - 1);
+  }, { passive: true });
+
+  if(player){
+    player.addEventListener('mouseenter', function(){ hover = true; });
+    player.addEventListener('mouseleave', function(){ hover = false; schedule(); });
+  }
+  document.addEventListener('visibilitychange', schedule);
+  document.addEventListener('langchange', paint);
+
+  paint();
+  preload(1);
+  schedule();
+})();
+
+/* ===== 音乐 · 推荐留声：把访客推荐的歌 / 专辑送到本地 /api/recommend ===== */
+(function(){
+  const itemEl  = document.getElementById('recItem');
+  const noteEl  = document.getElementById('recNote');
+  const sendBtn = document.getElementById('recSend');
+  const logEl   = document.getElementById('recLog');
+  const countEl = document.getElementById('recCount');
+  const emptyEl = document.getElementById('recEmpty');
+  if(!itemEl || !noteEl || !sendBtn || !logEl) return;
+
+  let sending = false;
+
+  // 有留言后就把中间那句空状态提示收起来，让位给聊天记录
+  function syncEmpty(){
+    if(emptyEl) emptyEl.hidden = logEl.children.length > 0;
+  }
+
+  function bubble(cls, text){
+    const div = document.createElement('div');
+    div.className = 'msg ' + cls;
+    div.textContent = text;
+    logEl.appendChild(div);
+    logEl.scrollTop = logEl.scrollHeight;
+    syncEmpty();
+  }
+
+  /* 条数取自服务器（可能含别人的推荐），但下面的框只显示「你自己本次提交的」——
+     所以空状态不能永远说「还没有人留言」，条数 >0 时换成说明性文案。 */
+  function setCount(n){
+    if(countEl) countEl.textContent = t('music.recCount').replace('{n}', n);
+    if(emptyEl) emptyEl.textContent = (n > 0)
+      ? t('music.recEmptySome').replace('{n}', n)
+      : t('music.recEmpty');
+  }
+
+  /* 纯静态托管上没有 Python 接口：换成「欢迎走反馈版块」的说明 */
+  function recErrText(){
+    return SITE_ENV.local ? t('music.recErr') : t('music.recErrStatic');
+  }
+
+  function refreshCount(){
+    fetch('/api/recommend', { headers: { 'Accept': 'application/json' } })
+      .then(r => r.ok ? r.json() : null)
+      .then(d => { if(d && typeof d.count === 'number') setCount(d.count); })
+      .catch(()=>{});
+  }
+
+  function submit(){
+    if(sending) return;
+    const item = itemEl.value.trim();
+    const note = noteEl.value.trim();
+    if(!item){ itemEl.focus(); return; }
+
+    sending = true;
+    sendBtn.disabled = true;
+    bubble('user', note ? item + ' — ' + note : item);
+    itemEl.value = '';
+    noteEl.value = '';
+
+    fetch('/api/recommend', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ item: item, note: note })
+    })
+      .then(r => r.json().catch(() => ({})).then(d => ({ ok: r.ok, data: d })))
+      .then(res => {
+        if(res.ok && res.data && res.data.ok){
+          bubble('bot', t('music.recThanks'));
+          if(typeof res.data.count === 'number') setCount(res.data.count);
+        }else{
+          bubble('bot', recErrText());
+        }
+      })
+      .catch(() => { bubble('bot', recErrText()); })
+      .then(() => { sending = false; sendBtn.disabled = false; });
+  }
+
+  sendBtn.addEventListener('click', submit);
+  [itemEl, noteEl].forEach(el => {
+    el.addEventListener('keydown', e => { if(e.key === 'Enter'){ e.preventDefault(); submit(); } });
+  });
+  document.addEventListener('langchange', refreshCount);
+  if(emptyEl) emptyEl.textContent = t('music.recEmpty');   // 先按当前语言铺好，等条数回来覆盖
+  syncEmpty();
+  refreshCount();
+})();
+
+/* ===== BGM：首次交互自动播放 + 点击切换 + 循环 ===== */
+(function(){
+  const btn = document.getElementById('bgmBtn');
+  const audio = document.getElementById('bgm');
+  if(!btn || !audio) return;
+
+  const TARGET_VOL = 0.42;
+  // 音量淡入：开始/续播时从 0 平滑升到目标音量，避免突然出声
+  let fadeTimer = null;
+  const stopFade = () => { if(fadeTimer){ clearInterval(fadeTimer); fadeTimer = null; } };
+  const fadeIn = (target, duration) => {
+    stopFade();
+    let v = audio.volume;
+    if(v >= target){ audio.volume = target; return; }
+    const step = 30;
+    const inc = (target - v) * step / duration;
+    fadeTimer = setInterval(() => {
+      v += inc;
+      if(v >= target){ v = target; audio.volume = v; stopFade(); }
+      else { audio.volume = v; }
+    }, step);
+  };
+  const startPlayback = () => {
+    if(!audio.paused) return null;    // 已在播放，避免重复触发
+    audio.volume = 0;                 // 从静音起步
+    const p = audio.play();
+    if(p && p.then){
+      // 只有在真正开始播放后才淡入；被自动播放策略拦截时保持静音等待下次手势
+      p.then(() => { fadeIn(TARGET_VOL, 650); }).catch(() => {});
+    } else {
+      fadeIn(TARGET_VOL, 650);
+    }
+    return p;
+  };
+
+  const TITLE_KEY = { play:'bgm.play', pause:'bgm.pause' };
+  const setTitle = () => {
+    const key = audio.paused ? TITLE_KEY.play : TITLE_KEY.pause;
+    btn.title = t(key);
+  };
+  const refreshState = () => {
+    if(audio.paused) stopFade();        // 暂停时停止淡入，音量保持在当前值
+    btn.classList.toggle('playing', !audio.paused);
+    btn.setAttribute('aria-pressed', audio.paused ? 'false' : 'true');
+    setTitle();
+  };
+
+  btn.addEventListener('click', () => {
+    if(audio.paused){
+      btn.classList.remove('paused');   // 开始播放：撤掉斜杠
+      startPlayback();                  // 音量淡入
+    } else {
+      btn.classList.add('paused');      // 用户手动暂停：显示斜杠
+      audio.pause();
+    }
+  });
+  audio.addEventListener('play', refreshState);
+  audio.addEventListener('pause', refreshState);
+  audio.addEventListener('ended', refreshState);
+
+  // 浏览器（Edge / Chrome / Safari）要求"用户手势"后才允许出声。
+  // 注意：scroll / wheel 不属于可授权手势，所以不能算；而且这里刻意不设
+  // 一次性开关 —— 只要还没放出声，就持续监听手势，直到真正播放成功才解绑，
+  // 避免某次无效手势把唯一机会消耗掉、之后怎么点都没声音。
+  const GESTURES = ['pointerdown','mousedown','touchstart','keydown','click'];
+  const unlock = (e) => {
+    // 音乐按钮有自己的播放/暂停逻辑，交给它处理，避免"刚播放又被暂停"
+    if(e && e.target && e.target.closest && e.target.closest('#bgmBtn')) return;
+    if(audio.paused) startPlayback();
+  };
+  const bindGestures = () => {
+    GESTURES.forEach(ev => window.addEventListener(ev, unlock, { passive:true, capture:true }));
+  };
+  const unbindGestures = () => {
+    GESTURES.forEach(ev => window.removeEventListener(ev, unlock, true));
+  };
+  bindGestures();
+
+  // 真正开始播放后：撤掉斜杠 + 解绑手势监听
+  audio.addEventListener('play', () => {
+    btn.classList.remove('paused');
+    unbindGestures();
+  });
+
+  // 一打开页面就先尝试自动播放；被拦截时上面的手势监听会立刻补上播放。
+  startPlayback();
+
+  // 语言切换时刷新按钮文案
+  document.addEventListener('langchange', () => { refreshState(); });
+  if(audio.readyState >= 1) refreshState();
+
+  // 页面隐藏/标签被切走时暂停音乐（避免后台有声音）；
+  // 切回来时，若之前"正在播放"则自动续播（用户手动暂停的不会自动响）
+  let resumeOnReturn = false;
+  document.addEventListener('visibilitychange', () => {
+    if(document.hidden){
+      if(!audio.paused){
+        resumeOnReturn = true;
+        audio.pause();
+      }
+    } else if(resumeOnReturn){
+      resumeOnReturn = false;
+      startPlayback();                  // 续播时音量淡入
+    }
+  });
+})();
+
+/* ===== 海浪声：与上面 BGM 完全相同的机制 =====
+   首次交互自动播放 + 点击切换 + 循环 + 音量淡入 + 切回续播
+   音频来源: 用户提供 "海阔天空的阿尔塔_Freesound.mp3" -> bgm/sea-waves.mp3 */
+(function(){
+  const btn = document.getElementById('seaBtn');
+  const audio = document.getElementById('sea');
+  if(!btn || !audio) return;
+
+  const TARGET_VOL = 0.55;            // 比 BGM 略大：海浪声需要更明显
+  // 音量淡入：开始/续播时从 0 平滑升到目标音量，避免突然出声
+  let fadeTimer = null;
+  const stopFade = () => { if(fadeTimer){ clearInterval(fadeTimer); fadeTimer = null; } };
+  const fadeIn = (target, duration) => {
+    stopFade();
+    let v = audio.volume;
+    if(v >= target){ audio.volume = target; return; }
+    const step = 30;
+    const inc = (target - v) * step / duration;
+    fadeTimer = setInterval(() => {
+      v += inc;
+      if(v >= target){ v = target; audio.volume = v; stopFade(); }
+      else { audio.volume = v; }
+    }, step);
+  };
+  const startPlayback = () => {
+    if(!audio.paused) return null;    // 已在播放，避免重复触发
+    audio.volume = 0;                 // 从静音起步
+    const p = audio.play();
+    if(p && p.then){
+      // 只有在真正开始播放后才淡入；被自动播放策略拦截时保持静音等待下次手势
+      p.then(() => { fadeIn(TARGET_VOL, 650); }).catch(() => {});
+    } else {
+      fadeIn(TARGET_VOL, 650);
+    }
+    return p;
+  };
+
+  const TITLE_KEY = { play:'sea.play', pause:'sea.pause' };
+  const setTitle = () => {
+    const key = audio.paused ? TITLE_KEY.play : TITLE_KEY.pause;
+    btn.title = t(key);
+  };
+  const refreshState = () => {
+    if(audio.paused) stopFade();        // 暂停时停止淡入，音量保持在当前值
+    btn.classList.toggle('playing', !audio.paused);
+    btn.setAttribute('aria-pressed', audio.paused ? 'false' : 'true');
+    setTitle();
+  };
+
+  btn.addEventListener('click', () => {
+    if(audio.paused){
+      btn.classList.remove('paused');   // 开始播放：撤掉斜杠
+      startPlayback();                  // 音量淡入
+    } else {
+      btn.classList.add('paused');      // 用户手动暂停：显示斜杠
+      audio.pause();
+    }
+  });
+  audio.addEventListener('play', refreshState);
+  audio.addEventListener('pause', refreshState);
+  audio.addEventListener('ended', refreshState);
+
+  // 与 BGM 相同的手势解锁策略：只要还没放出声，就持续监听手势，直到真正播放成功才解绑。
+  const GESTURES = ['pointerdown','mousedown','touchstart','keydown','click'];
+  const unlock = (e) => {
+    // 海浪按钮有自己的播放/暂停逻辑，交给它处理，避免"刚播放又被暂停"
+    if(e && e.target && e.target.closest && e.target.closest('#seaBtn')) return;
+    if(audio.paused) startPlayback();
+  };
+  const bindGestures = () => {
+    GESTURES.forEach(ev => window.addEventListener(ev, unlock, { passive:true, capture:true }));
+  };
+  const unbindGestures = () => {
+    GESTURES.forEach(ev => window.removeEventListener(ev, unlock, true));
+  };
+  bindGestures();
+
+  // 真正开始播放后：撤掉斜杠 + 解绑手势监听
+  audio.addEventListener('play', () => {
+    btn.classList.remove('paused');
+    unbindGestures();
+  });
+
+  // 一打开页面就先尝试自动播放；被拦截时上面的手势监听会立刻补上播放。
+  startPlayback();
+
+  // 语言切换时刷新按钮文案
+  document.addEventListener('langchange', () => { refreshState(); });
+  if(audio.readyState >= 1) refreshState();
+
+  // 页面隐藏/标签被切走时暂停（避免后台有声音）；切回来时若之前"正在播放"则自动续播
+  let resumeOnReturn = false;
+  document.addEventListener('visibilitychange', () => {
+    if(document.hidden){
+      if(!audio.paused){
+        resumeOnReturn = true;
+        audio.pause();
+      }
+    } else if(resumeOnReturn){
+      resumeOnReturn = false;
+      startPlayback();                  // 续播时音量淡入
+    }
+  });
+})();
+</script>
+
+<!-- ===== 声音提示 =====
+     浏览器的自动播放策略会拦截"用户尚未交互"的播放，所以页面刚打开时一定是静的，
+     这一点网页作者无法绕过。若 1.5 秒后仍没有任何声音播放成功，就浮出一行小字
+     告诉访客"点击开启声音"；任意一个音频真正开始播放后提示永久退场
+     （用户已经知道了；之后手动暂停也不再打扰）。 -->
+<script>
+(function(){
+  const hint = document.getElementById('soundHint');
+  if(!hint) return;
+  const tracks = ['bgm','sea'].map(id => document.getElementById(id)).filter(Boolean);
+  if(!tracks.length) return;
+
+  let done = false;
+  const dismiss = () => { done = true; hint.classList.remove('show'); };
+
+  // 真正播出声 = 声音已解锁 → 提示永久退场
+  tracks.forEach(a => a.addEventListener('play', dismiss));
+
+  setTimeout(() => {
+    if(done) return;
+    if(tracks.some(a => !a.paused)){ done = true; return; }   // 浏览器放行了自动播放
+    hint.classList.add('show');
+  }, 1500);
+
+  // 兜底：用户交互后若已在播放（play 事件被别处吃掉等情况），立刻撤掉
+  ['pointerdown','mousedown','touchstart','keydown','click'].forEach(ev => {
+    window.addEventListener(ev, () => setTimeout(() => {
+      if(!done && tracks.some(a => !a.paused)) dismiss();
+    }, 400), { passive:true });
+  });
+})();
+</script>
+
+<!-- ===== 按钮点击音效 =====
+     音效来源: Kenney "Interface Sounds" (https://kenney.nl/assets/interface-sounds)
+     授权: Creative Commons CC0 1.0 公共领域 —— 免费使用 / 可商用 / 无需署名
+     文件: sounds/click.mp3 (普通点击), select.mp3 (切换), confirm.mp3 (发送)
+-->
+<script>
+(function(){
+  const SFX = {
+    click:   'sounds/click.mp3',
+    select:  'sounds/select.mp3',
+    confirm: 'sounds/confirm.mp3'
+  };
+  const VOLUME = 0.40;      // 音效源接近满刻度，压到 0.4 比较舒服
+  const POOL = 5;           // 每种音效准备 5 个实例，连点时不互相打断
+  const THROTTLE = 40;      // 同一瞬间的连点做轻微节流，避免叠成噪声
+
+  const pools = {};
+  const cursor = {};
+  Object.keys(SFX).forEach(function(k){
+    pools[k] = [];
+    cursor[k] = 0;
+    for(let i=0; i<POOL; i++){
+      const a = new Audio(SFX[k]);
+      a.preload = 'auto';
+      a.volume = VOLUME;
+      pools[k].push(a);
+    }
+  });
+
+  let lastPlay = 0;
+  function play(kind){
+    const name = pools[kind] ? kind : 'click';
+    const now = Date.now();
+    if(now - lastPlay < THROTTLE) return;
+    lastPlay = now;
+    const a = pools[name][cursor[name]];
+    cursor[name] = (cursor[name] + 1) % pools[name].length;
+    try { a.currentTime = 0; } catch(e){}
+    const p = a.play();
+    if(p && p.catch) p.catch(function(){});
+  }
+
+  // 哪个元素用哪个音效
+  function pickSfx(el){
+    if(el.dataset && el.dataset.sfx) return el.dataset.sfx;
+    if(el.id === 'send') return 'confirm';
+    if(el.classList && el.classList.contains('lang-btn')) return 'select';
+    return 'click';
+  }
+
+  // 全部可点击元素：按钮、链接、明信片、地图
+  const SELECTOR = 'button, a, [role="button"], .pc, .map-canvas > img';
+
+  document.addEventListener('click', function(e){
+    const el = e.target && e.target.closest ? e.target.closest(SELECTOR) : null;
+    if(!el) return;
+    play(pickSfx(el));
+  }, true);
+})();
+</script>
+<!-- ===== 反馈提交：Supabase（外部后台）优先 → REST 兜底 → 本地服务回退 =====
+     1) 官方客户端库：CDN 动态导入 @supabase/supabase-js
+     2) REST：直接 POST {url}/rest/v1/feedback（同一张表、同一套 RLS 权限）
+     3) 本地：POST /api/feedback（server.py，写 data/feedback.jsonl，仅供本地开发）
+     前端只用「可公开」的 publishable key；service_role / 数据库密码永不进前端。 -->
+<script src="supabase-config.js"></script>
+<script>
+(function(){
+  const form = document.getElementById('fbForm');
+  if(!form) return;
+
+  const nameEl   = document.getElementById('fbName');
+  const relEl    = document.getElementById('fbRelation');
+  const devEl    = document.getElementById('fbDevice');
+  const msgEl    = document.getElementById('fbMessage');
+  const sendBtn  = document.getElementById('fbSend');
+  const statusEl = document.getElementById('fbStatus');
+
+  const CFG = window.SUPABASE_CONFIG || {};
+  const VERSION = CFG.version || 'v3.0';
+  const SB_URL = String(CFG.url || '').trim();
+  const SB_KEY = String(CFG.publishableKey || CFG.anonKey || '').trim();
+  const HAS_SB = /^https:\/\/[a-z0-9-]+\.supabase\.co\/?$/i.test(SB_URL) && SB_KEY.length > 20;
+
+  let sending = false;
+  let lastStatus = { key: '', cls: '' };      // 记住最后一次状态，切换语言时按新语言重画
+
+  function renderStatus(){
+    if(!statusEl) return;
+    statusEl.className = 'fb-status' + (lastStatus.cls ? ' ' + lastStatus.cls : '');
+    statusEl.textContent = lastStatus.key ? t(lastStatus.key) : '';
+  }
+  function setStatus(key, cls){ lastStatus = { key: key, cls: cls || '' }; renderStatus(); }
+
+  // 设备默认值：按访客自己的浏览器预选（本人可随时改）
+  function guessDevice(){
+    if(!devEl) return;
+    const ua = navigator.userAgent || '';
+    const guess = /iPad|Tablet/i.test(ua) ? '平板' : (/Mobi|Android|iPhone/i.test(ua) ? '手机' : '电脑');
+    if(Array.prototype.some.call(devEl.options, function(o){ return o.value === guess; })) devEl.value = guess;
+  }
+  guessDevice();
+
+  let sbClient = null, sbTried = false;
+  async function getClient(){
+    if(sbClient) return sbClient;
+    if(sbTried) return null;
+    sbTried = true;
+    try{
+      const mod = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');
+      sbClient = mod.createClient(SB_URL, SB_KEY);
+      return sbClient;
+    }catch(e){ return null; }     // CDN 不可达 → 走 REST
+  }
+
+  function payload(){
+    const v = function(el){ return el ? String(el.value || '').trim() : ''; };
+    return {
+      name:     v(nameEl) || null,             // 空值一律送 null（数据库里 relation/device 的 check 只认给定值或 null）
+      relation: v(relEl)  || null,
+      device:   v(devEl)  || null,
+      message:  v(msgEl),
+      version:  VERSION
+    };
+  }
+
+  async function viaSDK(p){
+    const client = await getClient();
+    if(!client) throw new Error('sdk-unavailable');
+    const r = await client.from('feedback').insert(p);
+    if(r.error) throw new Error('sdk ' + (r.error.message || ''));
+    return true;
+  }
+
+  async function viaREST(p){
+    const res = await fetch(SB_URL.replace(/\/+$/, '') + '/rest/v1/feedback', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SB_KEY,
+        'Authorization': 'Bearer ' + SB_KEY,
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify(p)
+    });
+    if(!res.ok){
+      let detail = '';
+      try{ detail = (await res.text()).slice(0, 200); }catch(e){}
+      throw new Error('rest ' + res.status + ' ' + detail);
+    }
+    return true;
+  }
+
+  async function viaLocal(p){
+    const res = await fetch('/api/feedback', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(p)
+    });
+    if(!res.ok) throw new Error('local ' + res.status);
+    return true;
+  }
+
+  async function send(p){
+    if(HAS_SB){
+      try{ return await viaSDK(p); }
+      catch(e){
+        if(String(e && e.message) === 'sdk-unavailable') return viaREST(p);
+        throw e;
+      }
+    }
+    if(SITE_ENV.local) return viaLocal(p);
+    throw new Error('no-backend');
+  }
+
+  form.addEventListener('submit', async function(e){
+    e.preventDefault();
+    if(sending) return;                       // 防重复提交
+
+    const p = payload();
+    if(!p.message){ setStatus('fb.needMsg', 'err'); if(msgEl) msgEl.focus(); return; }
+    p.message = p.message.slice(0, 2000);
+
+    sending = true;
+    sendBtn.disabled = true;
+    sendBtn.setAttribute('aria-busy', 'true');
+    setStatus('fb.sending', '');
+
+    try{
+      await send(p);
+      form.reset();
+      guessDevice();
+      setStatus('fb.thanks', 'ok');
+    }catch(err){
+      const msg = String((err && err.message) || '');
+      if(/no-backend/.test(msg))       setStatus('fb.noConfig', 'err');
+      else if(SITE_ENV.local && /^local /.test(msg)) setStatus('fb.errLocal', 'err');
+      else                             setStatus('fb.err', 'err');
+      // 失败时绝不清空输入：访客可以直接再点一次
+    }finally{
+      sending = false;
+      sendBtn.disabled = false;
+      sendBtn.removeAttribute('aria-busy');
+    }
+  });
+
+  document.addEventListener('langchange', renderStatus);   // 切语言时状态文字跟着换
+  renderStatus();
+  // 角落入口的显隐：该出现时出现，挡着东西时让开。
+  //   ① 手机第一屏收起：那一屏正文一直铺到屏幕下边缘，固定按钮会压住「关于我」卡片最后几个字；
+  //   ② 角落入口正压在「反馈」版块上时收起：人已经在填表了，入口多余，还会挡住输入框和提交按钮；
+  //   ③ 正压在页脚上时收起：别盖住版权那行。
+  // 桌面宽度下导航里就有「反馈」，但它同样会压到页脚，所以②③两种宽度都生效。
+  (function(){
+    const fabEl = document.querySelector('.fb-fab');
+    const hero  = document.querySelector('.hero');
+    if(!fabEl) return;
+    const mq = window.matchMedia('(max-width:620px)');
+    const avoid = ['#feedback', 'footer'];
+    function covers(el){
+      if(!el) return false;
+      const a = el.getBoundingClientRect(), b = fabEl.getBoundingClientRect();
+      return !(a.right < b.left || a.left > b.right || a.bottom < b.top || a.top > b.bottom);
+    }
+    function update(){
+      const firstScreen = mq.matches && hero && window.scrollY < Math.max(200, (hero.offsetHeight || 480) * 0.55);
+      const redundant = avoid.some(function(sel){ return covers(document.querySelector(sel)); });
+      const hidden = !!(firstScreen || redundant);
+      fabEl.classList.toggle('hide', hidden);
+      fabEl.setAttribute('aria-hidden', hidden ? 'true' : 'false');
+      fabEl.tabIndex = hidden ? -1 : 0;
+    }
+    window.addEventListener('scroll', update, {passive:true});
+    window.addEventListener('resize', update);
+    if(mq.addEventListener) mq.addEventListener('change', update);
+    update();
+  })();
+
+})();
+</script>
+
+</body>
+</html>

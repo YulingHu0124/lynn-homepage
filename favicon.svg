@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Fledglynn">
+  <defs>
+    <!-- night sky: site blue fading to near black -->
+    <linearGradient id="fld-sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2E4A66"/>
+      <stop offset=".55" stop-color="#16283A"/>
+      <stop offset="1" stop-color="#0A0C0F"/>
+    </linearGradient>
+    <!-- halo behind the star -->
+    <radialGradient id="fld-glow" cx=".5" cy=".5234" r=".3438">
+      <stop offset="0" stop-color="#FBE08A" stop-opacity=".48"/>
+      <stop offset=".55" stop-color="#F6C445" stop-opacity=".13"/>
+      <stop offset="1" stop-color="#F6C445" stop-opacity="0"/>
+    </radialGradient>
+    <!-- star body: bright core fading to site yellow -->
+    <radialGradient id="fld-star" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#FBE08A"/>
+      <stop offset=".55" stop-color="#F9CF6A"/>
+      <stop offset="1" stop-color="#F6C445"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="64" height="64" rx="14" fill="url(#fld-sky)"/>
+  <circle cx="32" cy="33.5" r="22" fill="url(#fld-glow)"/>
+  <polygon points="32.00,14.00 37.04,26.56 50.55,27.47 40.16,36.15 43.46,49.28 32.00,42.08 20.54,49.28 23.84,36.15 13.45,27.47 26.96,26.56" fill="url(#fld-star)"/>
+</svg>
