@@ -3439,6 +3439,8 @@ const CHAT_TIMEOUT_MS = 25000;
 async function answer(q, history){
   q = q.trim();
   if(!q) return t("chat.empty");
+  // 纯静态托管（GitHub Pages / Netlify）没有 /api/chat：直接给友好说明，不发无效请求
+  if(!SITE_ENV.local) return t("chat.offlineStatic");
   const controller = new AbortController();
   const timer = setTimeout(()=>controller.abort(), CHAT_TIMEOUT_MS);
   try{
@@ -4018,6 +4020,7 @@ document.querySelectorAll('.quick').forEach(btn=>{
   }
 
   function refreshCount(){
+    if(!SITE_ENV.local) return;   // 纯静态托管没有接口：不发无效请求（避免必然的 404）
     fetch('/api/recommend', { headers: { 'Accept': 'application/json' } })
       .then(r => r.ok ? r.json() : null)
       .then(d => { if(d && typeof d.count === 'number') setCount(d.count); })
@@ -4035,6 +4038,14 @@ document.querySelectorAll('.quick').forEach(btn=>{
     bubble('user', note ? item + ' — ' + note : item);
     itemEl.value = '';
     noteEl.value = '';
+
+    // 纯静态托管：没有 /api/recommend，直接给友好说明（不发必然 404 的请求）
+    if(!SITE_ENV.local){
+      sending = false;
+      sendBtn.disabled = false;
+      bubble('bot', recErrText());
+      return;
+    }
 
     fetch('/api/recommend', {
       method: 'POST',
@@ -4419,10 +4430,16 @@ document.querySelectorAll('.quick').forEach(btn=>{
     if(sbTried) return null;
     sbTried = true;
     try{
-      const mod = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');
+      // 慢网兜底：CDN 首次加载要串行拉多个模块，超过 8 秒就放弃 SDK，改走下方的 REST 通道
+      const cdn = import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');
+      cdn.catch(function(){});     // 超时之后 CDN 若再失败，不产生未处理的 rejection
+      const mod = await Promise.race([
+        cdn,
+        new Promise(function(_, reject){ setTimeout(function(){ reject(new Error('cdn-timeout')); }, 8000); })
+      ]);
       sbClient = mod.createClient(SB_URL, SB_KEY);
       return sbClient;
-    }catch(e){ return null; }     // CDN 不可达 → 走 REST
+    }catch(e){ return null; }     // CDN 不可达或超时 → 走 REST
   }
 
   function payload(){
