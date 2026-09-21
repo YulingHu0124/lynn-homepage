@@ -6,8 +6,9 @@
    均为 SIL Open Font License 1.1，允许自托管与再分发。
 
    说明：谷歌给 Noto Serif SC 下发的这份样式里只含拉丁字母字形（不含汉字），
-   页面上的汉字在改动前后都由系统字体（PingFang SC / 微软雅黑）渲染，
-   所以本次改动对中文外观零影响，只把英文字母的字体搬到了本地。
+   所以下面另有 2 份「CJK 中文子集」文件（同样是思源宋体，SIL OFL 授权，允许自托管），
+   用 unicode-range 只吃汉字与中文标点 —— 这样中文与标题的拉丁衬线风格统一，字重 300-900 全覆盖，
+   而拉丁字母仍走上面那些更小的 latin / latin-ext 文件。
    ========================================================================== */
 
 /* Cinzel 500 normal latin-ext */
@@ -288,4 +289,88 @@
   font-display:swap;
   src:url('playfair-display-700-latin.woff2') format('woff2');
   unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Noto Serif SC 300/Regular 常规 —— CJK 中文子集（思源宋体，含本站用到的全部汉字）
+   同 2 份文件覆盖 300-900 全档字重：拉丁子集占了 500/600，汉字若不在这些字重注册就会回落系统字体。
+   unicode-range 只声明区块，字号以外的字（如 AI 回复里的生僻字）会自动回落系统字体。 */
+@font-face{
+  font-family:'Noto Serif SC';
+  font-style:normal;
+  font-weight:300;
+  font-display:swap;
+  src:url('noto-serif-sc-400-cjk.woff2') format('woff2');
+  unicode-range:U+00B7, U+2010-2019, U+201C-201D, U+2013-2014, U+2026, U+2030, U+203B, U+2460-24FF, U+2500-257F, U+25A0-25FF, U+2600-26FF, U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF, U+3300-33FF, U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE10-FE1F, U+FE30-FE4F, U+FF00-FFEF;
+}
+
+/* Noto Serif SC 400/Regular 常规 —— CJK 中文子集（思源宋体，含本站用到的全部汉字）
+   同 2 份文件覆盖 300-900 全档字重：拉丁子集占了 500/600，汉字若不在这些字重注册就会回落系统字体。
+   unicode-range 只声明区块，字号以外的字（如 AI 回复里的生僻字）会自动回落系统字体。 */
+@font-face{
+  font-family:'Noto Serif SC';
+  font-style:normal;
+  font-weight:400;
+  font-display:swap;
+  src:url('noto-serif-sc-400-cjk.woff2') format('woff2');
+  unicode-range:U+00B7, U+2010-2019, U+201C-201D, U+2013-2014, U+2026, U+2030, U+203B, U+2460-24FF, U+2500-257F, U+25A0-25FF, U+2600-26FF, U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF, U+3300-33FF, U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE10-FE1F, U+FE30-FE4F, U+FF00-FFEF;
+}
+
+/* Noto Serif SC 500/Regular 常规 —— CJK 中文子集（思源宋体，含本站用到的全部汉字）
+   同 2 份文件覆盖 300-900 全档字重：拉丁子集占了 500/600，汉字若不在这些字重注册就会回落系统字体。
+   unicode-range 只声明区块，字号以外的字（如 AI 回复里的生僻字）会自动回落系统字体。 */
+@font-face{
+  font-family:'Noto Serif SC';
+  font-style:normal;
+  font-weight:500;
+  font-display:swap;
+  src:url('noto-serif-sc-400-cjk.woff2') format('woff2');
+  unicode-range:U+00B7, U+2010-2019, U+201C-201D, U+2013-2014, U+2026, U+2030, U+203B, U+2460-24FF, U+2500-257F, U+25A0-25FF, U+2600-26FF, U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF, U+3300-33FF, U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE10-FE1F, U+FE30-FE4F, U+FF00-FFEF;
+}
+
+/* Noto Serif SC 600/Bold 粗体 —— CJK 中文子集（思源宋体，含本站用到的全部汉字）
+   同 2 份文件覆盖 300-900 全档字重：拉丁子集占了 500/600，汉字若不在这些字重注册就会回落系统字体。
+   unicode-range 只声明区块，字号以外的字（如 AI 回复里的生僻字）会自动回落系统字体。 */
+@font-face{
+  font-family:'Noto Serif SC';
+  font-style:normal;
+  font-weight:600;
+  font-display:swap;
+  src:url('noto-serif-sc-700-cjk.woff2') format('woff2');
+  unicode-range:U+00B7, U+2010-2019, U+201C-201D, U+2013-2014, U+2026, U+2030, U+203B, U+2460-24FF, U+2500-257F, U+25A0-25FF, U+2600-26FF, U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF, U+3300-33FF, U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE10-FE1F, U+FE30-FE4F, U+FF00-FFEF;
+}
+
+/* Noto Serif SC 700/Bold 粗体 —— CJK 中文子集（思源宋体，含本站用到的全部汉字）
+   同 2 份文件覆盖 300-900 全档字重：拉丁子集占了 500/600，汉字若不在这些字重注册就会回落系统字体。
+   unicode-range 只声明区块，字号以外的字（如 AI 回复里的生僻字）会自动回落系统字体。 */
+@font-face{
+  font-family:'Noto Serif SC';
+  font-style:normal;
+  font-weight:700;
+  font-display:swap;
+  src:url('noto-serif-sc-700-cjk.woff2') format('woff2');
+  unicode-range:U+00B7, U+2010-2019, U+201C-201D, U+2013-2014, U+2026, U+2030, U+203B, U+2460-24FF, U+2500-257F, U+25A0-25FF, U+2600-26FF, U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF, U+3300-33FF, U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE10-FE1F, U+FE30-FE4F, U+FF00-FFEF;
+}
+
+/* Noto Serif SC 800/Bold 粗体 —— CJK 中文子集（思源宋体，含本站用到的全部汉字）
+   同 2 份文件覆盖 300-900 全档字重：拉丁子集占了 500/600，汉字若不在这些字重注册就会回落系统字体。
+   unicode-range 只声明区块，字号以外的字（如 AI 回复里的生僻字）会自动回落系统字体。 */
+@font-face{
+  font-family:'Noto Serif SC';
+  font-style:normal;
+  font-weight:800;
+  font-display:swap;
+  src:url('noto-serif-sc-700-cjk.woff2') format('woff2');
+  unicode-range:U+00B7, U+2010-2019, U+201C-201D, U+2013-2014, U+2026, U+2030, U+203B, U+2460-24FF, U+2500-257F, U+25A0-25FF, U+2600-26FF, U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF, U+3300-33FF, U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE10-FE1F, U+FE30-FE4F, U+FF00-FFEF;
+}
+
+/* Noto Serif SC 900/Bold 粗体 —— CJK 中文子集（思源宋体，含本站用到的全部汉字）
+   同 2 份文件覆盖 300-900 全档字重：拉丁子集占了 500/600，汉字若不在这些字重注册就会回落系统字体。
+   unicode-range 只声明区块，字号以外的字（如 AI 回复里的生僻字）会自动回落系统字体。 */
+@font-face{
+  font-family:'Noto Serif SC';
+  font-style:normal;
+  font-weight:900;
+  font-display:swap;
+  src:url('noto-serif-sc-700-cjk.woff2') format('woff2');
+  unicode-range:U+00B7, U+2010-2019, U+201C-201D, U+2013-2014, U+2026, U+2030, U+203B, U+2460-24FF, U+2500-257F, U+25A0-25FF, U+2600-26FF, U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF, U+3300-33FF, U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE10-FE1F, U+FE30-FE4F, U+FF00-FFEF;
 }

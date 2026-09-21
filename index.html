@@ -13,7 +13,7 @@
      样式表，浏览器要等到超时才继续画页面，首屏会白屏很久。字体授权均为 OFL 1.1，允许自托管与再分发。
      注意：谷歌给 Noto Serif SC 下发的样式里只含拉丁字形（不含汉字），页面上的汉字始终由系统字体渲染，
      所以这次改动对中文外观零影响。 -->
-<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="fonts/fonts.css?v=20260919d">
 <style>
   :root{
     --yellow: #F6C445;
@@ -553,7 +553,7 @@
   .bci-stage{
     position:relative;z-index:4;cursor:crosshair;
     min-height:470px;
-    font-family:'SF Pro Display',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    font-family:'SF Pro Display',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,"Noto Serif SC",sans-serif;
     color:#fff;user-select:none;
   }
   /* 画布遮罩：**椭圆**。之前用的"横向+纵向线性渐变取交集"会给神经套一个矩形可见区，
@@ -622,7 +622,7 @@
     box-shadow:0 0 18px rgba(63,217,200,.2);
   }
   @keyframes bciSpin{100%{transform:rotate(360deg)}}
-  .bci-loader-text{color:rgba(255,255,255,.55);font-size:10px;letter-spacing:2px}
+  .bci-loader-text{color:rgba(255,255,255,.6);font-size:11.5px;letter-spacing:.4px;line-height:1.7;text-align:center;padding:0 22px}
   /* ===== 桌面端：把神经"抠"出卡片 =====
      舞台整体向右、上、下溢出 110/46/46px（左侧留给文字，不动），
      溢出的那部分是画布遮罩自然淡出的尾巴，于是神经穿过卡片边框、浮在页面底色上，
@@ -950,6 +950,7 @@
   .music-cap{margin-top:12px;text-align:center;max-width:var(--music-w)}
   .music-cap strong{display:block;font-size:17px;letter-spacing:.2px}
   .music-tz{display:block;margin-top:4px;font-size:11.5px;font-weight:600;letter-spacing:1.6px;color:var(--muted)}
+  .music-tz:empty{display:none}
   .music-artist{display:block;margin-top:5px;font-size:12.5px;color:var(--yellow-light)}
   .music-note{display:block;margin-top:9px;font-size:13.5px;line-height:1.62;color:var(--ink)}
   .music-bar{display:flex;align-items:center;gap:12px;margin-top:13px}
@@ -1677,19 +1678,12 @@
     .contact a.mail{padding:12px 20px;font-size:14.5px}
     footer{padding:26px 0;font-size:12.5px}
   }
+    /* 表单控件默认不继承页面字体（中文会落到系统黑体），统一到思源宋体；
+       拉丁保持 Arial 不动，汉字不在 Arial 里，自然落到思源宋体 */
+    button,input,select,textarea{font-family:Arial,"Noto Serif SC",sans-serif;}
 </style>
   <!-- 3D「神经网络」的模块链预加载：不加这几行，10 个模块会一个接一个串行请求，
        跨境访问时每次往返 1~3 秒，串起来就显得「半天加载不出来」。预加载后浏览器并行取。 -->
-  <link rel="modulepreload" href="vendor/three/build/three.module.js">
-  <link rel="modulepreload" href="vendor/three/examples/jsm/controls/OrbitControls.js">
-  <link rel="modulepreload" href="vendor/three/examples/jsm/postprocessing/EffectComposer.js">
-  <link rel="modulepreload" href="vendor/three/examples/jsm/postprocessing/RenderPass.js">
-  <link rel="modulepreload" href="vendor/three/examples/jsm/postprocessing/UnrealBloomPass.js">
-  <link rel="modulepreload" href="vendor/three/examples/jsm/postprocessing/MaskPass.js">
-  <link rel="modulepreload" href="vendor/three/examples/jsm/postprocessing/Pass.js">
-  <link rel="modulepreload" href="vendor/three/examples/jsm/postprocessing/ShaderPass.js">
-  <link rel="modulepreload" href="vendor/three/examples/jsm/shaders/CopyShader.js">
-  <link rel="modulepreload" href="vendor/three/examples/jsm/shaders/LuminosityHighPassShader.js">
 </head>
 <body>
 
@@ -1790,7 +1784,7 @@
       <div class="core">F</div>
     </div>
     <h1>Fledglynn</h1>
-    <p class="tagline" data-i18n="hero.tagline">一个勇于探索未知领域并深耕的大一新生</p>
+    <p class="tagline" data-i18n="hero.tagline">大一新生，喜欢把一件事慢慢做深</p>
     <div class="hero-badges">
       <span class="badge" data-i18n="hero.bio">智能医学工程</span>
       <span class="badge" data-i18n="hero.bci">脑机接口方向</span>
@@ -1836,20 +1830,19 @@
   <section class="section" id="about">
     <h2 class="section-title reveal"><span>·</span><span data-i18n="about.title">关于我</span></h2>
     <div class="about reveal" data-i18n-html="about.intro">
-      你好，我是 <b>Fledglynn</b>，<span class="hl">话不多、有点佛系</span>，但在感兴趣的事情上愿意沉下心去深耕。
-      目前是 <b>天津大学·香港理工大学深圳未来技术学院</b> 智能医学工程专业的大一新生，
-      正一边夯实专业基础、一边学习 <span class="hl">vibe coding</span>，并借助 AI 工具做知识整理。
+      你好，我是 <b>Fledglynn</b>，<span class="hl">话不多，喜欢慢慢来</span>。
+      现在是智能医学工程专业的大一新生，一边打基础，一边学着用 AI 做点小东西。
     </div>
     <div class="cards">
       <div class="card reveal">
         <div class="k" data-i18n="card1.k">现在的我</div>
         <h3 data-i18n="card1.h">在做的事</h3>
-        <p data-i18n="card1.p">完善个人主页、整理作品集；学习专业基础知识与编程，同时拓展绘画、音乐、街舞、阅读等业余爱好。</p>
+        <p data-i18n="card1.p">在补专业基础和编程；这个主页是自己一点点搭起来的。</p>
       </div>
       <div class="card reveal" style="transition-delay:.1s">
         <div class="k" data-i18n="card2.k">我关心的方向</div>
-        <h3 data-i18n="card2.h">擅长领域</h3>
-        <p data-i18n="card2.p">非侵入式脑机接口、AI 应用、知识整理。希望能把技术与兴趣结合，做出让人 0 压力的科技产品。</p>
+        <h3 data-i18n="card2.h">我在学的方向</h3>
+        <p data-i18n="card2.p">非侵入式脑机接口、AI 应用、知识整理。想把技术和兴趣放在一起，做点有用的东西。</p>
         <div class="interests">
           <span class="chip" data-i18n="chip.bci">脑机接口</span><span class="chip" data-i18n="chip.ai">AI 应用</span><span class="chip" data-i18n="chip.kn">知识整理</span>
         </div>
@@ -1878,8 +1871,8 @@
         <span class="tl-dot" aria-hidden="true"></span>
         <div class="card tl-card">
           <div class="k" data-i18n="study.n1.k">2026.8</div>
-          <h3 data-i18n="study.n1.h">进入天津大学（深圳校区）学习</h3>
-          <p data-i18n="study.n1.p">2026 年 8 月，我进入天津大学（深圳校区），成为智能医学工程专业的一名学生。这里是我大学这条路的起点——先把基础打扎实，再慢慢找到真正想深入的方向。</p>
+          <h3 data-i18n="study.n1.h">开始大学生活</h3>
+          <p data-i18n="study.n1.p">2026 年 8 月入学，读智能医学工程。刚起步，先把基础打扎实，再慢慢找自己想深入的方向。</p>
           <div class="interests">
             <span class="chip" data-i18n="study.n1.c1">智能医学工程</span>
             <span class="chip" data-i18n="study.n1.c2">脑机接口方向</span>
@@ -1890,7 +1883,7 @@
              按 4:3 横向裁 600–1751（顶部留约四成天空），输出 1400×1050（191 KB）与卡片等宽对置。
              四版裁切对比留在 outputs/timeline-photo/compare.html。 -->
         <div class="tl-photo">
-          <img src="images/study.jpg" alt="天津大学（深圳校区）" loading="lazy" decoding="async">
+          <img src="images/study.jpg" alt="入学时的校园照片" loading="lazy" decoding="async">
         </div>
       </div>
 
@@ -1912,8 +1905,8 @@
       <!-- 左：文字说明 -->
       <div class="bci-text">
         <h3 data-i18n="bci.h">我最想深入的方向</h3>
-        <p data-i18n-html="bci.p1">脑机接口是我目前最感兴趣的方向——它把<b>神经信号</b>与机器直接连在一起，让一个念头不必经过手指和键盘，就能变成屏幕上的动作、文字或声音。</p>
-        <p data-i18n="bci.p2">作为智能医学工程专业的学生，我尤其好奇它在医疗里的可能：让失去行动能力的人重新控制肢体，让无法开口的人重新“说话”。右边这个演示，是我对这条路径的一点想象。</p>
+        <p data-i18n-html="bci.p1">脑机接口把<b>神经信号</b>直接连到机器上：一个念头不必经过手指和键盘，就能变成屏幕上的动作或声音。这是我目前最感兴趣的方向。</p>
+        <p data-i18n="bci.p2">我读智能医学工程，最好奇的是它在医疗里的可能——让失去行动能力的人重新控制肢体，让无法开口的人重新说话。右边的演示，只是我的一点想象。</p>
         <div class="interests">
           <span class="chip y" data-i18n="bci.chip1">神经信号解码</span>
           <span class="chip y" data-i18n="bci.chip2">脑电 EEG</span>
@@ -1929,7 +1922,7 @@
       <div class="bci-stage" id="bciStage">
         <div class="bci-loader" id="bciLoader">
           <div class="bci-spinner"></div>
-          <div class="bci-loader-text">INITIALIZING BIOELECTRIC ENGINE</div>
+          <div class="bci-loader-text">正在生成神经网络…</div>
         </div>
         <div class="bci-canvas-wrap"></div>
         <div class="bci-overlay"></div>
@@ -1958,15 +1951,6 @@
     </div>
   </section>
 
-  <!-- 脑机接口演示依赖：本地 Three.js（importmap 必须早于下面的 module） -->
-  <script type="importmap">
-  {
-    "imports": {
-      "three": "./vendor/three/build/three.module.js",
-      "three/addons/": "./vendor/three/examples/jsm/"
-    }
-  }
-  </script>
 
   <script type="module">
   // ============================================================
@@ -1976,17 +1960,56 @@
   //  本地化改造：依赖改为本地 vendor/three；样式与脚本全部限定在 #bciStage 内；
   //  画布透明 + 边缘遮罩淡出，使其自然融入页面深色背景。
   // ============================================================
-  import * as THREE from 'three';
-  import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-  import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
-  import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
-  import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+  /* 加载策略（2026-09 调整）：
+     · 不再依赖 <script type="importmap">：addon 内部也用相对路径引用 three，
+       老版本手机浏览器（import map 支持不全）同样能跑起来；
+     · 不在首屏加载：滚到本版块附近（提前 600px）才动态 import，
+       首屏不再为 1.2MB 的 three.js 抢带宽、抢主线程；
+     · 加载失败或设备跑不动时给一句人话，不再无限转圈。 */
+  const THREE_URL = './vendor/three/build/three.module.js';
+  const ADDONS = './vendor/three/examples/jsm/';
 
   const stage = document.getElementById('bciStage');
-  const canvasWrap = stage.querySelector('.bci-canvas-wrap');
+  const canvasWrap = stage ? stage.querySelector('.bci-canvas-wrap') : null;
   const loaderEl = document.getElementById('bciLoader');
+  const loaderTextEl = loaderEl ? loaderEl.querySelector('.bci-loader-text') : null;
   const btnFire = document.getElementById('bciFire');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  let started = false;       // 是否已触发加载
+  let booted = false;        // 场景是否已初始化
+  let firstFrame = false;    // 是否已经渲染出第一帧
+  let failTimer = null;
+
+  function bciText(key, fallback){
+    try { if (typeof t === 'function') return t(key) || fallback; } catch (err) {}
+    return fallback;
+  }
+  function setLoaderText(txt){ if (loaderTextEl) loaderTextEl.textContent = txt; }
+  function loadFailMsg(){
+    setLoaderText(bciText('bci.loadFail', '这个演示在你当前设备上没能跑起来，先看左边的文字就好。'));
+    if (loaderEl) {
+      const sp = loaderEl.querySelector('.bci-spinner');
+      if (sp) sp.style.display = 'none';
+    }
+  }
+
+  async function boot(){
+    if (booted || !stage || !canvasWrap || !loaderEl) return;
+    booted = true;
+
+    const mods = await Promise.all([
+      import(THREE_URL),
+      import(ADDONS + 'controls/OrbitControls.js'),
+      import(ADDONS + 'postprocessing/EffectComposer.js'),
+      import(ADDONS + 'postprocessing/RenderPass.js'),
+      import(ADDONS + 'postprocessing/UnrealBloomPass.js')
+    ]);
+    const THREE = mods[0];
+    const OrbitControls = mods[1].OrbitControls;
+    const EffectComposer = mods[2].EffectComposer;
+    const RenderPass = mods[3].RenderPass;
+    const UnrealBloomPass = mods[4].UnrealBloomPass;
 
   const shaderNoise = `
       vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
@@ -2619,6 +2642,7 @@
     updateUI();
 
     composer.render();
+    markFirstFrame();
   }
 
   function hideLoader(delay) {
@@ -2628,15 +2652,21 @@
     }, delay);
   }
 
+  function markFirstFrame(){
+    if (firstFrame) return;
+    firstFrame = true;
+    if (failTimer) { clearTimeout(failTimer); failTimer = null; }
+    hideLoader(150);
+  }
+
   if (reduceMotion) {
     controls.autoRotate = false;
     applyResponsiveScene(true);
     updateUI();
     composer.render();
-    hideLoader(300);
+    markFirstFrame();
   } else {
     animate();
-    hideLoader(1200);
   }
 
   if ('ResizeObserver' in window) {
@@ -2644,6 +2674,60 @@
   } else {
     window.addEventListener('resize', () => applyResponsiveScene());
   }
+  }
+
+  /* ===== 懒加载：滚到 3D 版块附近（提前 600px）才开始加载 three.js ===== */
+  function nearEnough(){
+    if (!stage) return true;
+    const r = stage.getBoundingClientRect();
+    const vh = window.innerHeight || document.documentElement.clientHeight || 0;
+    return r.top < vh + 600 && r.bottom > -600;
+  }
+
+  function start(why){
+    if (started) return;
+    started = true;
+    setLoaderText(bciText('bci.loading', '正在生成神经网络…'));
+    failTimer = setTimeout(function(){
+      if (!firstFrame) loadFailMsg();
+    }, 15000);
+    boot().catch(function(err){
+      if (failTimer) { clearTimeout(failTimer); failTimer = null; }
+      if (window.console && console.warn) console.warn('[bci] 3D 场景没能启动：', err);
+      loadFailMsg();
+    });
+  }
+
+  function onScrollCheck(){
+    if (started || !nearEnough()) return;
+    window.removeEventListener('scroll', onScrollCheck);
+    window.removeEventListener('touchmove', onScrollCheck);
+    start('scroll');
+  }
+
+  if ('IntersectionObserver' in window && stage) {
+    const io = new IntersectionObserver(function(entries){
+      for (let k = 0; k < entries.length; k++) {
+        if (entries[k].isIntersecting) { io.disconnect(); start('observer'); return; }
+      }
+    }, { rootMargin: '600px 0px 600px 0px', threshold: 0 });
+    io.observe(stage);
+    window.addEventListener('scroll', onScrollCheck, { passive: true });
+    window.addEventListener('touchmove', onScrollCheck, { passive: true });
+  } else {
+    window.addEventListener('scroll', onScrollCheck, { passive: true });
+    window.addEventListener('touchmove', onScrollCheck, { passive: true });
+  }
+  if (nearEnough()) start('immediate');   // 带 #bci 锚点直开，或版块就在首屏附近
+
+  /* 语言切换时，把加载提示同步成当前语言 */
+  document.addEventListener('langchange', function(){
+    if (!started || firstFrame) return;
+    setLoaderText(bciText('bci.loading', '正在生成神经网络…'));
+  });
+
+  /* 静态文案默认语言（模块早于词典执行时先用中文兜底） */
+  setLoaderText(bciText('bci.loading', '正在生成神经网络…'));
   </script>
 
   <!-- ===== 明信片 ===== -->
@@ -2655,8 +2739,8 @@
         <div class="postcard-body">
           <div class="postcard-text">
             <h3 data-i18n="postcard.collect">收集世界各地的明信片</h3>
-            <p data-i18n-html="postcard.p1">我喜欢通过 <b>Postcrossing</b> 和世界各地的朋友交换明信片，用一张张纸质卡片，让遥远的国家、街道和故事，真实地抵达我手里。</p>
-            <p data-i18n="postcard.p2">每寄出一张，就有一份期待；每收到一张，就打开一扇关于远方的小小窗口。这是我的另一种旅行。</p>
+            <p data-i18n-html="postcard.p1">我在 <b>Postcrossing</b> 上和世界各地的朋友交换明信片，纸质的卡片，让很远的国家和故事真的落到我手里。</p>
+            <p data-i18n="postcard.p2">每寄出一张是期待，每收到一张像是打开一扇小窗。这也是我旅行的一种方式。</p>
           </div>
           <a class="link-btn" href="https://www.postcrossing.com/" target="_blank" rel="noopener"><span data-i18n="postcard.link">去看看 Postcrossing</span> ↗</a>
         </div>
@@ -2708,7 +2792,7 @@
       </figure>
       <div class="card draw-card reveal">
         <h3 data-i18n="drawing.h">颜色还在路上</h3>
-        <p data-i18n="drawing.p1">从 5 岁起，我就很喜欢绘画。现在正在学习板绘——不过速度特别慢，一张要磨很久。所以先放一张模糊的在这里，画完再揭晓。</p>
+        <p data-i18n="drawing.p1">从 5 岁起就喜欢画画。最近在学板绘，但画得很慢，一张要磨很久，所以先放一张模糊的在这里，画完再揭晓。</p>
         <div class="draw-foot">
           <button class="hurry" id="hurryBtn" type="button" data-i18n="drawing.hurry">一键催更</button>
           <span class="hurry-note" id="hurryNote"></span>
@@ -2724,7 +2808,7 @@
     <div class="music-shell">
       <div class="card music-intro reveal">
         <h3 data-i18n="music.h">一整张，从头听到尾</h3>
-        <p data-i18n="music.p1">我特别喜欢听各种类型的歌，主要听 R&amp;B 和嘻哈说唱。个人习惯是一次性听完整张专辑，也会去了解创作者背后的故事——对我来说，一张专辑更像一段完整的话，得从头听到尾。</p>
+        <p data-i18n="music.p1">我主要听 R&amp;B 和嘻哈说唱，习惯一次听完一整张专辑，也会去了解创作者的故事。一张专辑像一段完整的话，得从头听到尾。</p>
       </div>
       <div class="music-player reveal">
         <div class="music-cover" id="musicCover" role="button" tabindex="0"
@@ -2751,7 +2835,7 @@
           <h3 data-i18n="music.recTitle">把好歌推荐给我</h3>
           <span class="rec-count" id="recCount"></span>
         </div>
-        <p class="rec-desc" data-i18n="music.recDesc">你有什么喜欢的歌曲或者专辑想推荐给我吗？我很乐意收听。写下名字就行，想说的话也可以留一句。</p>
+        <p class="rec-desc" data-i18n="music.recDesc">有喜欢的歌或专辑想推荐给我吗？写下名字就行，想说一句也可以。</p>
         <div class="rec-log chat-log" id="recLog" aria-live="polite"></div>
         <p class="rec-empty" id="recEmpty">还没有人留言 —— 你可以是第一句。</p>
         <div class="rec-form">
@@ -2814,7 +2898,7 @@
         <h3 data-i18n="fb.h">这个主页还有哪里可以更好？</h3>
         <span class="fb-badge" data-i18n="fb.private">不会公开，只有我能看到</span>
       </div>
-      <p class="fb-desc" data-i18n="fb.desc">欢迎指出一个看不懂、不好找或者用着别扭的地方——比如某个版块在哪、手机上字是不是太小、某个按钮点了没反应。写一句就够，我会认真看。</p>
+      <p class="fb-desc" data-i18n="fb.desc">欢迎指出看不懂、不好找或用着别扭的地方——比如手机上字太小、某个按钮点了没反应。写一句就够，我都会看。</p>
 
       <form class="fb-form" id="fbForm" novalidate>
         <div class="fb-grid">
@@ -2865,7 +2949,7 @@
     <div class="contact reveal">
       <div>
         <h3 data-i18n="contact.title">认识一下 / 保持联系</h3>
-        <p data-i18n="contact.desc">无论你是朋友、同学、潜在合作伙伴，还是面试官，都欢迎来信交流。</p>
+        <p data-i18n="contact.desc">朋友、同学、老师，或者只是想聊两句的人，都欢迎来信。</p>
       </div>
       <a class="mail" href="mailto:lynn3540@163.com">lynn3540@163.com</a>
     </div>
@@ -2889,18 +2973,18 @@ const I18N = {
     "nav.music": "音乐",
     "nav.chat": "数字分身",
     "nav.contact": "联系",
-    "hero.tagline": "一个勇于探索未知领域并深耕的大一新生",
+    "hero.tagline": "大一新生，喜欢把一件事慢慢做深",
     "hero.bio": "智能医学工程",
     "hero.bci": "脑机接口方向",
     "hero.hobbies": "绘画 · 音乐 · 街舞 · 看书",
     "about.title": "关于我",
-    "about.intro": "你好，我是 <b>Fledglynn</b>，<span class=\"hl\">话不多、有点佛系</span>，但在感兴趣的事情上愿意沉下心去深耕。目前是 <b>天津大学·香港理工大学深圳未来技术学院</b> 智能医学工程专业的大一新生，正一边夯实专业基础、一边学习 <span class=\"hl\">vibe coding</span>，并借助 AI 工具做知识整理。",
+    "about.intro": "你好，我是 <b>Fledglynn</b>，<span class=\"hl\">话不多，喜欢慢慢来</span>。现在是智能医学工程专业的大一新生，一边打基础，一边学着用 AI 做点小东西。",
     "card1.k": "现在的我",
     "card1.h": "在做的事",
-    "card1.p": "完善个人主页、整理作品集；学习专业基础知识与编程，同时拓展绘画、音乐、街舞、阅读等业余爱好。",
+    "card1.p": "在补专业基础和编程；这个主页是自己一点点搭起来的。",
     "card2.k": "我关心的方向",
-    "card2.h": "擅长领域",
-    "card2.p": "非侵入式脑机接口、AI 应用、知识整理。希望能把技术与兴趣结合，做出让人 0 压力的科技产品。",
+    "card2.h": "我在学的方向",
+    "card2.p": "非侵入式脑机接口、AI 应用、知识整理。想把技术和兴趣放在一起，做点有用的东西。",
     "chip.bci": "脑机接口",
     "chip.ai": "AI 应用",
     "chip.kn": "知识整理",
@@ -2913,8 +2997,8 @@ const I18N = {
     "chip.read": "看书",
     "study.title": "学习",
     "study.n1.k": "2026.8",
-    "study.n1.h": "进入天津大学（深圳校区）学习",
-    "study.n1.p": "2026 年 8 月，我进入天津大学（深圳校区），成为智能医学工程专业的一名学生。这里是我大学这条路的起点——先把基础打扎实，再慢慢找到真正想深入的方向。",
+    "study.n1.h": "开始大学生活",
+    "study.n1.p": "2026 年 8 月入学，读智能医学工程。刚起步，先把基础打扎实，再慢慢找自己想深入的方向。",
     "study.n1.c1": "智能医学工程",
     "study.n1.c2": "脑机接口方向",
     "study.n1.c3": "Vibe Coding",
@@ -2922,17 +3006,19 @@ const I18N = {
     "study.more.p": "时间轴才刚起步，之后发生的事，我会一条条补上。",
     "bci.title": "脑机接口",
     "bci.h": "我最想深入的方向",
-    "bci.p1": "脑机接口是我目前最感兴趣的方向——它把<b>神经信号</b>与机器直接连在一起，让一个念头不必经过手指和键盘，就能变成屏幕上的动作、文字或声音。",
-    "bci.p2": "作为智能医学工程专业的学生，我尤其好奇它在医疗里的可能：让失去行动能力的人重新控制肢体，让无法开口的人重新“说话”。右边这个演示，是我对这条路径的一点想象。",
+    "bci.p1": "脑机接口把<b>神经信号</b>直接连到机器上：一个念头不必经过手指和键盘，就能变成屏幕上的动作或声音。这是我目前最感兴趣的方向。",
+    "bci.p2": "我读智能医学工程，最好奇的是它在医疗里的可能——让失去行动能力的人重新控制肢体，让无法开口的人重新说话。右边的演示，只是我的一点想象。",
     "bci.chip1": "神经信号解码",
     "bci.chip2": "脑电 EEG",
     "bci.chip3": "人机交互",
     "bci.chip4": "智能医学工程",
     "bci.hint": "点击触发神经脉冲",
+    "bci.loading": "正在生成神经网络…",
+    "bci.loadFail": "这个演示在你当前设备上没能跑起来，先看左边的文字就好。",
     "postcard.title": "明信片旅行",
     "postcard.collect": "收集世界各地的明信片",
-    "postcard.p1": "我喜欢通过 <b>Postcrossing</b> 和世界各地的朋友交换明信片，用一张张纸质卡片，让遥远的国家、街道和故事，真实地抵达我手里。",
-    "postcard.p2": "每寄出一张，就有一份期待；每收到一张，就打开一扇关于远方的小小窗口。这是我的另一种旅行。",
+    "postcard.p1": "我在 <b>Postcrossing</b> 上和世界各地的朋友交换明信片，纸质的卡片，让很远的国家和故事真的落到我手里。",
+    "postcard.p2": "每寄出一张是期待，每收到一张像是打开一扇小窗。这也是我旅行的一种方式。",
     "postcard.link": "去看看 Postcrossing",
     "postcard.mapTitle": "我的明信片地图",
     "postcard.mapSub": "红色 · 我寄出的 &nbsp;|&nbsp; 蓝色 · 我收到的",
@@ -2947,7 +3033,7 @@ const I18N = {
     "postcard.reply.cap": "来自 moxel 的回复",
     "drawing.title": "绘画",
     "drawing.h": "颜色还在路上",
-    "drawing.p1": "从 5 岁起，我就很喜欢绘画。现在正在学习板绘——不过速度特别慢，一张要磨很久。所以先放一张模糊的在这里，画完再揭晓。",
+    "drawing.p1": "从 5 岁起就喜欢画画。最近在学板绘，但画得很慢，一张要磨很久，所以先放一张模糊的在这里，画完再揭晓。",
     "drawing.hint": "点击看看",
     "drawing.pop1": "笔还插在笔座里，别急。",
     "drawing.pop2": "进度条卡在 1%，但心态很稳。",
@@ -2964,13 +3050,13 @@ const I18N = {
     "drawing.count0Tip": "我还在慢慢画，不急",
     "music.title": "音乐",
     "music.h": "一整张，从头听到尾",
-    "music.p1": "我特别喜欢听各种类型的歌，主要听 R&B 和嘻哈说唱。个人习惯是一次性听完整张专辑，也会去了解创作者背后的故事——对我来说，一张专辑更像一段完整的话，得从头听到尾。",
+    "music.p1": "我主要听 R&B 和嘻哈说唱，习惯一次听完一整张专辑，也会去了解创作者的故事。一张专辑像一段完整的话，得从头听到尾。",
     "music.hint": "轻点封面看下一张",
     "music.prev": "上一张",
     "music.next": "下一张",
     "music.dot": "第 {n} 张",
     "music.recTitle": "把好歌推荐给我",
-    "music.recDesc": "你有什么喜欢的歌曲或者专辑想推荐给我吗？我很乐意收听。写下名字就行，想说的话也可以留一句。",
+    "music.recDesc": "有喜欢的歌或专辑想推荐给我吗？写下名字就行，想说一句也可以。",
     "music.recEmpty": "还没有人留言 —— 你可以是第一句。",
     "music.recEmptySome": "已经收到 {n} 条推荐了 —— 你写的这条发出去后，会显示在上面的框里。",
     "music.recPh": "歌名 / 专辑名（必填）",
@@ -2987,7 +3073,7 @@ const I18N = {
     "chat.q2": "你有哪些作品？",
     "chat.q3": "怎么联系你？",
     "chat.note": "这是一个负责转述我真实信息的数字分身，不会编造超出我背景的回答。",
-    "chat.welcome": "你好，我是 Fledglynn 的数字分身 👋<br>你可以问我关于我的身份、在做什么、作品或兴趣的问题。想从「你现在在做什么？」开始吗？",
+    "chat.welcome": "你好，我是 Fledglynn 的数字分身 👋<br>想问什么都可以，比如我在做什么、有哪些作品。也可以先点左边的常见问题。",
     "chat.placeholder": "输入你的问题…",
     "chat.send": "发送",
     "chat.typing": "正在回忆…",
@@ -3000,7 +3086,7 @@ const I18N = {
     "fb.title": "反馈",
     "fb.h": "这个主页还有哪里可以更好？",
     "fb.private": "不会公开，只有我能看到",
-    "fb.desc": "欢迎指出一个看不懂、不好找或者用着别扭的地方——比如某个版块在哪、手机上字是不是太小、某个按钮点了没反应。写一句就够，我会认真看。",
+    "fb.desc": "欢迎指出看不懂、不好找或用着别扭的地方——比如手机上字太小、某个按钮点了没反应。写一句就够，我都会看。",
     "fb.name": "名字或昵称（可不填）",
     "fb.namePh": "怎么称呼你？",
     "fb.relation": "你和我的关系",
@@ -3033,7 +3119,7 @@ const I18N = {
     "chat.offlineStatic": "（数字分身只在本地演示环境开放，公开版本暂不提供在线问答。欢迎用下面的「反馈」给我留言。）",
     "music.recErrStatic": "（公开版本暂不接收在线推荐——欢迎到下面的「反馈」版块给我留言。）",
     "contact.title": "认识一下 / 保持联系",
-    "contact.desc": "无论你是朋友、同学、潜在合作伙伴，还是面试官，都欢迎来信交流。",
+    "contact.desc": "朋友、同学、老师，或者只是想聊两句的人，都欢迎来信。",
     "footer.line": "用灯塔的光，照亮想做的事",
     "bgm.title": "轻音乐 · Cold (Salt) Water",
     "bgm.play": "播放背景音乐",
@@ -3055,18 +3141,18 @@ const I18N = {
     "nav.music": "Music",
     "nav.chat": "Twin",
     "nav.contact": "Contact",
-    "hero.tagline": "A freshman who boldly explores the unknown and digs deep",
+    "hero.tagline": "A freshman, taking things slow and trying to do them well",
     "hero.bio": "Intelligent Medical Engineering",
     "hero.bci": "Brain-Computer Interface",
     "hero.hobbies": "Painting · Music · Dancing · Reading",
     "about.title": "About Me",
-    "about.intro": "Hi, I'm <b>Fledglynn</b> — <span class=\"hl\">quiet and a bit of a free spirit</span>, but I'm happy to settle in and go deep on things I care about. I'm a freshman in <b>Intelligent Medical Engineering</b> at the Tianjin University · Hong Kong Polytechnic University Shenzhen Future Technology Institute, building my foundation while learning <span class=\"hl\">vibe coding</span> and organizing knowledge with AI tools.",
+    "about.intro": "Hi, I'm <b>Fledglynn</b> — <span class=\"hl\">quiet, and I like to take things slow</span>. I'm a freshman in <b>Intelligent Medical Engineering</b>, building the basics and learning to make small things with AI.",
     "card1.k": "Me Now",
     "card1.h": "What I'm Doing",
-    "card1.p": "Polishing my personal site and curating a portfolio; studying core knowledge and programming while exploring hobbies like painting, music, dancing, and reading.",
+    "card1.p": "Building my foundation and learning to code; I put this site together myself, bit by bit.",
     "card2.k": "My Focus",
-    "card2.h": "Fields I Explore",
-    "card2.p": "Non-invasive brain-computer interfaces, AI applications, and knowledge organization. I want to blend technology with my interests to build low-stress tech products.",
+    "card2.h": "What I'm Learning",
+    "card2.p": "Non-invasive BCI, AI applications, and knowledge organization. I want to put technology and my interests together and make something useful.",
     "chip.bci": "BCI",
     "chip.ai": "AI Apps",
     "chip.kn": "Knowledge",
@@ -3079,8 +3165,8 @@ const I18N = {
     "chip.read": "Reading",
     "study.title": "Learning",
     "study.n1.k": "Aug 2026",
-    "study.n1.h": "Started at Tianjin University (Shenzhen Campus)",
-    "study.n1.p": "In August 2026 I entered Tianjin University (Shenzhen Campus) as a student of Intelligent Medical Engineering. This is where the road begins — build the foundation solid first, then slowly find the direction I really want to dig into.",
+    "study.n1.h": "Started university",
+    "study.n1.p": "Enrolled in August 2026 to study Intelligent Medical Engineering. Just getting started — basics first, then I'll look for the direction I want to go deeper into.",
     "study.n1.c1": "Intelligent Medical Engineering",
     "study.n1.c2": "Brain-Computer Interface",
     "study.n1.c3": "Vibe Coding",
@@ -3088,17 +3174,19 @@ const I18N = {
     "study.more.p": "The timeline has only just started — I'll add each new step as it happens.",
     "bci.title": "Brain-Computer Interface",
     "bci.h": "The field I want to dig into",
-    "bci.p1": "Brain-computer interfaces are the direction I'm most drawn to — they wire <b>neural signals</b> straight into machines, so an intention can become an action, a word or a sound on screen without going through fingers and a keyboard.",
-    "bci.p2": "As a student of Intelligent Medical Engineering, I'm especially curious about what it can do in medicine: helping people who have lost motor control move again, and giving a voice back to those who can no longer speak. The demo on the right is a small piece of that imagination.",
+    "bci.p1": "BCI wires <b>neural signals</b> straight into machines: an intention can become an action or a sound on screen without going through fingers and a keyboard. It's the field I'm most drawn to.",
+    "bci.p2": "I study Intelligent Medical Engineering, and what I'm most curious about is medicine — helping people who lost motor control move again, giving a voice back to those who can't speak. The demo on the right is just a bit of imagination.",
     "bci.chip1": "Neural Decoding",
     "bci.chip2": "EEG",
     "bci.chip3": "Human-Computer Interaction",
     "bci.chip4": "Intelligent Medical Engineering",
     "bci.hint": "CLICK TO TRIGGER NEURAL IMPULSE",
+    "bci.loading": "Building the neural network…",
+    "bci.loadFail": "This demo could not start on your device — the text on the left says the same thing.",
     "postcard.title": "Postcard Journey",
     "postcard.collect": "Collecting postcards from around the world",
-    "postcard.p1": "I love swapping postcards with friends worldwide through <b>Postcrossing</b>, letting distant countries, streets and stories truly reach me through paper cards.",
-    "postcard.p2": "Every one I send carries a little hope; every one I receive opens a tiny window to somewhere far away. It's another way I travel.",
+    "postcard.p1": "I swap postcards with people around the world on <b>Postcrossing</b>; paper cards bring far-away countries and stories into my hands.",
+    "postcard.p2": "Every card I send is a bit of hope, every card I get opens a small window. It's another way I travel.",
     "postcard.link": "Explore Postcrossing",
     "postcard.mapTitle": "My Postcard Map",
     "postcard.mapSub": "Red · Sent by me &nbsp;|&nbsp; Blue · Received",
@@ -3113,7 +3201,7 @@ const I18N = {
     "postcard.reply.cap": "A Reply from moxel",
     "drawing.title": "Art",
     "drawing.h": "The colors are still on their way",
-    "drawing.p1": "I've loved drawing since I was 5. These days I'm learning digital painting on a tablet — but I'm painfully slow, one piece takes forever. So here's a blurred one for now; the reveal comes when it's done.",
+    "drawing.p1": "I've loved drawing since I was 5. I'm learning digital painting now, but I'm slow — one piece takes forever — so here's a blurred one; the reveal comes when it's done.",
     "drawing.hint": "Tap to peek",
     "drawing.pop1": "The pen isn't even out of the case yet.",
     "drawing.pop2": "Progress bar stuck at 1%, but the mindset is solid.",
@@ -3130,13 +3218,13 @@ const I18N = {
     "drawing.count0Tip": "Still painting, slowly — no rush",
     "music.title": "Music",
     "music.h": "Whole albums, start to finish",
-    "music.p1": "I listen to all kinds of music, mostly R&B and hip-hop. My habit is to take a whole album in one sitting, and to read up on the stories behind the people who made it — to me an album is one complete statement, best heard from start to finish.",
+    "music.p1": "I mostly listen to R&B and hip-hop, usually a whole album in one sitting, and I like reading about the people behind it. An album is one complete statement, so I hear it start to finish.",
     "music.hint": "Tap the cover for the next one",
     "music.prev": "Previous",
     "music.next": "Next",
     "music.dot": "Album {n}",
     "music.recTitle": "Send me a song",
-    "music.recDesc": "Any song or album you love and want to recommend to me? I'd be glad to listen. The name is enough — one line about why is welcome too.",
+    "music.recDesc": "Any song or album you'd recommend? The name is enough — one more line is welcome too.",
     "music.recEmpty": "No messages yet — yours could be the first.",
     "music.recEmptySome": "{n} recommendation(s) have come in — once you send yours, it will show up in the box above.",
     "music.recPh": "Song / album name (required)",
@@ -3153,7 +3241,7 @@ const I18N = {
     "chat.q2": "What works do you have?",
     "chat.q3": "How can I reach you?",
     "chat.note": "This twin relays my real information and won't invent answers beyond my background.",
-    "chat.welcome": "Hi, I'm Fledglynn's AI twin 👋<br>Ask me about who I am, what I'm doing, my work, or my interests. Want to start with \"What are you doing now?\"?",
+    "chat.welcome": "Hi, I'm Fledglynn's AI twin 👋<br>Ask me anything — what I'm doing, or the things I've made. Or start with a common question on the left.",
     "chat.placeholder": "Type your question…",
     "chat.send": "Send",
     "chat.typing": "Recalling…",
@@ -3166,7 +3254,7 @@ const I18N = {
     "fb.title": "Feedback",
     "fb.h": "Where could this site be better?",
     "fb.private": "Not public — only I can see it",
-    "fb.desc": "Point out anything confusing, hard to find, or awkward to use — a section you couldn't locate, text that's too small on your phone, a button that did nothing. One line is plenty, and I'll read every word.",
+    "fb.desc": "Tell me anything confusing, hard to find, or awkward to use — text too small on your phone, a button that did nothing. One line is enough, and I'll read all of it.",
     "fb.name": "Name or nickname (optional)",
     "fb.namePh": "What should I call you?",
     "fb.relation": "How you know me",
@@ -3199,7 +3287,7 @@ const I18N = {
     "chat.offlineStatic": "(The AI twin is only available in the local demo build — the public version doesn't offer live Q&A. Feel free to leave a line via the Feedback section below.)",
     "music.recErrStatic": "(The public version doesn't take online recommendations — feel free to leave a line via the Feedback section below.)",
     "contact.title": "Say Hi / Stay in Touch",
-    "contact.desc": "Whether you're a friend, classmate, potential collaborator, or interviewer — you're welcome to reach out.",
+    "contact.desc": "Friends, classmates, teachers — or anyone who just wants to say hi. Feel free to write.",
     "footer.line": "With the lighthouse's light, illuminating what you set out to do",
     "bgm.title": "Soft Music · Cold (Salt) Water",
     "bgm.play": "Play background music",
@@ -3854,23 +3942,23 @@ document.querySelectorAll('.quick').forEach(btn=>{
   const ALBUMS = [
     /* t = 专辑名，a = 歌手，r = 短评，tz = 中文译名（只写在 zh 里，EN 模式不显示）。
        改顺序/换短评/加译名只动这里。 */
-    { img:'images/albums/05.jpg', zh:{ t:"NEVER ENOUGH", tz:"永不足够", a:"Daniel Caesar", r:"福音和声铺底，编曲刻意留白，人声在混音里被推得很前；比前作松弛，也更接近他现场的样子。" },
+    { img:'images/albums/05.jpg', zh:{ t:"NEVER ENOUGH", a:"Daniel Caesar", r:"福音和声铺底，编曲刻意留白，人声在混音里被推得很前；比前作松弛，也更接近他现场的样子。" },
       en:{ t:"NEVER ENOUGH", a:"Daniel Caesar", r:"Gospel harmony underneath, arrangements deliberately sparse, vocals pushed far forward in the mix — looser than his earlier work, closer to how he sounds live." } },
-    { img:'images/albums/06.jpg', zh:{ t:"First Love", tz:"初恋", a:"宇多田光", r:"把 R&B 的和声与日语的语感接在一起，编曲干净、留出呼吸；二十多年后再听，制作水准依然不显旧。" },
+    { img:'images/albums/06.jpg', zh:{ t:"First Love", a:"宇多田光", r:"把 R&B 的和声与日语的语感接在一起，编曲干净、留出呼吸；二十多年后再听，制作水准依然不显旧。" },
       en:{ t:"First Love", a:"Hikaru Utada", r:"R&B voicings meeting the cadence of Japanese head-on, arranged cleanly with room to breathe — two decades on, the production still does not sound dated." } },
     { img:'images/albums/07.jpg', zh:{ t:"11:11", a:"Chris Brown", r:"按 R&B 传统做的专辑：鼓组轻律动、和声层叠，曲目顺序排得像一张连贯的深夜歌单。" },
       en:{ t:"11:11", a:"Chris Brown", r:"Built on R&B orthodoxy: light-touch drum programming, stacked harmonies, a sequence that plays like one continuous late-night set." } },
-    { img:'images/albums/08.jpg', zh:{ t:"FEAR", tz:"恐惧", a:"NF", r:"沿用他惯用的钢琴、弦乐与 808 编制，主题直指恐惧本身；整体比上一张更暗，留白更少。它和紧接的 HOPE 是同一条线的两半——先往下把恐惧摊开，再往上谈希望，连着按顺序听才完整。" },
+    { img:'images/albums/08.jpg', zh:{ t:"FEAR", a:"NF", r:"沿用他惯用的钢琴、弦乐与 808 编制，主题直指恐惧本身；整体比上一张更暗，留白更少。它和紧接的 HOPE 是同一条线的两半——先往下把恐惧摊开，再往上谈希望，连着按顺序听才完整。" },
       en:{ t:"FEAR", a:"NF", r:"His usual piano, strings and 808 setup, aimed straight at fear itself — darker than the last record, with fewer places to breathe. Together with the HOPE entry that follows it forms two halves of one line — the fear opened up first, the climb after — best heard in order, in one sitting." } },
-    { img:'images/albums/09.jpg', zh:{ t:"HOPE", tz:"希望", a:"NF", r:"钢琴与弦乐仍是骨架，但节奏组比前作更靠前；如果 FEAR 是往下沉的那一半，这张就是往上爬的那一半。" },
+    { img:'images/albums/09.jpg', zh:{ t:"HOPE", a:"NF", r:"钢琴与弦乐仍是骨架，但节奏组比前作更靠前；如果 FEAR 是往下沉的那一半，这张就是往上爬的那一半。" },
       en:{ t:"HOPE", a:"NF", r:"Piano and strings still carry the frame, but the rhythm section sits further forward — where FEAR sinks, this half climbs." } },
     { img:'images/albums/10.jpg', zh:{ t:"SOS", a:"SZA", r:"23 首把 R&B、独立摇滚与流行的边界推开，碎片化的结构本身就是情绪结构；混音层次和客串安排都很讲究。" },
       en:{ t:"SOS", a:"SZA", r:"Twenty-three tracks pushing R&B into indie rock and pop; the fragmentation is itself the emotional structure, with mixes and features handled carefully throughout." } },
-    { img:'images/albums/11.jpg', zh:{ t:"The Ride: Part 1", tz:"旅程 · 第一部", a:"Johnny Orlando", r:"作为系列的第一部分，编曲以轻量电子和吉他为主，人声位置很前；能听出他在流行与创作歌手之间找平衡。" },
+    { img:'images/albums/11.jpg', zh:{ t:"The Ride: Part 1", a:"Johnny Orlando", r:"作为系列的第一部分，编曲以轻量电子和吉他为主，人声位置很前；能听出他在流行与创作歌手之间找平衡。" },
       en:{ t:"The Ride: Part 1", a:"Johnny Orlando", r:"First instalment of a series: light electronics and guitar under a very forward vocal — a young writer balancing pop and singer-songwriter instincts." } },
     { img:'images/albums/12.jpg', zh:{ t:"Groupies 吉他手", a:"陈绮贞", r:"吉他主导的编制，词曲常从小场景切入，把民谣叙述和流行旋律缝在一起；中文创作女声里的一个坐标。" },
       en:{ t:"Groupies 吉他手", a:"Cheer Chen", r:"Guitar-led arrangements and lyrics that enter from small scenes, folk narrative stitched to pop melody — a landmark in Chinese-language songwriting." } },
-    { img:'images/albums/13.jpg', zh:{ t:"Flower Boy", tz:"花男孩", a:"Tyler, The Creator", r:"编曲从粗糙取样转向弦乐与和声的铺展，花田与蜜蜂的封面上写的其实是孤独——也是他第一次把脆弱放进正式作品。" },
+    { img:'images/albums/13.jpg', zh:{ t:"Flower Boy", a:"Tyler, The Creator", r:"编曲从粗糙取样转向弦乐与和声的铺展，花田与蜜蜂的封面上写的其实是孤独——也是他第一次把脆弱放进正式作品。" },
       en:{ t:"Flower Boy", a:"Tyler, The Creator", r:"Arrangements move from scrappy samples to spread-out strings and vocal harmony; beneath the flower-field cover the subject is loneliness, and it is the first time he let that into a record." } },
     { img:'images/albums/01.jpg', zh:{ t:"CHROMAKOPIA", a:"Tyler, The Creator", r:"开场三首连成一体，整张围绕父亲、婚姻与身份展开；合成器与弦乐之间收放得很克制，比以往任何一张都更少炫技。" },
       en:{ t:"CHROMAKOPIA", a:"Tyler, The Creator", r:"A three-part opening gives way to his father, his marriage and his identity; synths and strings are traded with more restraint than anything he has made." } },
@@ -3878,7 +3966,7 @@ document.querySelectorAll('.quick').forEach(btn=>{
       en:{ t:"DAMN.", a:"Kendrick Lamar", r:"Minimal drum samples fold a Compton narrative into a concept album that also plays in reverse — the closing DUCKWORTH. rewinds the whole record with one family story." } },
     { img:'images/albums/03.jpg', zh:{ t:"Late Registration", a:"Kanye West", r:"Jon Brion 参与管弦乐与合唱编排，弦乐和取样互相穿插，把说唱做到电影配乐的规格；两张唱片长度却几乎不显冗长。" },
       en:{ t:"Late Registration", a:"Kanye West", r:"With Jon Brion co-producing, orchestras and choirs trade places with samples and push rap to film-score scale — and it rarely drags for a double record." } },
-    { img:'images/albums/04.jpg', zh:{ t:"Dawn FM", tz:"黎明电台", a:"The Weeknd", r:"用一整张电台节目做叙事框架，Jim Carrey 串场，合成器音色偏八十年代；把「死前最后一夜」做成了连续的收听体验。" },
+    { img:'images/albums/04.jpg', zh:{ t:"Dawn FM", a:"The Weeknd", r:"用一整张电台节目做叙事框架，Jim Carrey 串场，合成器音色偏八十年代；把「死前最后一夜」做成了连续的收听体验。" },
       en:{ t:"Dawn FM", a:"The Weeknd", r:"A whole radio broadcast as narrative frame, voiced by Jim Carrey over decidedly eighties synth tones — the last night before death, built as one continuous listen." } },
   ];
   if(!ALBUMS.length) return;
