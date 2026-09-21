@@ -569,6 +569,10 @@
     mask-image:radial-gradient(50% 50% at 50% 50%, #000 70%, transparent 100%);
   }
   .bci-canvas-wrap canvas{display:block;width:100%;height:100%}
+  /* 静态兜底：设备跑不动 3D 时贴一张真实渲染的静帧，沿用画布的椭圆遮罩 */
+  .bci-poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+    opacity:0;transition:opacity .9s ease;pointer-events:none}
+  .bci-poster.is-on{opacity:.95}
   /* 叠加层：只保留扫描线。边缘淡化已交给画布那道遮罩，这里再压暗会在卡片中间留下脏影。
      扫描线必须跟着同一个椭圆一起消散，否则神经"拎出去"之后，
      框外那片空黑里会残留一块矩形的细横纹，露馅。 */
@@ -1784,12 +1788,12 @@
       <div class="core">F</div>
     </div>
     <h1>Fledglynn</h1>
-    <p class="tagline" data-i18n="hero.tagline">大一新生，喜欢把一件事慢慢做深</p>
+    <p class="tagline" data-i18n="hero.tagline">大一新生，习惯把一件事做久一点</p>
     <div class="hero-badges">
       <span class="badge" data-i18n="hero.bio">智能医学工程</span>
       <span class="badge" data-i18n="hero.bci">脑机接口方向</span>
       <span class="badge">Vibe Coding</span>
-      <span class="badge" data-i18n="hero.hobbies">绘画 · 音乐 · 街舞 · 看书</span>
+      <span class="badge" data-i18n="hero.hobbies">绘画 · 音乐 · 街舞 · 阅读</span>
     </div>
   </div>
 
@@ -1830,14 +1834,13 @@
   <section class="section" id="about">
     <h2 class="section-title reveal"><span>·</span><span data-i18n="about.title">关于我</span></h2>
     <div class="about reveal" data-i18n-html="about.intro">
-      你好，我是 <b>Fledglynn</b>，<span class="hl">话不多，喜欢慢慢来</span>。
-      现在是智能医学工程专业的大一新生，一边打基础，一边学着用 AI 做点小东西。
+      你好，我是 <b>Fledglynn</b>，<span class="hl">话不多，做事偏慢</span>。智能医学工程专业大一，一边补基础，一边试着用 AI 做点小东西。
     </div>
     <div class="cards">
       <div class="card reveal">
         <div class="k" data-i18n="card1.k">现在的我</div>
         <h3 data-i18n="card1.h">在做的事</h3>
-        <p data-i18n="card1.p">在补专业基础和编程；这个主页是自己一点点搭起来的。</p>
+        <p data-i18n="card1.p">在补专业基础与编程；这个主页是自己一点点搭起来的。</p>
       </div>
       <div class="card reveal" style="transition-delay:.1s">
         <div class="k" data-i18n="card2.k">我关心的方向</div>
@@ -1855,7 +1858,7 @@
           <span class="chip y" data-i18n="chip.paint">绘画</span>
           <span class="chip y" data-i18n="chip.music">音乐</span>
           <span class="chip y" data-i18n="chip.dance">街舞</span>
-          <span class="chip y" data-i18n="chip.read">看书</span>
+          <span class="chip y" data-i18n="chip.read">阅读</span>
         </div>
       </div>
     </div>
@@ -1872,7 +1875,7 @@
         <div class="card tl-card">
           <div class="k" data-i18n="study.n1.k">2026.8</div>
           <h3 data-i18n="study.n1.h">开始大学生活</h3>
-          <p data-i18n="study.n1.p">2026 年 8 月入学，读智能医学工程。刚起步，先把基础打扎实，再慢慢找自己想深入的方向。</p>
+          <p data-i18n="study.n1.p">2026 年 8 月入学，读智能医学工程。刚起步，先把基础打扎实，再慢慢找想深入的方向。</p>
           <div class="interests">
             <span class="chip" data-i18n="study.n1.c1">智能医学工程</span>
             <span class="chip" data-i18n="study.n1.c2">脑机接口方向</span>
@@ -1890,8 +1893,8 @@
       <div class="tl-item tl-more">
         <span class="tl-dot" aria-hidden="true"></span>
         <div class="card tl-card">
-          <div class="k" data-i18n="study.more.k">持续更新中</div>
-          <p data-i18n="study.more.p">时间轴才刚起步，之后发生的事，我会一条条补上。</p>
+          <div class="k" data-i18n="study.more.k">持续更新</div>
+          <p data-i18n="study.more.p">时间轴才刚起步。之后的事，我会一条条补上。</p>
         </div>
       </div>
     </div>
@@ -1905,7 +1908,7 @@
       <!-- 左：文字说明 -->
       <div class="bci-text">
         <h3 data-i18n="bci.h">我最想深入的方向</h3>
-        <p data-i18n-html="bci.p1">脑机接口把<b>神经信号</b>直接连到机器上：一个念头不必经过手指和键盘，就能变成屏幕上的动作或声音。这是我目前最感兴趣的方向。</p>
+        <p data-i18n-html="bci.p1">脑机接口把<b>神经信号</b>直接连到机器上：一个念头不必经过手指和键盘，就能变成屏幕上的动作或声音。这是目前我最感兴趣的方向。</p>
         <p data-i18n="bci.p2">我读智能医学工程，最好奇的是它在医疗里的可能——让失去行动能力的人重新控制肢体，让无法开口的人重新说话。右边的演示，只是我的一点想象。</p>
         <div class="interests">
           <span class="chip y" data-i18n="bci.chip1">神经信号解码</span>
@@ -1922,7 +1925,7 @@
       <div class="bci-stage" id="bciStage">
         <div class="bci-loader" id="bciLoader">
           <div class="bci-spinner"></div>
-          <div class="bci-loader-text">正在生成神经网络…</div>
+          <div class="bci-loader-text">正在载入动态演示…</div>
         </div>
         <div class="bci-canvas-wrap"></div>
         <div class="bci-overlay"></div>
@@ -1985,13 +1988,48 @@
     try { if (typeof t === 'function') return t(key) || fallback; } catch (err) {}
     return fallback;
   }
-  function setLoaderText(txt){ if (loaderTextEl) loaderTextEl.textContent = txt; }
-  function loadFailMsg(){
-    setLoaderText(bciText('bci.loadFail', '这个演示在你当前设备上没能跑起来，先看左边的文字就好。'));
+  function setLoaderText(txt){ if(loaderTextEl) loaderTextEl.textContent = txt; }
+
+  /* 画质档位（2026-09 手机端补强）：先看这台设备的 WebGL 能力，再决定用哪一档。
+       high = WebGL2 且能渲染半浮点缓冲 → 保留 Bloom 后期，与桌面端一致；
+       low  = 其余情况（老款 iPhone 只有 WebGL1、缺半浮点扩展）→ 去掉后期、粒子减半、像素比压到 1；
+       none = 连 WebGL 上下文都拿不到 → 直接贴静态海报，不再浪费一次必然失败的尝试。 */
+  let QUALITY = (function(){
+    try {
+      const c = document.createElement('canvas');
+      const gl2 = c.getContext('webgl2');
+      if (gl2) {
+        const half = !!(gl2.getExtension('EXT_color_buffer_half_float') || gl2.getExtension('EXT_color_buffer_float'));
+        return half ? 'high' : 'low';
+      }
+      const c1 = document.createElement('canvas');
+      const gl1 = c1.getContext('webgl') || c1.getContext('experimental-webgl');
+      return gl1 ? 'low' : 'none';
+    } catch (err) { return 'none'; }
+  })();
+
+  let posterShown = false;
+
+  /* 静态兜底：真跑不动时，用一张真实渲染的静帧替代画布（沿用同一道椭圆遮罩），
+     加载层只留一行说明，不再无限转圈，也不留空版块。 */
+  function showPoster(){
+    if (posterShown) return;
+    posterShown = true;
+    if (canvasWrap) {
+      const img = document.createElement('img');
+      img.className = 'bci-poster';
+      img.src = 'images/bci-poster.jpg';
+      img.alt = '';
+      img.decoding = 'async';
+      img.onerror = function(){ img.remove(); };
+      canvasWrap.appendChild(img);
+      setTimeout(function(){ img.classList.add('is-on'); }, 30);
+    }
     if (loaderEl) {
       const sp = loaderEl.querySelector('.bci-spinner');
       if (sp) sp.style.display = 'none';
     }
+    setLoaderText(bciText('bci.loadFail', '动态演示未能在当前设备启动，文字部分不受影响。'));
   }
 
   async function boot(){
@@ -2122,27 +2160,40 @@
   const camera = new THREE.PerspectiveCamera(45, stageW() / stageH(), 0.1, 500);
   camera.position.copy(desktopCameraPosition);
 
-  let renderer;
-  try {
-    renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true, powerPreference: 'high-performance' });
-  } catch (err) {
-    const t = loaderEl.querySelector('.bci-loader-text');
-    if (t) t.textContent = 'WEBGL NOT AVAILABLE';
-    throw err;
+  /* 渲染器创建：先按当前档位试首选参数，失败再退到最保守的一套（alpha 也需要的老机型）。
+     全部失败就抛出，交给外层的重试 / 静态海报兜底。 */
+  let renderer = null;
+  const rendererOptions = (QUALITY === 'high')
+    ? [{ antialias: false, alpha: true, powerPreference: 'high-performance' }, { antialias: false, alpha: true }]
+    : [{ antialias: false, alpha: true }, { antialias: false, alpha: true, failIfMajorPerformanceCaveat: false }];
+  for (let k = 0; k < rendererOptions.length && !renderer; k++) {
+    try { renderer = new THREE.WebGLRenderer(rendererOptions[k]); } catch (err) { renderer = null; }
   }
+  if (!renderer) throw new Error('webgl-unavailable');
+  renderer.domElement.addEventListener('webglcontextlost', function(ev){
+    ev.preventDefault();
+    if (window.console && console.warn) console.warn('[bci] 3D 上下文丢失，改用静态画面');
+    showPoster();
+  }, false);
   renderer.setClearColor(0x000000, 0);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, QUALITY === 'high' ? 2 : 1));
   renderer.setSize(stageW(), stageH(), false);
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.2;
   canvasWrap.appendChild(renderer.domElement);
 
-  const composer = new EffectComposer(renderer);
-  const renderPass = new RenderPass(scene, camera);
-  composer.addPass(renderPass);
-
-  const bloomPass = new UnrealBloomPass(new THREE.Vector2(stageW(), stageH()), 1.8, 0.6, 0.1);
-  composer.addPass(bloomPass);
+  /* 精简档不做后期：EffectComposer 默认用半浮点渲染目标，
+     老的 WebGL1 设备上会黑屏或直接报错，这正是手机端只看到降级文案的主因之一。
+     bloomPass 在精简档保留成一个只有 strength 的占位对象，动画逻辑无需分支。 */
+  let composer = null;
+  let bloomPass = { strength: 1.8 };
+  if (QUALITY === 'high') {
+    composer = new EffectComposer(renderer);
+    const renderPass = new RenderPass(scene, camera);
+    composer.addPass(renderPass);
+    bloomPass = new UnrealBloomPass(new THREE.Vector2(stageW(), stageH()), 1.8, 0.6, 0.1);
+    composer.addPass(bloomPass);
+  }
 
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
@@ -2174,9 +2225,9 @@
     camera.fov = compact ? 52 : 45;
     camera.updateProjectionMatrix();
 
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, compact ? 1.5 : 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, QUALITY === 'high' ? (compact ? 1.5 : 2) : 1));
     renderer.setSize(width, height, false);
-    composer.setSize(width, height);
+    if (composer) composer.setSize(width, height);
 
     controls.minDistance = compact ? 24 : 15;
     controls.maxDistance = compact ? 140 : 120;
@@ -2476,7 +2527,7 @@
   networkGroup.add(synapses);
 
   const dustGeo = new THREE.BufferGeometry();
-  const dustCount = 800;
+  const dustCount = (QUALITY === 'high') ? 800 : 380;   // 精简档粒子减半：先保证出画面
   const dustPos = new Float32Array(dustCount * 3);
   for(let i=0; i<dustCount * 3; i++) {
     dustPos[i] = (Math.random() - 0.5) * 150;
@@ -2641,7 +2692,7 @@
 
     updateUI();
 
-    composer.render();
+    if (composer) composer.render(); else renderer.render(scene, camera);
     markFirstFrame();
   }
 
@@ -2663,7 +2714,7 @@
     controls.autoRotate = false;
     applyResponsiveScene(true);
     updateUI();
-    composer.render();
+    if (composer) composer.render(); else renderer.render(scene, camera);
     markFirstFrame();
   } else {
     animate();
@@ -2684,18 +2735,51 @@
     return r.top < vh + 600 && r.bottom > -600;
   }
 
+  /* 手机（蜂窝网络 + 老机型）出首帧明显更慢：超时放宽到 45 秒，中途先给一句「仍在载入」，
+     超时或两次尝试都失败之后，才换成静态画面。 */
+  const MOBILE_LIKE = window.matchMedia('(hover: none) and (pointer: coarse)').matches
+    || Math.min(window.innerWidth || 0, window.innerHeight || 0) <= 520;
+  const START_TIMEOUT = MOBILE_LIKE ? 45000 : 20000;
+  const SLOW_HINT_AT  = MOBILE_LIKE ? 10000 : 6000;
+  let slowTimer = null;
+  let bootAttempt = 0;
+
+  function clearBciTimers(){
+    if (failTimer) { clearTimeout(failTimer); failTimer = null; }
+    if (slowTimer) { clearTimeout(slowTimer); slowTimer = null; }
+  }
+
+  function giveUp(){
+    clearBciTimers();
+    showPoster();
+  }
+
+  function attemptBoot(){
+    boot().catch(function(err){
+      if (window.console && console.warn) console.warn('[bci] 3D 场景没能启动（第 ' + bootAttempt + ' 次）：', err);
+      if (bootAttempt < 2) {
+        bootAttempt++;
+        QUALITY = 'low';                       // 第二次一律走精简档
+        booted = false;
+        if (canvasWrap) { try { canvasWrap.innerHTML = ''; } catch (e) {} }
+        setTimeout(attemptBoot, 400);
+        return;
+      }
+      giveUp();
+    });
+  }
+
   function start(why){
     if (started) return;
     started = true;
-    setLoaderText(bciText('bci.loading', '正在生成神经网络…'));
-    failTimer = setTimeout(function(){
-      if (!firstFrame) loadFailMsg();
-    }, 15000);
-    boot().catch(function(err){
-      if (failTimer) { clearTimeout(failTimer); failTimer = null; }
-      if (window.console && console.warn) console.warn('[bci] 3D 场景没能启动：', err);
-      loadFailMsg();
-    });
+    setLoaderText(bciText('bci.loading', '正在载入动态演示…'));
+    if (QUALITY === 'none') { giveUp(); return; }
+    slowTimer = setTimeout(function(){
+      if (!firstFrame && !posterShown) setLoaderText(bciText('bci.loadingSlow', '仍在载入动态演示…'));
+    }, SLOW_HINT_AT);
+    failTimer = setTimeout(function(){ if (!firstFrame) giveUp(); }, START_TIMEOUT);
+    bootAttempt = 1;
+    attemptBoot();
   }
 
   function onScrollCheck(){
@@ -2722,12 +2806,13 @@
 
   /* 语言切换时，把加载提示同步成当前语言 */
   document.addEventListener('langchange', function(){
+    if (posterShown) { setLoaderText(bciText('bci.loadFail', '动态演示未能在当前设备启动，文字部分不受影响。')); return; }
     if (!started || firstFrame) return;
-    setLoaderText(bciText('bci.loading', '正在生成神经网络…'));
+    setLoaderText(bciText('bci.loading', '正在载入动态演示…'));
   });
 
   /* 静态文案默认语言（模块早于词典执行时先用中文兜底） */
-  setLoaderText(bciText('bci.loading', '正在生成神经网络…'));
+  setLoaderText(bciText('bci.loading', '正在载入动态演示…'));
   </script>
 
   <!-- ===== 明信片 ===== -->
@@ -2739,10 +2824,10 @@
         <div class="postcard-body">
           <div class="postcard-text">
             <h3 data-i18n="postcard.collect">收集世界各地的明信片</h3>
-            <p data-i18n-html="postcard.p1">我在 <b>Postcrossing</b> 上和世界各地的朋友交换明信片，纸质的卡片，让很远的国家和故事真的落到我手里。</p>
-            <p data-i18n="postcard.p2">每寄出一张是期待，每收到一张像是打开一扇小窗。这也是我旅行的一种方式。</p>
+            <p data-i18n-html="postcard.p1">我在 <b>Postcrossing</b> 上和世界各地的朋友交换明信片。纸质卡片会把很远的国家和故事，真的带到手里。</p>
+            <p data-i18n="postcard.p2">寄出一张是期待，收到一张像打开一扇小窗。这也是我旅行的一种方式。</p>
           </div>
-          <a class="link-btn" href="https://www.postcrossing.com/" target="_blank" rel="noopener"><span data-i18n="postcard.link">去看看 Postcrossing</span> ↗</a>
+          <a class="link-btn" href="https://www.postcrossing.com/" target="_blank" rel="noopener"><span data-i18n="postcard.link">前往 Postcrossing</span> ↗</a>
         </div>
       </div>
       <div class="postcard-gallery reveal">
@@ -2792,9 +2877,9 @@
       </figure>
       <div class="card draw-card reveal">
         <h3 data-i18n="drawing.h">颜色还在路上</h3>
-        <p data-i18n="drawing.p1">从 5 岁起就喜欢画画。最近在学板绘，但画得很慢，一张要磨很久，所以先放一张模糊的在这里，画完再揭晓。</p>
+        <p data-i18n="drawing.p1">从 5 岁起就喜欢画画。最近在学板绘，画得慢，一张要磨很久，所以先放一张模糊的在这里，画完再换。</p>
         <div class="draw-foot">
-          <button class="hurry" id="hurryBtn" type="button" data-i18n="drawing.hurry">一键催更</button>
+          <button class="hurry" id="hurryBtn" type="button" data-i18n="drawing.hurry">催一下进度</button>
           <span class="hurry-note" id="hurryNote"></span>
         </div>
         <p class="hurry-msg" id="hurryMsg" role="status" aria-live="polite"></p>
@@ -2808,7 +2893,7 @@
     <div class="music-shell">
       <div class="card music-intro reveal">
         <h3 data-i18n="music.h">一整张，从头听到尾</h3>
-        <p data-i18n="music.p1">我主要听 R&amp;B 和嘻哈说唱，习惯一次听完一整张专辑，也会去了解创作者的故事。一张专辑像一段完整的话，得从头听到尾。</p>
+        <p data-i18n="music.p1">我主要听 R&B 和嘻哈说唱，习惯一次听完一整张专辑，也会顺带了解创作者的故事。一张专辑像一段完整的话，得从头听到尾。</p>
       </div>
       <div class="music-player reveal">
         <div class="music-cover" id="musicCover" role="button" tabindex="0"
@@ -2835,9 +2920,9 @@
           <h3 data-i18n="music.recTitle">把好歌推荐给我</h3>
           <span class="rec-count" id="recCount"></span>
         </div>
-        <p class="rec-desc" data-i18n="music.recDesc">有喜欢的歌或专辑想推荐给我吗？写下名字就行，想说一句也可以。</p>
+        <p class="rec-desc" data-i18n="music.recDesc">有喜欢的歌或专辑想推荐给我吗？写下名字就好，想附一句话也可以。</p>
         <div class="rec-log chat-log" id="recLog" aria-live="polite"></div>
-        <p class="rec-empty" id="recEmpty">还没有人留言 —— 你可以是第一句。</p>
+        <p class="rec-empty" id="recEmpty">暂无推荐。</p>
         <div class="rec-form">
           <div class="chat-input">
             <input id="recItem" type="text" maxlength="120" autocomplete="off"
@@ -2862,7 +2947,7 @@
           <div class="bot-ava">F</div>
           <div>
             <div class="bot-name" data-i18n="chat.name">Fledglynn 的数字分身</div>
-            <div class="bot-status" data-i18n="chat.status">在线 · 基于已知资料回答</div>
+            <div class="bot-status" data-i18n="chat.status">在线 · 依据已知资料回答</div>
           </div>
         </div>
         <div>
@@ -2884,7 +2969,7 @@
         </div>
       </div>
     </div>
-    <p class="fb-cta reveal"><a href="#feedback" data-i18n="chat.cta">看完还有话说？给我留条反馈 →</a></p>
+    <p class="fb-cta reveal"><a href="#feedback" data-i18n="chat.cta">若还有想说的，可以留一条反馈 →</a></p>
   </section>
 
   <!-- ===== 反馈（Feedback）=====
@@ -2898,7 +2983,7 @@
         <h3 data-i18n="fb.h">这个主页还有哪里可以更好？</h3>
         <span class="fb-badge" data-i18n="fb.private">不会公开，只有我能看到</span>
       </div>
-      <p class="fb-desc" data-i18n="fb.desc">欢迎指出看不懂、不好找或用着别扭的地方——比如手机上字太小、某个按钮点了没反应。写一句就够，我都会看。</p>
+      <p class="fb-desc" data-i18n="fb.desc">欢迎指出看不懂、不好找或用着别扭的地方，比如手机上字太小、某个按钮点了没反应。写一句就够，我都会看。</p>
 
       <form class="fb-form" id="fbForm" novalidate>
         <div class="fb-grid">
@@ -2973,15 +3058,15 @@ const I18N = {
     "nav.music": "音乐",
     "nav.chat": "数字分身",
     "nav.contact": "联系",
-    "hero.tagline": "大一新生，喜欢把一件事慢慢做深",
+    "hero.tagline": "大一新生，习惯把一件事做久一点",
     "hero.bio": "智能医学工程",
     "hero.bci": "脑机接口方向",
-    "hero.hobbies": "绘画 · 音乐 · 街舞 · 看书",
+    "hero.hobbies": "绘画 · 音乐 · 街舞 · 阅读",
     "about.title": "关于我",
-    "about.intro": "你好，我是 <b>Fledglynn</b>，<span class=\"hl\">话不多，喜欢慢慢来</span>。现在是智能医学工程专业的大一新生，一边打基础，一边学着用 AI 做点小东西。",
+    "about.intro": "你好，我是 <b>Fledglynn</b>，<span class=\"hl\">话不多，做事偏慢</span>。智能医学工程专业大一，一边补基础，一边试着用 AI 做点小东西。",
     "card1.k": "现在的我",
     "card1.h": "在做的事",
-    "card1.p": "在补专业基础和编程；这个主页是自己一点点搭起来的。",
+    "card1.p": "在补专业基础与编程；这个主页是自己一点点搭起来的。",
     "card2.k": "我关心的方向",
     "card2.h": "我在学的方向",
     "card2.p": "非侵入式脑机接口、AI 应用、知识整理。想把技术和兴趣放在一起，做点有用的东西。",
@@ -2994,32 +3079,33 @@ const I18N = {
     "chip.paint": "绘画",
     "chip.music": "音乐",
     "chip.dance": "街舞",
-    "chip.read": "看书",
+    "chip.read": "阅读",
     "study.title": "学习",
     "study.n1.k": "2026.8",
     "study.n1.h": "开始大学生活",
-    "study.n1.p": "2026 年 8 月入学，读智能医学工程。刚起步，先把基础打扎实，再慢慢找自己想深入的方向。",
+    "study.n1.p": "2026 年 8 月入学，读智能医学工程。刚起步，先把基础打扎实，再慢慢找想深入的方向。",
     "study.n1.c1": "智能医学工程",
     "study.n1.c2": "脑机接口方向",
     "study.n1.c3": "Vibe Coding",
-    "study.more.k": "持续更新中",
-    "study.more.p": "时间轴才刚起步，之后发生的事，我会一条条补上。",
+    "study.more.k": "持续更新",
+    "study.more.p": "时间轴才刚起步。之后的事，我会一条条补上。",
     "bci.title": "脑机接口",
     "bci.h": "我最想深入的方向",
-    "bci.p1": "脑机接口把<b>神经信号</b>直接连到机器上：一个念头不必经过手指和键盘，就能变成屏幕上的动作或声音。这是我目前最感兴趣的方向。",
+    "bci.p1": "脑机接口把<b>神经信号</b>直接连到机器上：一个念头不必经过手指和键盘，就能变成屏幕上的动作或声音。这是目前我最感兴趣的方向。",
     "bci.p2": "我读智能医学工程，最好奇的是它在医疗里的可能——让失去行动能力的人重新控制肢体，让无法开口的人重新说话。右边的演示，只是我的一点想象。",
     "bci.chip1": "神经信号解码",
     "bci.chip2": "脑电 EEG",
     "bci.chip3": "人机交互",
     "bci.chip4": "智能医学工程",
     "bci.hint": "点击触发神经脉冲",
-    "bci.loading": "正在生成神经网络…",
-    "bci.loadFail": "这个演示在你当前设备上没能跑起来，先看左边的文字就好。",
+    "bci.loading": "正在载入动态演示…",
+    "bci.loadingSlow": "仍在载入动态演示…",
+    "bci.loadFail": "动态演示未能在当前设备启动，文字部分不受影响。",
     "postcard.title": "明信片旅行",
     "postcard.collect": "收集世界各地的明信片",
-    "postcard.p1": "我在 <b>Postcrossing</b> 上和世界各地的朋友交换明信片，纸质的卡片，让很远的国家和故事真的落到我手里。",
-    "postcard.p2": "每寄出一张是期待，每收到一张像是打开一扇小窗。这也是我旅行的一种方式。",
-    "postcard.link": "去看看 Postcrossing",
+    "postcard.p1": "我在 <b>Postcrossing</b> 上和世界各地的朋友交换明信片。纸质卡片会把很远的国家和故事，真的带到手里。",
+    "postcard.p2": "寄出一张是期待，收到一张像打开一扇小窗。这也是我旅行的一种方式。",
+    "postcard.link": "前往 Postcrossing",
     "postcard.mapTitle": "我的明信片地图",
     "postcard.mapSub": "红色 · 我寄出的 &nbsp;|&nbsp; 蓝色 · 我收到的",
     "postcard.zoomHint": "点击查看大图",
@@ -3033,60 +3119,60 @@ const I18N = {
     "postcard.reply.cap": "来自 moxel 的回复",
     "drawing.title": "绘画",
     "drawing.h": "颜色还在路上",
-    "drawing.p1": "从 5 岁起就喜欢画画。最近在学板绘，但画得很慢，一张要磨很久，所以先放一张模糊的在这里，画完再揭晓。",
+    "drawing.p1": "从 5 岁起就喜欢画画。最近在学板绘，画得慢，一张要磨很久，所以先放一张模糊的在这里，画完再换。",
     "drawing.hint": "点击看看",
-    "drawing.pop1": "笔还插在笔座里，别急。",
-    "drawing.pop2": "进度条卡在 1%，但心态很稳。",
-    "drawing.pop3": "已经在画了（大概）。",
-    "drawing.hurry": "一键催更",
+    "drawing.pop1": "笔还没拿起来。",
+    "drawing.pop2": "进度停在 1%，心态稳定。",
+    "drawing.pop3": "在画了，大概。",
+    "drawing.hurry": "催一下进度",
     "drawing.hurryDone": "今天已催过",
-    "drawing.hurryDay": "今天已经催过啦，明天再来",
-    "drawing.hurry1": "催更成功！已经转达到本人桌上。",
-    "drawing.hurry2": "收到，TA 说：在画了在画了。",
-    "drawing.hurry3": "催更 +1，进度条动了 0.5%。",
+    "drawing.hurryDay": "今天已经催过了，明天再来。",
+    "drawing.hurry1": "已记录，谢谢你。",
+    "drawing.hurry2": "已记录。我转告一句：在画了。",
+    "drawing.hurry3": "已记录，进度条前进了 0.5%。",
     "drawing.count": "已被催 {n} 次",
-    "drawing.count0": "还没人催过",
-    "drawing.countTip": "谢谢你来催，我会努力画完的",
-    "drawing.count0Tip": "我还在慢慢画，不急",
+    "drawing.count0": "还没有人催过",
+    "drawing.countTip": "谢谢你来催，我会把它画完。",
+    "drawing.count0Tip": "还在慢慢画，不急。",
     "music.title": "音乐",
     "music.h": "一整张，从头听到尾",
-    "music.p1": "我主要听 R&B 和嘻哈说唱，习惯一次听完一整张专辑，也会去了解创作者的故事。一张专辑像一段完整的话，得从头听到尾。",
+    "music.p1": "我主要听 R&B 和嘻哈说唱，习惯一次听完一整张专辑，也会顺带了解创作者的故事。一张专辑像一段完整的话，得从头听到尾。",
     "music.hint": "轻点封面看下一张",
     "music.prev": "上一张",
     "music.next": "下一张",
     "music.dot": "第 {n} 张",
     "music.recTitle": "把好歌推荐给我",
-    "music.recDesc": "有喜欢的歌或专辑想推荐给我吗？写下名字就行，想说一句也可以。",
-    "music.recEmpty": "还没有人留言 —— 你可以是第一句。",
-    "music.recEmptySome": "已经收到 {n} 条推荐了 —— 你写的这条发出去后，会显示在上面的框里。",
+    "music.recDesc": "有喜欢的歌或专辑想推荐给我吗？写下名字就好，想附一句话也可以。",
+    "music.recEmpty": "暂无推荐。",
+    "music.recEmptySome": "已收到 {n} 条推荐。你写的这条发出后，会显示在上面的框里。",
     "music.recPh": "歌名 / 专辑名（必填）",
     "music.recPh2": "想对我说的一句话（可不填）",
     "music.recSend": "发送",
-    "music.recThanks": "收到啦，谢谢你，我会去听的。",
+    "music.recThanks": "已收到，谢谢你，我会去听的。",
     "music.recErr": "没能送出去（本地服务可能没在运行）。也可以直接邮件我：lynn3540@163.com",
     "music.recCount": "已收到 {n} 条推荐",
     "chat.title": "数字分身问答",
     "chat.name": "Fledglynn 的数字分身",
-    "chat.status": "在线 · 基于已知资料回答",
+    "chat.status": "在线 · 依据已知资料回答",
     "chat.quickTitle": "常见问题",
     "chat.q1": "你现在在做什么？",
     "chat.q2": "你有哪些作品？",
     "chat.q3": "怎么联系你？",
     "chat.note": "这是一个负责转述我真实信息的数字分身，不会编造超出我背景的回答。",
-    "chat.welcome": "你好，我是 Fledglynn 的数字分身 👋<br>想问什么都可以，比如我在做什么、有哪些作品。也可以先点左边的常见问题。",
+    "chat.welcome": "你好，我是 Fledglynn 的数字分身。<br>想问什么都可以，比如我在做什么、有哪些作品；也可以先点左边的常见问题。",
     "chat.placeholder": "输入你的问题…",
     "chat.send": "发送",
     "chat.typing": "正在回忆…",
-    "chat.empty": "想聊点什么？可以直接点左边的常见问题，或者随便问我。",
-    "chat.noKey": "（数字分身暂时离线：服务端还没配置 OpenRouter API Key。请在 outputs/personal-homepage/.env 里填入 OPENROUTER_API_KEY 后重启服务。）",
-    "chat.err": "（我这边的 AI 服务出了点问题，稍后再试试。）",
-    "chat.timeout": "（AI 服务暂时没回应，可能是免费模型有点慢。稍等几秒再试一次。）",
-    "chat.network": "（连接数字分身服务失败：请确认已运行 python server.py。稍后再试。）",
+    "chat.empty": "想聊点什么？可以直接点左边的常见问题，也可以随便问我。",
+    "chat.noKey": "（数字分身暂时离线：服务端还没配置 OpenRouter API Key。请在 outputs/personal-homepage-v2/.env 里填入 OPENROUTER_API_KEY 后重启服务。）",
+    "chat.err": "（我这边的 AI 服务出了点问题，稍后再试。）",
+    "chat.timeout": "（AI 服务暂时没回应，可能是免费模型较慢，请稍等几秒再试。）",
+    "chat.network": "（连接数字分身服务失败：请确认已运行 python server.py，然后重试。）",
     "nav.feedback": "反馈",
     "fb.title": "反馈",
     "fb.h": "这个主页还有哪里可以更好？",
     "fb.private": "不会公开，只有我能看到",
-    "fb.desc": "欢迎指出看不懂、不好找或用着别扭的地方——比如手机上字太小、某个按钮点了没反应。写一句就够，我都会看。",
+    "fb.desc": "欢迎指出看不懂、不好找或用着别扭的地方，比如手机上字太小、某个按钮点了没反应。写一句就够，我都会看。",
     "fb.name": "名字或昵称（可不填）",
     "fb.namePh": "怎么称呼你？",
     "fb.relation": "你和我的关系",
@@ -3108,16 +3194,16 @@ const I18N = {
     "fb.messagePh": "哪里可以更好？一句话就够…",
     "fb.send": "提交反馈",
     "fb.sending": "正在提交…",
-    "fb.thanks": "收到啦，谢谢你——你的反馈已经进我的后台了。",
-    "fb.needMsg": "先写一句反馈内容再提交吧。",
-    "fb.err": "没能提交成功，可能是网络问题——你写的内容还在，可以直接再点一次。",
+    "fb.thanks": "已收到，谢谢。你的反馈已经进入我的后台。",
+    "fb.needMsg": "请先写一句反馈内容。",
+    "fb.err": "没能提交成功，可能是网络问题。你写的内容还在，可以直接再点一次。",
     "fb.errLocal": "本地服务没在运行，没能存下来。也可以直接邮件我：lynn3540@163.com",
     "fb.noConfig": "反馈后台还没接上（正在配置中）。也可以直接邮件我：lynn3540@163.com",
     "fb.fab": "反馈",
     "fb.fabTitle": "给我留条反馈",
-    "chat.cta": "看完还有话说？给我留条反馈 →",
-    "chat.offlineStatic": "（数字分身只在本地演示环境开放，公开版本暂不提供在线问答。欢迎用下面的「反馈」给我留言。）",
-    "music.recErrStatic": "（公开版本暂不接收在线推荐——欢迎到下面的「反馈」版块给我留言。）",
+    "chat.cta": "若还有想说的，可以留一条反馈 →",
+    "chat.offlineStatic": "（数字分身只在本地演示环境开放，公开版本暂不提供在线问答。欢迎通过下方「反馈」留言。）",
+    "music.recErrStatic": "暂时没能送出去，可能是网络问题。你写的内容还在，可以再点一次。也可以直接邮件我：lynn3540@163.com",
     "contact.title": "认识一下 / 保持联系",
     "contact.desc": "朋友、同学、老师，或者只是想聊两句的人，都欢迎来信。",
     "footer.line": "用灯塔的光，照亮想做的事",
@@ -3130,134 +3216,135 @@ const I18N = {
     "sound.hint": "点击开启声音",
     "lightbox.close": "关闭",
     "lightbox.prev": "上一张",
-    "lightbox.next": "下一张"
+    "lightbox.next": "下一张",
   },
   en: {
     "nav.about": "About",
-    "nav.study": "Learning",
-    "nav.bci": "BCI",
+    "nav.study": "Studies",
+    "nav.bci": "Brain–Computer",
     "nav.postcard": "Postcards",
-    "nav.drawing": "Art",
+    "nav.drawing": "Drawing",
     "nav.music": "Music",
-    "nav.chat": "Twin",
+    "nav.chat": "AI Twin",
     "nav.contact": "Contact",
-    "hero.tagline": "A freshman, taking things slow and trying to do them well",
+    "hero.tagline": "First-year student, learning to stay with one thing a little longer.",
     "hero.bio": "Intelligent Medical Engineering",
-    "hero.bci": "Brain-Computer Interface",
-    "hero.hobbies": "Painting · Music · Dancing · Reading",
-    "about.title": "About Me",
-    "about.intro": "Hi, I'm <b>Fledglynn</b> — <span class=\"hl\">quiet, and I like to take things slow</span>. I'm a freshman in <b>Intelligent Medical Engineering</b>, building the basics and learning to make small things with AI.",
-    "card1.k": "Me Now",
-    "card1.h": "What I'm Doing",
-    "card1.p": "Building my foundation and learning to code; I put this site together myself, bit by bit.",
-    "card2.k": "My Focus",
-    "card2.h": "What I'm Learning",
-    "card2.p": "Non-invasive BCI, AI applications, and knowledge organization. I want to put technology and my interests together and make something useful.",
-    "chip.bci": "BCI",
-    "chip.ai": "AI Apps",
+    "hero.bci": "Track: brain–computer interfaces",
+    "hero.hobbies": "Drawing · Music · Street Dance · Reading",
+    "about.title": "About",
+    "about.intro": "Hello, I am <b>Fledglynn</b>. <span class=\"hl\">Quiet, and on the slow side.</span> A first-year student in Intelligent Medical Engineering, filling in the basics while trying to build small things with AI.",
+    "card1.k": "Right now",
+    "card1.h": "What I am doing",
+    "card1.p": "Filling in the fundamentals of my major and of programming. This site I built piece by piece myself.",
+    "card2.k": "What I care about",
+    "card2.h": "Where I am heading",
+    "card2.p": "Non-invasive brain–computer interfaces, AI applications, knowledge management. I would like to bring technique and interest together into something useful.",
+    "chip.bci": "Brain–Computer",
+    "chip.ai": "AI Applications",
     "chip.kn": "Knowledge",
-    "card3.k": "My Interests",
+    "card3.k": "Interests",
     "card3.h": "Hobbies",
-    "card3.p": "I like quiet moments, capturing the world with lines and color blocks.",
-    "chip.paint": "Painting",
+    "card3.p": "I like quiet, and record the world with lines and blocks of colour.",
+    "chip.paint": "Drawing",
     "chip.music": "Music",
-    "chip.dance": "Dancing",
+    "chip.dance": "Street Dance",
     "chip.read": "Reading",
-    "study.title": "Learning",
-    "study.n1.k": "Aug 2026",
-    "study.n1.h": "Started university",
-    "study.n1.p": "Enrolled in August 2026 to study Intelligent Medical Engineering. Just getting started — basics first, then I'll look for the direction I want to go deeper into.",
+    "study.title": "Studies",
+    "study.n1.k": "2026.8",
+    "study.n1.h": "Starting university",
+    "study.n1.p": "Enrolled in August 2026 in Intelligent Medical Engineering. Just beginning: first the fundamentals, then, slowly, a direction worth going deeper into.",
     "study.n1.c1": "Intelligent Medical Engineering",
-    "study.n1.c2": "Brain-Computer Interface",
+    "study.n1.c2": "Brain–computer interfaces",
     "study.n1.c3": "Vibe Coding",
-    "study.more.k": "To be continued",
-    "study.more.p": "The timeline has only just started — I'll add each new step as it happens.",
-    "bci.title": "Brain-Computer Interface",
-    "bci.h": "The field I want to dig into",
-    "bci.p1": "BCI wires <b>neural signals</b> straight into machines: an intention can become an action or a sound on screen without going through fingers and a keyboard. It's the field I'm most drawn to.",
-    "bci.p2": "I study Intelligent Medical Engineering, and what I'm most curious about is medicine — helping people who lost motor control move again, giving a voice back to those who can't speak. The demo on the right is just a bit of imagination.",
-    "bci.chip1": "Neural Decoding",
+    "study.more.k": "Ongoing",
+    "study.more.p": "The timeline has only just started. I will add what happens, one entry at a time.",
+    "bci.title": "Brain–Computer Interfaces",
+    "bci.h": "The direction I most want to go deeper into",
+    "bci.p1": "A brain–computer interface connects <b>neural signals</b> straight to a machine: a thought can become a movement or a sound on screen without passing through fingers or a keyboard. This is the direction I find most interesting now.",
+    "bci.p2": "I study Intelligent Medical Engineering, and what I am most curious about is what it can do in medicine — helping someone who has lost control of their limbs regain it, or someone who cannot speak speak again. The demonstration on the right is only a small imagining of mine.",
+    "bci.chip1": "Neural signal decoding",
     "bci.chip2": "EEG",
-    "bci.chip3": "Human-Computer Interaction",
+    "bci.chip3": "Human–computer interaction",
     "bci.chip4": "Intelligent Medical Engineering",
-    "bci.hint": "CLICK TO TRIGGER NEURAL IMPULSE",
-    "bci.loading": "Building the neural network…",
-    "bci.loadFail": "This demo could not start on your device — the text on the left says the same thing.",
-    "postcard.title": "Postcard Journey",
+    "bci.hint": "Click to trigger a neural pulse",
+    "bci.loading": "Loading the animated demo…",
+    "bci.loadingSlow": "Still loading the animated demo…",
+    "bci.loadFail": "The animated demo could not start on this device. The text is unaffected.",
+    "postcard.title": "Postcards",
     "postcard.collect": "Collecting postcards from around the world",
-    "postcard.p1": "I swap postcards with people around the world on <b>Postcrossing</b>; paper cards bring far-away countries and stories into my hands.",
-    "postcard.p2": "Every card I send is a bit of hope, every card I get opens a small window. It's another way I travel.",
-    "postcard.link": "Explore Postcrossing",
-    "postcard.mapTitle": "My Postcard Map",
-    "postcard.mapSub": "Red · Sent by me &nbsp;|&nbsp; Blue · Received",
-    "postcard.zoomHint": "Click to view full size",
-    "postcard.poland.full": "Poland · Wawel Castle, Krakow",
-    "postcard.poland.cap": "Poland · Krakow",
-    "postcard.movie.full": "Dune Movie Postcard",
-    "postcard.movie.cap": "Dune (Movie)",
-    "postcard.finland.full": "Finland · Helsinki",
-    "postcard.finland.cap": "Finland · Helsinki",
-    "postcard.reply.full": "A Reply from moxel",
-    "postcard.reply.cap": "A Reply from moxel",
-    "drawing.title": "Art",
-    "drawing.h": "The colors are still on their way",
-    "drawing.p1": "I've loved drawing since I was 5. I'm learning digital painting now, but I'm slow — one piece takes forever — so here's a blurred one; the reveal comes when it's done.",
-    "drawing.hint": "Tap to peek",
-    "drawing.pop1": "The pen isn't even out of the case yet.",
-    "drawing.pop2": "Progress bar stuck at 1%, but the mindset is solid.",
-    "drawing.pop3": "Already drawing (probably).",
-    "drawing.hurry": "Nudge for updates",
+    "postcard.p1": "I exchange postcards with people around the world on <b>Postcrossing</b>. Paper cards bring distant countries and stories into my hands.",
+    "postcard.p2": "Sending one is anticipation; receiving one is like opening a small window. It is also how I travel.",
+    "postcard.link": "Visit Postcrossing",
+    "postcard.mapTitle": "My postcard map",
+    "postcard.mapSub": "Red · sent &nbsp;|&nbsp; Blue · received",
+    "postcard.zoomHint": "Click to enlarge",
+    "postcard.poland.full": "Wawel Castle, Kraków, Poland",
+    "postcard.poland.cap": "Kraków, Poland",
+    "postcard.movie.full": "Postcard from the film Dune",
+    "postcard.movie.cap": "The film Dune",
+    "postcard.finland.full": "Helsinki, Finland",
+    "postcard.finland.cap": "Helsinki, Finland",
+    "postcard.reply.full": "A reply from moxel",
+    "postcard.reply.cap": "A reply from moxel",
+    "drawing.title": "Drawing",
+    "drawing.h": "The colour is still on its way",
+    "drawing.p1": "I have liked drawing since I was five. Lately I am learning digital painting; it is slow work, and one piece takes a long time, so here is a blurred one for now, to be replaced when it is finished.",
+    "drawing.hint": "Have a look",
+    "drawing.pop1": "The pen is not picked up yet.",
+    "drawing.pop2": "Progress stopped at 1%; composure intact.",
+    "drawing.pop3": "Being drawn, roughly.",
+    "drawing.hurry": "Nudge the progress",
     "drawing.hurryDone": "Nudged today",
-    "drawing.hurryDay": "You already nudged today — come back tomorrow",
-    "drawing.hurry1": "Nudge delivered straight to the desk.",
-    "drawing.hurry2": "Got it. Reply: still drawing, still drawing.",
-    "drawing.hurry3": "Nudge +1. Progress bar moved 0.5%.",
-    "drawing.count": "Nudged {n} times so far",
+    "drawing.hurryDay": "Already nudged today. Please come back tomorrow.",
+    "drawing.hurry1": "Recorded, thank you.",
+    "drawing.hurry2": "Recorded. Word passed on: it is being drawn.",
+    "drawing.hurry3": "Recorded. The progress bar moved 0.5%.",
+    "drawing.count": "Nudged {n} times",
     "drawing.count0": "No nudges yet",
-    "drawing.countTip": "Thanks for nudging — I'll do my best to finish it",
-    "drawing.count0Tip": "Still painting, slowly — no rush",
+    "drawing.countTip": "Thank you for the nudge. I will finish it.",
+    "drawing.count0Tip": "Still drawing, slowly.",
     "music.title": "Music",
-    "music.h": "Whole albums, start to finish",
-    "music.p1": "I mostly listen to R&B and hip-hop, usually a whole album in one sitting, and I like reading about the people behind it. An album is one complete statement, so I hear it start to finish.",
+    "music.h": "A whole album, start to finish",
+    "music.p1": "I mostly listen to R&B and hip-hop, usually a whole album at a time, and I like knowing the story of the people who made it. An album is like one long statement: it has to be heard from start to finish.",
     "music.hint": "Tap the cover for the next one",
     "music.prev": "Previous",
     "music.next": "Next",
-    "music.dot": "Album {n}",
-    "music.recTitle": "Send me a song",
-    "music.recDesc": "Any song or album you'd recommend? The name is enough — one more line is welcome too.",
-    "music.recEmpty": "No messages yet — yours could be the first.",
-    "music.recEmptySome": "{n} recommendation(s) have come in — once you send yours, it will show up in the box above.",
-    "music.recPh": "Song / album name (required)",
-    "music.recPh2": "Anything you want to tell me (optional)",
+    "music.dot": "No. {n}",
+    "music.recTitle": "Recommend a song to me",
+    "music.recDesc": "Is there a song or an album you would like to recommend? A title is enough; a sentence alongside it is welcome too.",
+    "music.recEmpty": "No recommendations yet.",
+    "music.recEmptySome": "{n} recommendations so far. Once yours is sent, it will appear in the box above.",
+    "music.recPh": "Song or album title (required)",
+    "music.recPh2": "A sentence for me (optional)",
     "music.recSend": "Send",
-    "music.recThanks": "Got it — thank you, I'll give it a listen.",
-    "music.recErr": "That didn't go through (the local server may be off). You can also just email me: lynn3540@163.com",
-    "music.recCount": "{n} recommendation(s) so far",
-    "chat.title": "AI Twin Q&A",
-    "chat.name": "Fledglynn's AI Twin",
-    "chat.status": "Online · answers from known info",
-    "chat.quickTitle": "Common Questions",
-    "chat.q1": "What are you doing now?",
-    "chat.q2": "What works do you have?",
+    "music.recThanks": "Received, thank you. I will listen.",
+    "music.recErr": "It could not be sent (the local service may not be running). You can also email me: lynn3540@163.com",
+    "music.recCount": "{n} recommendations received",
+    "chat.title": "Ask the AI twin",
+    "chat.name": "Fledglynn's AI twin",
+    "chat.status": "Online · answers from information I have provided",
+    "chat.quickTitle": "Common questions",
+    "chat.q1": "What are you working on now?",
+    "chat.q2": "What have you made?",
     "chat.q3": "How can I reach you?",
-    "chat.note": "This twin relays my real information and won't invent answers beyond my background.",
-    "chat.welcome": "Hi, I'm Fledglynn's AI twin 👋<br>Ask me anything — what I'm doing, or the things I've made. Or start with a common question on the left.",
+    "chat.note": "This is an AI twin that relays information about me as I have given it; it will not invent answers beyond my own background.",
+    "chat.welcome": "Hello, I am Fledglynn's AI twin.<br>Ask me anything — what I am working on, what I have made; or start with the questions on the left.",
     "chat.placeholder": "Type your question…",
     "chat.send": "Send",
     "chat.typing": "Recalling…",
-    "chat.empty": "What would you like to talk about? Try a common question, or just ask me anything.",
-    "chat.noKey": "(The AI twin is offline: the server hasn't been configured with an OpenRouter API Key yet. Add OPENROUTER_API_KEY to outputs/personal-homepage/.env and restart the service.)",
-    "chat.err": "(My AI service hit a problem. Try again in a moment.)",
-    "chat.timeout": "(The AI service is taking a while — the free model can be slow. Try again in a few seconds.)",
-    "chat.network": "(Failed to reach the AI service: make sure python server.py is running. Try again later.)",
+    "chat.empty": "What would you like to ask? Use the questions on the left, or simply ask.",
+    "chat.noKey": "(The AI twin is offline: the server has no OpenRouter API key configured. Add OPENROUTER_API_KEY to outputs/personal-homepage-v2/.env and restart the service.)",
+    "chat.err": "(My AI service ran into a problem. Please try again later.)",
+    "chat.timeout": "(The AI service has not replied yet; free models can be slow. Please wait a few seconds and try again.)",
+    "chat.network": "(Could not reach the AI twin service. Please make sure python server.py is running, then try again.)",
     "nav.feedback": "Feedback",
     "fb.title": "Feedback",
-    "fb.h": "Where could this site be better?",
-    "fb.private": "Not public — only I can see it",
-    "fb.desc": "Tell me anything confusing, hard to find, or awkward to use — text too small on your phone, a button that did nothing. One line is enough, and I'll read all of it.",
+    "fb.h": "What could be better on this page?",
+    "fb.private": "Not public — only I can read it",
+    "fb.desc": "If anything is hard to read, hard to find, or awkward to use — text too small on a phone, a button that does nothing — I would be glad to know. One sentence is enough, and I read every one.",
     "fb.name": "Name or nickname (optional)",
     "fb.namePh": "What should I call you?",
-    "fb.relation": "How you know me",
+    "fb.relation": "How we know each other",
     "fb.rel.none": "Optional",
     "fb.rel.classmate": "Classmate",
     "fb.rel.teacher": "Teacher",
@@ -3265,40 +3352,40 @@ const I18N = {
     "fb.rel.friend": "Friend",
     "fb.rel.colleague": "Colleague",
     "fb.rel.other": "Other",
-    "fb.rel.private": "Rather not say",
-    "fb.device": "Which device you're on",
+    "fb.rel.private": "Prefer not to say",
+    "fb.device": "What you are viewing on",
     "fb.dev.none": "Optional",
     "fb.dev.desktop": "Computer",
     "fb.dev.phone": "Phone",
     "fb.dev.tablet": "Tablet",
     "fb.dev.other": "Other",
     "fb.message": "Your feedback (required)",
-    "fb.messagePh": "What could be better? One line is enough…",
+    "fb.messagePh": "What could be better? One sentence is enough…",
     "fb.send": "Send feedback",
     "fb.sending": "Sending…",
-    "fb.thanks": "Got it — thank you. Your feedback is in my dashboard now.",
-    "fb.needMsg": "Please write a line of feedback first.",
-    "fb.err": "That didn't go through — possibly a network issue. Your text is still here, so just hit send again.",
-    "fb.errLocal": "The local server isn't running, so nothing was saved. You can also email me: lynn3540@163.com",
-    "fb.noConfig": "The feedback backend isn't connected yet (still being set up). You can also email me: lynn3540@163.com",
+    "fb.thanks": "Received, thank you. Your feedback has reached my dashboard.",
+    "fb.needMsg": "Please write a sentence first.",
+    "fb.err": "It did not go through, possibly a network problem. What you wrote is still here, so you can simply send it again.",
+    "fb.errLocal": "The local service is not running, so nothing was saved. You can also email me: lynn3540@163.com",
+    "fb.noConfig": "The feedback backend is not connected yet (still being set up). You can also email me: lynn3540@163.com",
     "fb.fab": "Feedback",
-    "fb.fabTitle": "Leave me a line of feedback",
-    "chat.cta": "Anything else on your mind? Leave me a line of feedback →",
-    "chat.offlineStatic": "(The AI twin is only available in the local demo build — the public version doesn't offer live Q&A. Feel free to leave a line via the Feedback section below.)",
-    "music.recErrStatic": "(The public version doesn't take online recommendations — feel free to leave a line via the Feedback section below.)",
-    "contact.title": "Say Hi / Stay in Touch",
-    "contact.desc": "Friends, classmates, teachers — or anyone who just wants to say hi. Feel free to write.",
-    "footer.line": "With the lighthouse's light, illuminating what you set out to do",
-    "bgm.title": "Soft Music · Cold (Salt) Water",
+    "fb.fabTitle": "Leave me a note",
+    "chat.cta": "Anything more to say? Leave a note in Feedback →",
+    "chat.offlineStatic": "(The AI twin is available in the local demo only; the public version does not offer live Q&A. Please use Feedback below.)",
+    "music.recErrStatic": "It could not be sent, possibly a network problem. What you wrote is still here, so you can simply send it again. You can also email me: lynn3540@163.com",
+    "contact.title": "Say hello / stay in touch",
+    "contact.desc": "Friends, classmates, teachers — or anyone who simply feels like a chat — you are all welcome to write.",
+    "footer.line": "Light from the lighthouse, on the things I want to do",
+    "bgm.title": "Light music · Cold (Salt) Water",
     "bgm.play": "Play background music",
     "bgm.pause": "Pause background music",
-    "sea.title": "Sea Waves · Alta",
-    "sea.play": "Play sea waves",
-    "sea.pause": "Pause sea waves",
-    "sound.hint": "Tap to enable sound",
+    "sea.title": "Waves · Alta, wide sea and open sky",
+    "sea.play": "Play waves",
+    "sea.pause": "Pause waves",
+    "sound.hint": "Turn on sound",
     "lightbox.close": "Close",
     "lightbox.prev": "Previous",
-    "lightbox.next": "Next"
+    "lightbox.next": "Next",
   }
 };
 
@@ -4116,20 +4203,66 @@ document.querySelectorAll('.quick').forEach(btn=>{
       : t('music.recEmpty');
   }
 
-  /* 纯静态托管上没有 Python 接口：换成「欢迎走反馈版块」的说明 */
+  /* 公开端没有 Python 接口，但反馈用的 Supabase 表同样允许匿名写入：
+     推荐就复用同一张表，用 version 后缀区分（v3.0-rec），站长在后台一筛就能看到。
+     前端只有 INSERT 权限、读不到别人写的内容，所以线上不再显示「已有多少条」。 */
+  function sbConf(){
+    const c = window.SUPABASE_CONFIG || {};
+    const url = String(c.url || '').trim().replace(/\/+$/, '');
+    const key = String(c.publishableKey || c.anonKey || '').trim();
+    const ok = /^https:\/\/[a-z0-9-]+\.supabase\.co$/i.test(url) && key.length > 20;
+    return { url: url, key: key, ok: ok, version: (c.version || 'v3.0') + '-rec' };
+  }
+
   function recErrText(){
     return SITE_ENV.local ? t('music.recErr') : t('music.recErrStatic');
   }
 
+  /* 送进 feedback 表：只写不读；message 加前缀，后台里一眼能和反馈区分开 */
+  async function sendCloud(item, note){
+    const c = sbConf();
+    if(!c.ok) throw new Error('no-backend');
+    const res = await fetch(c.url + '/rest/v1/feedback', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': c.key,
+        'Authorization': 'Bearer ' + c.key,
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({
+        name: null, relation: null, device: null,
+        message: '【推荐】' + item + (note ? ' — ' + note : ''),
+        version: c.version
+      })
+    });
+    if(!res.ok) throw new Error('cloud ' + res.status);
+    return true;
+  }
+
+  async function sendLocal(item, note){
+    const res = await fetch('/api/recommend', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ item: item, note: note })
+    });
+    const d = await res.json().catch(() => ({}));
+    if(!res.ok || !d || !d.ok) throw new Error('local ' + res.status);
+    return d;
+  }
+
   function refreshCount(){
-    if(!SITE_ENV.local) return;   // 纯静态托管没有接口：不发无效请求（避免必然的 404）
+    if(!SITE_ENV.local){
+      if(countEl) countEl.hidden = true;   // 线上读不到条数，这一行索性不显示
+      return;
+    }
     fetch('/api/recommend', { headers: { 'Accept': 'application/json' } })
       .then(r => r.ok ? r.json() : null)
       .then(d => { if(d && typeof d.count === 'number') setCount(d.count); })
       .catch(()=>{});
   }
 
-  function submit(){
+  async function submit(){
     if(sending) return;
     const item = itemEl.value.trim();
     const note = noteEl.value.trim();
@@ -4141,30 +4274,20 @@ document.querySelectorAll('.quick').forEach(btn=>{
     itemEl.value = '';
     noteEl.value = '';
 
-    // 纯静态托管：没有 /api/recommend，直接给友好说明（不发必然 404 的请求）
-    if(!SITE_ENV.local){
+    try{
+      if(SITE_ENV.local){
+        const d = await sendLocal(item, note);
+        if(d && typeof d.count === 'number') setCount(d.count);
+      }else{
+        await sendCloud(item, note);   // 公开端：写进 Supabase 的 feedback 表
+      }
+      bubble('bot', t('music.recThanks'));
+    }catch(err){
+      bubble('bot', recErrText());
+    }finally{
       sending = false;
       sendBtn.disabled = false;
-      bubble('bot', recErrText());
-      return;
     }
-
-    fetch('/api/recommend', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ item: item, note: note })
-    })
-      .then(r => r.json().catch(() => ({})).then(d => ({ ok: r.ok, data: d })))
-      .then(res => {
-        if(res.ok && res.data && res.data.ok){
-          bubble('bot', t('music.recThanks'));
-          if(typeof res.data.count === 'number') setCount(res.data.count);
-        }else{
-          bubble('bot', recErrText());
-        }
-      })
-      .catch(() => { bubble('bot', recErrText()); })
-      .then(() => { sending = false; sendBtn.disabled = false; });
   }
 
   sendBtn.addEventListener('click', submit);
