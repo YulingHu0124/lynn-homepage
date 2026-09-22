@@ -4856,10 +4856,13 @@ document.querySelectorAll('.quick').forEach(btn=>{
   })();
 
   /* ===== 访客记录（只写不读）=====
-     每次打开页面，往 Supabase 的 visits 表写一条，站长在后台就能看到「谁在什么时候来过」。
+     每次打开页面记一条 pageview（PV 口径：刷新、重新打开都算一条），站长在后台就能看到「谁在什么时候来过」。
      只上报「语言 / 设备 / 屏幕 / 来源域名 / 时区 / 随机访客号」：
        - 不写 IP、不种 cookie、不接任何第三方统计，读权限只留给站长（RLS 只允许匿名 INSERT）；
-       - 随机访客号存在访客自己的浏览器里，只用来区分「是不是同一个人」，不含任何身份信息；
+       - 随机访客号存在访客自己的浏览器里，用来区分「是不是同一个人」，不含任何身份信息；
+         浏览器禁用存储时退化成「临时访客号」，宁可算成新访客，也绝不丢记录；
+       - 发送失败的那条会进本地待补队列（最多 8 条，72 小时内有效），下次打开页面自动补传，
+         并带上原始发生时间 —— 弱网、被墙、断网都不会白白丢掉一次访问；
        - 全部包在 try/catch 里，失败一律静默 —— 统计绝不能影响访客体验。
      表还没建好时（或网络不通）什么都不会发生，页面一切照常。 */
   function visitConf(){
@@ -4879,15 +4882,61 @@ document.querySelectorAll('.quick').forEach(btn=>{
     });
   }
 
+  /* 存储兜底：无痕模式、部分 App 内置浏览器会直接禁用 storage，这里绝不抛异常，
+     拿不到就退化成「本次页面内存里的临时编号」，记录照样发得出去。 */
+  function visitStore(kind){
+    try{ return kind === 'vid' ? window.localStorage : window.sessionStorage; }catch(e){ return null; }
+  }
+
   /* 访客号（长期，存 localStorage）与本次会话号（关掉标签页即失效） */
-  function visitMark(kind){
+  function visitId(kind){
+    const key = 'fw-' + kind;
+    const store = visitStore(kind);
     try{
-      const store = kind === 'vid' ? window.localStorage : window.sessionStorage;
-      const k = 'fw-' + kind;
-      let v = store.getItem(k);
-      if(!v){ v = visitUUID(); store.setItem(k, v); }
-      return v;
-    }catch(e){ return null; }
+      let v = store && store.getItem(key);
+      if(!v){ v = visitUUID(); if(store) store.setItem(key, v); }
+      if(v) return v;
+    }catch(e){}
+    if(!window.__fwMem) window.__fwMem = {};
+    if(!window.__fwMem[key]) window.__fwMem[key] = visitUUID();
+    return window.__fwMem[key];
+  }
+
+  /* 待补队列：发送失败的那条先存本地，下次打开页面补传（最多 8 条，超 72 小时作废） */
+  const VISIT_Q_KEY = 'fw-visit-queue', VISIT_Q_MAX = 8, VISIT_Q_TTL = 72 * 3600 * 1000;
+
+  function visitQueueRead(){
+    const store = visitStore('vid');
+    try{
+      const raw = store && store.getItem(VISIT_Q_KEY);
+      const arr = raw ? JSON.parse(raw) : [];
+      if(!Array.isArray(arr)) return [];
+      const now = Date.now();
+      return arr.filter(function(p){
+        const t = Date.parse((p && p.created_at) || '');
+        return isFinite(t) && (now - t) < VISIT_Q_TTL;
+      });
+    }catch(e){ return []; }
+  }
+
+  function visitQueueWrite(list){
+    const store = visitStore('vid');
+    try{
+      if(!store) return;
+      if(!list || !list.length) store.removeItem(VISIT_Q_KEY);
+      else store.setItem(VISIT_Q_KEY, JSON.stringify(list.slice(-VISIT_Q_MAX)));
+    }catch(e){}
+  }
+
+  function visitQueueAdd(payload){
+    try{
+      const list = visitQueueRead();
+      for(let i = 0; i < list.length; i++){
+        if(list[i] && list[i].created_at === payload.created_at) return;   // 同一条不重复入队
+      }
+      list.push(payload);
+      visitQueueWrite(list);
+    }catch(e){}
   }
 
   function visitDevice(){
@@ -4906,29 +4955,41 @@ document.querySelectorAll('.quick').forEach(btn=>{
     }catch(e){ return null; }
   }
 
+  /* 发送一条：2xx = 写进去了；4xx = 请求本身被拒（表结构/权限），重试没意义；
+     5xx / 429 / 网络失败 = 留待下次打开页面补传 */
+  function visitSend(c, payload){
+    return fetch(c.url + '/rest/v1/' + encodeURIComponent(c.table), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': c.key,
+        'Authorization': 'Bearer ' + c.key,
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify(payload),
+      keepalive: true
+    }).then(function(r){
+      if(r && r.status >= 200 && r.status < 300) return true;
+      if(r && r.status >= 400 && r.status < 500) return true;
+      return false;
+    }, function(){ return false; });
+  }
+
   function logVisit(){
     try{
       const c = visitConf();
       if(!c.ok) return;
-      if(window.sessionStorage.getItem('fw-visit') === '1') return;   // 同一标签页只记一次
-      window.sessionStorage.setItem('fw-visit', '1');
 
       const tz = (function(){
         try{ return Intl.DateTimeFormat().resolvedOptions().timeZone || null; }catch(e){ return null; }
       })();
 
-      fetch(c.url + '/rest/v1/' + encodeURIComponent(c.table), {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'apikey': c.key,
-          'Authorization': 'Bearer ' + c.key,
-          'Prefer': 'return=minimal'
-        },
-        body: JSON.stringify({
+      function snapshot(atIso){
+        return {
           kind: 'pageview',
-          visitor_id: visitMark('vid'),
-          session_id: visitMark('sid'),
+          created_at: atIso,             // 补传时保留原始发生时间
+          visitor_id: visitId('vid'),
+          session_id: visitId('sid'),
           lang: String(document.documentElement.lang || 'zh').slice(0, 8),
           device: visitDevice(),
           screen: window.screen ? (screen.width + 'x' + screen.height) : null,
@@ -4937,9 +4998,31 @@ document.querySelectorAll('.quick').forEach(btn=>{
           timezone: tz,
           ua: String(navigator.userAgent || '').slice(0, 180),
           version: c.version
-        }),
-        keepalive: true
-      }).catch(function(){});
+        };
+      }
+
+      /* 先把上次没送出去的补上；写回时只保留「本次没尝试过的」新条目 + 仍然失败的，
+         已发成功的必须移出队列，否则以后每次打开页面都会把同一条重复补传。 */
+      const pending = visitQueueRead();
+      if(pending.length){
+        Promise.all(pending.map(function(p){ return visitSend(c, p); })).then(function(oks){
+          const stillFailed = pending.filter(function(p, i){ return !oks[i]; });
+          const fresh = visitQueueRead().filter(function(p){
+            for(let i = 0; i < pending.length; i++){
+              if(pending[i].created_at === p.created_at) return false;
+            }
+            return true;
+          });
+          const keep = fresh.concat(stillFailed);
+          keep.sort(function(a, b){ return String(a.created_at) < String(b.created_at) ? -1 : 1; });
+          visitQueueWrite(keep);
+        }).catch(function(){});
+      }
+
+      const mine = snapshot(new Date().toISOString());
+      visitSend(c, mine).then(function(ok){
+        if(!ok) visitQueueAdd(mine);
+      }, function(){ visitQueueAdd(mine); });
     }catch(e){}
   }
 
