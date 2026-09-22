@@ -1647,17 +1647,26 @@
     .music-bar{gap:14px}
     .music-hint{font-size:12px}
 
-    /* BCI：HUD 原字号 6.5–10px 手机上无法辨读，整体放大 */
+    /* BCI：手机端把信息面板从画布上挪到画布下方。
+       原先 192px 宽的面板浮在画布左上角，在 360x330 的画面里压掉大半动画；
+       现在画布固定 300px 高、占满整行，面板以两列网格排在它下面；
+       扫描线叠加层在窄屏既无必要又添噪点，关掉。桌面端（>620px）保持原样。 */
     .bci-text{padding:20px 18px 6px}
     .bci-text h3{font-size:16.5px}
     .bci-text p{font-size:13.5px;line-height:1.7}
-    .bci-hud-left{width:192px;padding:11px 12px}
+    .bci-stage{min-height:0;display:flex;flex-direction:column;gap:12px;cursor:default}
+    .bci-canvas-wrap{position:relative;inset:auto;height:300px;flex:0 0 auto}
+    .bci-overlay{display:none}
+    .bci-loader{position:absolute;left:0;right:0;top:0;height:300px}
+    .bci-hud-left{position:static;width:100%;padding:12px;
+      display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;align-items:center}
+    .bci-hud-header{grid-column:1/-1;margin-bottom:6px}
     .bci-h1{font-size:11px;letter-spacing:1.8px}
     .bci-subtitle{font-size:10px;letter-spacing:1px}
-    .bci-row{font-size:10.5px;gap:10px;margin-bottom:5px}
-    .bci-btn{margin-top:9px;padding:10px;font-size:10.5px;letter-spacing:1.2px}
-    .bci-hint{font-size:10.5px;letter-spacing:1px}
-    .bci-stage{min-height:330px}
+    .bci-row{font-size:10px;gap:10px;margin-bottom:0}
+    .bci-label{font-size:9px}
+    .bci-btn{grid-column:1/-1;margin-top:8px;padding:10px;font-size:10.5px;letter-spacing:1.2px}
+    .bci-hint{position:static;left:auto;bottom:auto;transform:none;text-align:center;font-size:10.5px;letter-spacing:1px}
 
     /* 明信片：介绍卡片与地图留白收窄，墙上小图略放大（原本约 80px 见方偏小） */
     .postcard{gap:18px}
@@ -1745,14 +1754,14 @@
       <a href="#feedback" data-i18n="nav.feedback">反馈</a>
       <a href="#contact" data-i18n="nav.contact">联系</a>
     </nav>
-    <div class="lang-switch" id="langSwitch" role="group" aria-label="Language">
+    <div class="lang-switch" id="langSwitch" role="group" aria-label="Language" data-i18n-aria="a11y.lang">
       <button class="lang-btn active" data-lang="zh">中</button>
       <button class="lang-btn" data-lang="en">EN</button>
     </div>
-    <button class="bgm-btn" id="bgmBtn" type="button" aria-label="播放背景音乐" data-i18n-title="bgm.title" aria-pressed="false" title="播放背景音乐">
+    <button class="bgm-btn" id="bgmBtn" type="button" aria-label="播放背景音乐" data-i18n-aria="a11y.bgm" data-i18n-title="bgm.title" aria-pressed="false" title="播放背景音乐">
       <span class="note">🎵</span>
     </button>
-    <button class="bgm-btn sea-btn" id="seaBtn" type="button" aria-label="播放海浪声" data-i18n-title="sea.title" aria-pressed="false" title="播放海浪声">
+    <button class="bgm-btn sea-btn" id="seaBtn" type="button" aria-label="播放海浪声" data-i18n-aria="a11y.sea" data-i18n-title="sea.title" aria-pressed="false" title="播放海浪声">
       <span class="note">🌊</span>
     </button>
     <div class="sound-hint" id="soundHint" data-i18n="sound.hint">点击开启声音</div>
@@ -1760,7 +1769,7 @@
 </header>
 
 <!-- ===== 反馈 · 角落入口（固定右下，点一下跳到 #feedback 版块）===== -->
-<a class="fb-fab" href="#feedback" data-i18n-title="fb.fabTitle" title="给我留条反馈" aria-label="反馈 / Feedback">
+<a class="fb-fab" href="#feedback" data-i18n-title="fb.fabTitle" title="给我留一条反馈" aria-label="反馈 / Feedback">
   <span class="fb-fab-ico" aria-hidden="true">&#9997;</span><span class="fb-fab-txt" data-i18n="fb.fab">反馈</span>
 </a>
 
@@ -1788,7 +1797,7 @@
       <div class="core">F</div>
     </div>
     <h1>Fledglynn</h1>
-    <p class="tagline" data-i18n="hero.tagline">大一新生，习惯把一件事做久一点</p>
+    <p class="tagline" data-i18n="hero.tagline">把一件事放进更长的时间尺度里</p>
     <div class="hero-badges">
       <span class="badge" data-i18n="hero.bio">智能医学工程</span>
       <span class="badge" data-i18n="hero.bci">脑机接口方向</span>
@@ -1834,26 +1843,26 @@
   <section class="section" id="about">
     <h2 class="section-title reveal"><span>·</span><span data-i18n="about.title">关于我</span></h2>
     <div class="about reveal" data-i18n-html="about.intro">
-      你好，我是 <b>Fledglynn</b>，<span class="hl">话不多，做事偏慢</span>。智能医学工程专业大一，一边补基础，一边试着用 AI 做点小东西。
+      你好，我是 <b>Fledglynn</b>，<span class="hl">相信复利，愿意在一件事上做久</span>。智能医学工程专业大一，一边补基础，一边试着把想法做成能用的东西。
     </div>
     <div class="cards">
       <div class="card reveal">
-        <div class="k" data-i18n="card1.k">现在的我</div>
+        <div class="k" data-i18n="card1.k">现在</div>
         <h3 data-i18n="card1.h">在做的事</h3>
-        <p data-i18n="card1.p">在补专业基础与编程；这个主页是自己一点点搭起来的。</p>
+        <p data-i18n="card1.p">正在补专业基础与编程；这个主页是我一处一处搭起来的。</p>
       </div>
       <div class="card reveal" style="transition-delay:.1s">
-        <div class="k" data-i18n="card2.k">我关心的方向</div>
-        <h3 data-i18n="card2.h">我在学的方向</h3>
-        <p data-i18n="card2.p">非侵入式脑机接口、AI 应用、知识整理。想把技术和兴趣放在一起，做点有用的东西。</p>
+        <div class="k" data-i18n="card2.k">关心的问题</div>
+        <h3 data-i18n="card2.h">正在学的方向</h3>
+        <p data-i18n="card2.p">非侵入式脑机接口、AI 应用、知识整理。想把技术与兴趣合在一处，做成有用的东西。</p>
         <div class="interests">
           <span class="chip" data-i18n="chip.bci">脑机接口</span><span class="chip" data-i18n="chip.ai">AI 应用</span><span class="chip" data-i18n="chip.kn">知识整理</span>
         </div>
       </div>
       <div class="card reveal" style="transition-delay:.2s">
-        <div class="k" data-i18n="card3.k">我的兴趣</div>
-        <h3 data-i18n="card3.h">爱好</h3>
-        <p data-i18n="card3.p">喜欢安静，用线条和色块记录世界。</p>
+        <div class="k" data-i18n="card3.k">兴趣</div>
+        <h3 data-i18n="card3.h">喜欢做的事</h3>
+        <p data-i18n="card3.p">偏爱安静，用线条与色块记录世界。</p>
         <div class="interests">
           <span class="chip y" data-i18n="chip.paint">绘画</span>
           <span class="chip y" data-i18n="chip.music">音乐</span>
@@ -1874,8 +1883,8 @@
         <span class="tl-dot" aria-hidden="true"></span>
         <div class="card tl-card">
           <div class="k" data-i18n="study.n1.k">2026.8</div>
-          <h3 data-i18n="study.n1.h">开始大学生活</h3>
-          <p data-i18n="study.n1.p">2026 年 8 月入学，读智能医学工程。刚起步，先把基础打扎实，再慢慢找想深入的方向。</p>
+          <h3 data-i18n="study.n1.h">入学</h3>
+          <p data-i18n="study.n1.p">2026 年 8 月入学，读智能医学工程。刚起步，先把基础补上，再慢慢确定想深入的方向。</p>
           <div class="interests">
             <span class="chip" data-i18n="study.n1.c1">智能医学工程</span>
             <span class="chip" data-i18n="study.n1.c2">脑机接口方向</span>
@@ -1886,7 +1895,7 @@
              按 4:3 横向裁 600–1751（顶部留约四成天空），输出 1400×1050（191 KB）与卡片等宽对置。
              四版裁切对比留在 outputs/timeline-photo/compare.html。 -->
         <div class="tl-photo">
-          <img src="images/study.jpg" alt="入学时的校园照片" loading="lazy" decoding="async">
+          <img src="images/study.jpg" alt="入学时的校园照片" data-i18n-alt="img.study" loading="lazy" decoding="async">
         </div>
       </div>
 
@@ -1894,7 +1903,7 @@
         <span class="tl-dot" aria-hidden="true"></span>
         <div class="card tl-card">
           <div class="k" data-i18n="study.more.k">持续更新</div>
-          <p data-i18n="study.more.p">时间轴才刚起步。之后的事，我会一条条补上。</p>
+          <p data-i18n="study.more.p">时间轴才刚起步。之后的事，我会逐条补上。</p>
         </div>
       </div>
     </div>
@@ -1907,9 +1916,9 @@
     <div class="bci-split reveal">
       <!-- 左：文字说明 -->
       <div class="bci-text">
-        <h3 data-i18n="bci.h">我最想深入的方向</h3>
-        <p data-i18n-html="bci.p1">脑机接口把<b>神经信号</b>直接连到机器上：一个念头不必经过手指和键盘，就能变成屏幕上的动作或声音。这是目前我最感兴趣的方向。</p>
-        <p data-i18n="bci.p2">我读智能医学工程，最好奇的是它在医疗里的可能——让失去行动能力的人重新控制肢体，让无法开口的人重新说话。右边的演示，只是我的一点想象。</p>
+        <h3 data-i18n="bci.h">目前最想深入的方向</h3>
+        <p data-i18n-html="bci.p1">脑机接口把<b>神经信号</b>直接连到机器上：一个念头不必经过手指和键盘，就能变成屏幕上的动作或声音。这是它吸引我的地方。</p>
+        <p data-i18n="bci.p2">我读智能医学工程，最好奇的是它在医疗里的可能——让失去行动能力的人重新控制肢体，让无法开口的人重新说话。右边的演示，是我的一点想象。</p>
         <div class="interests">
           <span class="chip y" data-i18n="bci.chip1">神经信号解码</span>
           <span class="chip y" data-i18n="bci.chip2">脑电 EEG</span>
@@ -2824,8 +2833,8 @@
         <div class="postcard-body">
           <div class="postcard-text">
             <h3 data-i18n="postcard.collect">收集世界各地的明信片</h3>
-            <p data-i18n-html="postcard.p1">我在 <b>Postcrossing</b> 上和世界各地的朋友交换明信片。纸质卡片会把很远的国家和故事，真的带到手里。</p>
-            <p data-i18n="postcard.p2">寄出一张是期待，收到一张像打开一扇小窗。这也是我旅行的一种方式。</p>
+            <p data-i18n-html="postcard.p1">我在 <b>Postcrossing</b> 上和世界各地的朋友交换明信片。纸质卡片会把远处的国家和故事带到手里。</p>
+            <p data-i18n="postcard.p2">寄出是期待，收到像打开一扇小窗。这也是我旅行的一种方式。</p>
           </div>
           <a class="link-btn" href="https://www.postcrossing.com/" target="_blank" rel="noopener"><span data-i18n="postcard.link">前往 Postcrossing</span> ↗</a>
         </div>
@@ -2837,22 +2846,22 @@
             <span class="postcard-map-sub" data-i18n-html="postcard.mapSub">红色 · 我寄出的 &nbsp;|&nbsp; 蓝色 · 我收到的</span>
           </div>
           <div class="map-canvas">
-            <img src="images/postcard-map.jpg" alt="Postcrossing 明信片收发地图" loading="lazy">
+            <img src="images/postcard-map.jpg" alt="Postcrossing 明信片收发地图" data-i18n-alt="img.pcMap" loading="lazy">
             <div class="map-zoom-hint" data-i18n="postcard.zoomHint">点击查看大图</div>
             <figure class="pc pc-poland" data-full="images/postcard-poland.jpg" data-i18n-title="postcard.poland.full">
-              <img src="images/postcard-poland.jpg" alt="波兰 · 克拉科夫瓦维尔城堡" loading="lazy">
+              <img src="images/postcard-poland.jpg" alt="波兰 · 克拉科夫瓦维尔城堡" data-i18n-alt="img.pcPoland" loading="lazy">
               <figcaption data-i18n="postcard.poland.cap">波兰 · 克拉科夫</figcaption>
             </figure>
             <figure class="pc pc-movie" data-full="images/postcard-movie.jpg" data-i18n-title="postcard.movie.full">
-              <img src="images/postcard-movie.jpg" alt="电影《沙丘》明信片" loading="lazy">
+              <img src="images/postcard-movie.jpg" alt="电影《沙丘》明信片" data-i18n-alt="img.pcMovie" loading="lazy">
               <figcaption data-i18n="postcard.movie.cap">电影《沙丘》</figcaption>
             </figure>
             <figure class="pc pc-finland" data-full="images/postcard-finland.jpg" data-i18n-title="postcard.finland.full">
-              <img src="images/postcard-finland.jpg" alt="芬兰 · 赫尔辛基" loading="lazy">
+              <img src="images/postcard-finland.jpg" alt="芬兰 · 赫尔辛基" data-i18n-alt="img.pcFinland" loading="lazy">
               <figcaption data-i18n="postcard.finland.cap">芬兰 · 赫尔辛基</figcaption>
             </figure>
             <figure class="pc pc-reply" data-full="images/postcard-reply.jpg" data-i18n-title="postcard.reply.full">
-              <img src="images/postcard-reply.jpg" alt="moxel 给我的明信片回复" loading="lazy">
+              <img src="images/postcard-reply.jpg" alt="moxel 给我的明信片回复" data-i18n-alt="img.pcReply" loading="lazy">
               <figcaption data-i18n="postcard.reply.cap">来自 moxel 的回复</figcaption>
             </figure>
           </div>
@@ -2866,10 +2875,10 @@
     <h2 class="section-title reveal"><span>·</span><span data-i18n="drawing.title">绘画</span></h2>
     <div class="draw-shell">
       <figure class="draw-stage reveal" id="drawStage" tabindex="0" role="button"
-              aria-label="板绘作品（模糊预览），点击查看提示" data-i18n-title="drawing.hint" title="点击看看">
-        <img src="images/drawing.jpg" alt="板绘作品（模糊预览）" loading="lazy" decoding="async">
+              aria-label="板绘作品（模糊预览），点击查看提示" data-i18n-aria="a11y.drawing" data-i18n-title="drawing.hint" title="点击查看">
+        <img src="images/drawing.jpg" alt="板绘作品（模糊预览）" data-i18n-alt="img.drawing" loading="lazy" decoding="async">
         <span class="draw-q" aria-hidden="true">?</span>
-        <figcaption class="draw-hint" data-i18n="drawing.hint">点击看看</figcaption>
+        <figcaption class="draw-hint" data-i18n="drawing.hint">点击查看</figcaption>
         <div class="draw-pop" id="drawPop" aria-hidden="true">
           <strong>To be continued…</strong>
           <span id="drawPopP"></span>
@@ -2877,7 +2886,7 @@
       </figure>
       <div class="card draw-card reveal">
         <h3 data-i18n="drawing.h">颜色还在路上</h3>
-        <p data-i18n="drawing.p1">从 5 岁起就喜欢画画。最近在学板绘，画得慢，一张要磨很久，所以先放一张模糊的在这里，画完再换。</p>
+        <p data-i18n="drawing.p1">从 5 岁起就喜欢画画。最近在学板绘，画得慢，一张要磨很久；先放一张模糊的，画完再换。</p>
         <div class="draw-foot">
           <button class="hurry" id="hurryBtn" type="button" data-i18n="drawing.hurry">催一下进度</button>
           <span class="hurry-note" id="hurryNote"></span>
@@ -2893,11 +2902,11 @@
     <div class="music-shell">
       <div class="card music-intro reveal">
         <h3 data-i18n="music.h">一整张，从头听到尾</h3>
-        <p data-i18n="music.p1">我主要听 R&B 和嘻哈说唱，习惯一次听完一整张专辑，也会顺带了解创作者的故事。一张专辑像一段完整的话，得从头听到尾。</p>
+        <p data-i18n="music.p1">我主要听 R&B 和嘻哈说唱，习惯一次听完一整张专辑，也会留意创作者的故事。一张专辑像一段完整的话，要从头听到尾。</p>
       </div>
       <div class="music-player reveal">
         <div class="music-cover" id="musicCover" role="button" tabindex="0"
-             title="轻点封面看下一张" data-i18n-title="music.hint" aria-label="轻点封面看下一张">
+             title="点按封面翻到下一张" data-i18n-title="music.hint" data-i18n-aria="music.hint" aria-label="点按封面翻到下一张">
           <img id="musicImg" src="images/albums/05.jpg" alt="专辑封面" loading="lazy" decoding="async">
           <span class="music-idx" id="musicIdx">01 / 13</span>
         </div>
@@ -2908,11 +2917,11 @@
           <span class="music-note" id="musicNote"></span>
         </div>
         <div class="music-bar">
-          <button class="music-nav" id="musicPrev" type="button" title="上一张" data-i18n-title="music.prev" aria-label="上一张">&#8249;</button>
+          <button class="music-nav" id="musicPrev" type="button" title="上一张" data-i18n-title="music.prev" data-i18n-aria="music.prev" aria-label="上一张">&#8249;</button>
           <div class="music-dots" id="musicDots"></div>
-          <button class="music-nav" id="musicNext" type="button" title="下一张" data-i18n-title="music.next" aria-label="下一张">&#8250;</button>
+          <button class="music-nav" id="musicNext" type="button" title="下一张" data-i18n-title="music.next" data-i18n-aria="music.next" aria-label="下一张">&#8250;</button>
         </div>
-        <p class="music-hint" data-i18n="music.hint">轻点封面看下一张</p>
+        <p class="music-hint" data-i18n="music.hint">点按封面翻到下一张</p>
       </div>
       <!-- 推荐留声：访客把喜欢的歌 / 专辑推荐给我（桌面排左列＝专辑左边；窄屏自动堆到最下） -->
       <div class="card rec reveal">
@@ -2920,7 +2929,7 @@
           <h3 data-i18n="music.recTitle">把好歌推荐给我</h3>
           <span class="rec-count" id="recCount"></span>
         </div>
-        <p class="rec-desc" data-i18n="music.recDesc">有喜欢的歌或专辑想推荐给我吗？写下名字就好，想附一句话也可以。</p>
+        <p class="rec-desc" data-i18n="music.recDesc">有想推荐给我的歌或专辑吗？写下名字即可，想附一句话也欢迎。</p>
         <div class="rec-log chat-log" id="recLog" aria-live="polite"></div>
         <p class="rec-empty" id="recEmpty">暂无推荐。</p>
         <div class="rec-form">
@@ -2954,9 +2963,9 @@
           <div class="quick-title" data-i18n="chat.quickTitle">常见问题</div>
           <button class="quick" data-q="chat.q1"><span data-i18n="chat.q1">你现在在做什么？</span></button>
           <button class="quick" data-q="chat.q2"><span data-i18n="chat.q2">你有哪些作品？</span></button>
-          <button class="quick" data-q="chat.q3"><span data-i18n="chat.q3">怎么联系你？</span></button>
+          <button class="quick" data-q="chat.q3"><span data-i18n="chat.q3">如何联系你？</span></button>
         </div>
-        <p class="note" data-i18n="chat.note">这是一个负责转述我真实信息的数字分身，不会编造超出我背景的回答。</p>
+        <p class="note" data-i18n="chat.note">数字分身只转述我给出的信息，不会编造超出我背景的回答。</p>
       </aside>
 
       <div class="chat-main">
@@ -2983,19 +2992,19 @@
         <h3 data-i18n="fb.h">这个主页还有哪里可以更好？</h3>
         <span class="fb-badge" data-i18n="fb.private">不会公开，只有我能看到</span>
       </div>
-      <p class="fb-desc" data-i18n="fb.desc">欢迎指出看不懂、不好找或用着别扭的地方，比如手机上字太小、某个按钮点了没反应。写一句就够，我都会看。</p>
+      <p class="fb-desc" data-i18n="fb.desc">欢迎指出难以理解、不好找或使用别扭的地方，比如手机上文字太小、某个按钮没有反应。写一句即可，我都会看。</p>
 
       <form class="fb-form" id="fbForm" novalidate>
         <div class="fb-grid">
           <div class="fb-row">
             <label class="fb-label" for="fbName" data-i18n="fb.name">名字或昵称（可不填）</label>
             <input id="fbName" name="name" type="text" maxlength="60" autocomplete="off"
-                   data-i18n-placeholder="fb.namePh" placeholder="怎么称呼你？">
+                   data-i18n-placeholder="fb.namePh" placeholder="如何称呼你？">
           </div>
           <div class="fb-row">
             <label class="fb-label" for="fbRelation" data-i18n="fb.relation">你和我的关系</label>
             <select id="fbRelation" name="relation">
-              <option value="" data-i18n="fb.rel.none">不选也行</option>
+              <option value="" data-i18n="fb.rel.none">可不填</option>
               <option value="同学" data-i18n="fb.rel.classmate">同学</option>
               <option value="老师" data-i18n="fb.rel.teacher">老师</option>
               <option value="家人" data-i18n="fb.rel.family">家人</option>
@@ -3009,7 +3018,7 @@
         <div class="fb-row">
           <label class="fb-label" for="fbDevice" data-i18n="fb.device">你用什么设备看的</label>
           <select id="fbDevice" name="device">
-            <option value="" data-i18n="fb.dev.none">不选也行</option>
+            <option value="" data-i18n="fb.dev.none">可不填</option>
             <option value="电脑" data-i18n="fb.dev.desktop">电脑</option>
             <option value="手机" data-i18n="fb.dev.phone">手机</option>
             <option value="平板" data-i18n="fb.dev.tablet">平板</option>
@@ -3019,7 +3028,7 @@
         <div class="fb-row">
           <label class="fb-label" for="fbMessage" data-i18n="fb.message">反馈内容（必填）</label>
           <textarea id="fbMessage" name="message" rows="4" maxlength="2000" required
-                    data-i18n-placeholder="fb.messagePh" placeholder="哪里可以更好？一句话就够…"></textarea>
+                    data-i18n-placeholder="fb.messagePh" placeholder="哪里可以更好？一句话即可…"></textarea>
         </div>
         <div class="fb-foot">
           <button class="send" id="fbSend" type="submit" data-sfx="confirm" data-i18n="fb.send">提交反馈</button>
@@ -3034,7 +3043,7 @@
     <div class="contact reveal">
       <div>
         <h3 data-i18n="contact.title">认识一下 / 保持联系</h3>
-        <p data-i18n="contact.desc">朋友、同学、老师，或者只是想聊两句的人，都欢迎来信。</p>
+        <p data-i18n="contact.desc">朋友、同学、老师，或只是想聊几句的人，都欢迎来信。</p>
       </div>
       <a class="mail" href="mailto:lynn3540@163.com">lynn3540@163.com</a>
     </div>
@@ -3058,41 +3067,41 @@ const I18N = {
     "nav.music": "音乐",
     "nav.chat": "数字分身",
     "nav.contact": "联系",
-    "hero.tagline": "大一新生，习惯把一件事做久一点",
+    "hero.tagline": "把一件事放进更长的时间尺度里",
     "hero.bio": "智能医学工程",
     "hero.bci": "脑机接口方向",
     "hero.hobbies": "绘画 · 音乐 · 街舞 · 阅读",
     "about.title": "关于我",
-    "about.intro": "你好，我是 <b>Fledglynn</b>，<span class=\"hl\">话不多，做事偏慢</span>。智能医学工程专业大一，一边补基础，一边试着用 AI 做点小东西。",
-    "card1.k": "现在的我",
+    "about.intro": "你好，我是 <b>Fledglynn</b>，<span class=\"hl\">相信复利，愿意在一件事上做久</span>。智能医学工程专业大一，一边补基础，一边试着把想法做成能用的东西。",
+    "card1.k": "现在",
     "card1.h": "在做的事",
-    "card1.p": "在补专业基础与编程；这个主页是自己一点点搭起来的。",
-    "card2.k": "我关心的方向",
-    "card2.h": "我在学的方向",
-    "card2.p": "非侵入式脑机接口、AI 应用、知识整理。想把技术和兴趣放在一起，做点有用的东西。",
+    "card1.p": "正在补专业基础与编程；这个主页是我一处一处搭起来的。",
+    "card2.k": "关心的问题",
+    "card2.h": "正在学的方向",
+    "card2.p": "非侵入式脑机接口、AI 应用、知识整理。想把技术与兴趣合在一处，做成有用的东西。",
     "chip.bci": "脑机接口",
     "chip.ai": "AI 应用",
     "chip.kn": "知识整理",
-    "card3.k": "我的兴趣",
-    "card3.h": "爱好",
-    "card3.p": "喜欢安静，用线条和色块记录世界。",
+    "card3.k": "兴趣",
+    "card3.h": "喜欢做的事",
+    "card3.p": "偏爱安静，用线条与色块记录世界。",
     "chip.paint": "绘画",
     "chip.music": "音乐",
     "chip.dance": "街舞",
     "chip.read": "阅读",
     "study.title": "学习",
     "study.n1.k": "2026.8",
-    "study.n1.h": "开始大学生活",
-    "study.n1.p": "2026 年 8 月入学，读智能医学工程。刚起步，先把基础打扎实，再慢慢找想深入的方向。",
+    "study.n1.h": "入学",
+    "study.n1.p": "2026 年 8 月入学，读智能医学工程。刚起步，先把基础补上，再慢慢确定想深入的方向。",
     "study.n1.c1": "智能医学工程",
     "study.n1.c2": "脑机接口方向",
     "study.n1.c3": "Vibe Coding",
     "study.more.k": "持续更新",
-    "study.more.p": "时间轴才刚起步。之后的事，我会一条条补上。",
+    "study.more.p": "时间轴才刚起步。之后的事，我会逐条补上。",
     "bci.title": "脑机接口",
-    "bci.h": "我最想深入的方向",
-    "bci.p1": "脑机接口把<b>神经信号</b>直接连到机器上：一个念头不必经过手指和键盘，就能变成屏幕上的动作或声音。这是目前我最感兴趣的方向。",
-    "bci.p2": "我读智能医学工程，最好奇的是它在医疗里的可能——让失去行动能力的人重新控制肢体，让无法开口的人重新说话。右边的演示，只是我的一点想象。",
+    "bci.h": "目前最想深入的方向",
+    "bci.p1": "脑机接口把<b>神经信号</b>直接连到机器上：一个念头不必经过手指和键盘，就能变成屏幕上的动作或声音。这是它吸引我的地方。",
+    "bci.p2": "我读智能医学工程，最好奇的是它在医疗里的可能——让失去行动能力的人重新控制肢体，让无法开口的人重新说话。右边的演示，是我的一点想象。",
     "bci.chip1": "神经信号解码",
     "bci.chip2": "脑电 EEG",
     "bci.chip3": "人机交互",
@@ -3103,8 +3112,8 @@ const I18N = {
     "bci.loadFail": "动态演示未能在当前设备启动，文字部分不受影响。",
     "postcard.title": "明信片旅行",
     "postcard.collect": "收集世界各地的明信片",
-    "postcard.p1": "我在 <b>Postcrossing</b> 上和世界各地的朋友交换明信片。纸质卡片会把很远的国家和故事，真的带到手里。",
-    "postcard.p2": "寄出一张是期待，收到一张像打开一扇小窗。这也是我旅行的一种方式。",
+    "postcard.p1": "我在 <b>Postcrossing</b> 上和世界各地的朋友交换明信片。纸质卡片会把远处的国家和故事带到手里。",
+    "postcard.p2": "寄出是期待，收到像打开一扇小窗。这也是我旅行的一种方式。",
     "postcard.link": "前往 Postcrossing",
     "postcard.mapTitle": "我的明信片地图",
     "postcard.mapSub": "红色 · 我寄出的 &nbsp;|&nbsp; 蓝色 · 我收到的",
@@ -3119,8 +3128,8 @@ const I18N = {
     "postcard.reply.cap": "来自 moxel 的回复",
     "drawing.title": "绘画",
     "drawing.h": "颜色还在路上",
-    "drawing.p1": "从 5 岁起就喜欢画画。最近在学板绘，画得慢，一张要磨很久，所以先放一张模糊的在这里，画完再换。",
-    "drawing.hint": "点击看看",
+    "drawing.p1": "从 5 岁起就喜欢画画。最近在学板绘，画得慢，一张要磨很久；先放一张模糊的，画完再换。",
+    "drawing.hint": "点击查看",
     "drawing.pop1": "笔还没拿起来。",
     "drawing.pop2": "进度停在 1%，心态稳定。",
     "drawing.pop3": "在画了，大概。",
@@ -3136,19 +3145,30 @@ const I18N = {
     "drawing.count0Tip": "还在慢慢画，不急。",
     "music.title": "音乐",
     "music.h": "一整张，从头听到尾",
-    "music.p1": "我主要听 R&B 和嘻哈说唱，习惯一次听完一整张专辑，也会顺带了解创作者的故事。一张专辑像一段完整的话，得从头听到尾。",
-    "music.hint": "轻点封面看下一张",
+    "music.p1": "我主要听 R&B 和嘻哈说唱，习惯一次听完一整张专辑，也会留意创作者的故事。一张专辑像一段完整的话，要从头听到尾。",
+    "music.hint": "点按封面翻到下一张",
     "music.prev": "上一张",
     "music.next": "下一张",
+    "a11y.bgm": "播放背景音乐",
+    "a11y.sea": "播放海浪声",
+    "a11y.lang": "语言切换",
+    "a11y.drawing": "板绘作品（模糊预览），点击查看提示",
+    "img.study": "入学时的校园照片",
+    "img.pcMap": "Postcrossing 明信片收发地图",
+    "img.pcPoland": "波兰 · 克拉科夫瓦维尔城堡",
+    "img.pcMovie": "电影《沙丘》明信片",
+    "img.pcFinland": "芬兰 · 赫尔辛基",
+    "img.pcReply": "moxel 给我的明信片回复",
+    "img.drawing": "板绘作品（模糊预览）",
     "music.dot": "第 {n} 张",
     "music.recTitle": "把好歌推荐给我",
-    "music.recDesc": "有喜欢的歌或专辑想推荐给我吗？写下名字就好，想附一句话也可以。",
+    "music.recDesc": "有想推荐给我的歌或专辑吗？写下名字即可，想附一句话也欢迎。",
     "music.recEmpty": "暂无推荐。",
     "music.recEmptySome": "已收到 {n} 条推荐。你写的这条发出后，会显示在上面的框里。",
     "music.recPh": "歌名 / 专辑名（必填）",
     "music.recPh2": "想对我说的一句话（可不填）",
     "music.recSend": "发送",
-    "music.recThanks": "已收到，谢谢你，我会去听的。",
+    "music.recThanks": "已收到，谢谢你，我会去听。",
     "music.recErr": "没能送出去（本地服务可能没在运行）。也可以直接邮件我：lynn3540@163.com",
     "music.recCount": "已收到 {n} 条推荐",
     "chat.title": "数字分身问答",
@@ -3157,26 +3177,26 @@ const I18N = {
     "chat.quickTitle": "常见问题",
     "chat.q1": "你现在在做什么？",
     "chat.q2": "你有哪些作品？",
-    "chat.q3": "怎么联系你？",
-    "chat.note": "这是一个负责转述我真实信息的数字分身，不会编造超出我背景的回答。",
-    "chat.welcome": "你好，我是 Fledglynn 的数字分身。<br>想问什么都可以，比如我在做什么、有哪些作品；也可以先点左边的常见问题。",
+    "chat.q3": "如何联系你？",
+    "chat.note": "数字分身只转述我给出的信息，不会编造超出我背景的回答。",
+    "chat.welcome": "你好，我是 Fledglynn 的数字分身。<br>可以问我正在做什么、有哪些作品；也可以先点左边的常见问题。",
     "chat.placeholder": "输入你的问题…",
     "chat.send": "发送",
     "chat.typing": "正在回忆…",
-    "chat.empty": "想聊点什么？可以直接点左边的常见问题，也可以随便问我。",
+    "chat.empty": "想了解什么？可以点左边的常见问题，也可以直接提问。",
     "chat.noKey": "（数字分身暂时离线：服务端还没配置 OpenRouter API Key。请在 outputs/personal-homepage-v2/.env 里填入 OPENROUTER_API_KEY 后重启服务。）",
-    "chat.err": "（我这边的 AI 服务出了点问题，稍后再试。）",
-    "chat.timeout": "（AI 服务暂时没回应，可能是免费模型较慢，请稍等几秒再试。）",
+    "chat.err": "（AI 服务暂时出错，请稍后再试。）",
+    "chat.timeout": "（AI 服务暂无回应，免费模型可能较慢，请稍候再试。）",
     "chat.network": "（连接数字分身服务失败：请确认已运行 python server.py，然后重试。）",
     "nav.feedback": "反馈",
     "fb.title": "反馈",
     "fb.h": "这个主页还有哪里可以更好？",
     "fb.private": "不会公开，只有我能看到",
-    "fb.desc": "欢迎指出看不懂、不好找或用着别扭的地方，比如手机上字太小、某个按钮点了没反应。写一句就够，我都会看。",
+    "fb.desc": "欢迎指出难以理解、不好找或使用别扭的地方，比如手机上文字太小、某个按钮没有反应。写一句即可，我都会看。",
     "fb.name": "名字或昵称（可不填）",
-    "fb.namePh": "怎么称呼你？",
+    "fb.namePh": "如何称呼你？",
     "fb.relation": "你和我的关系",
-    "fb.rel.none": "不选也行",
+    "fb.rel.none": "可不填",
     "fb.rel.classmate": "同学",
     "fb.rel.teacher": "老师",
     "fb.rel.family": "家人",
@@ -3185,27 +3205,27 @@ const I18N = {
     "fb.rel.other": "其他",
     "fb.rel.private": "不便透露",
     "fb.device": "你用什么设备看的",
-    "fb.dev.none": "不选也行",
+    "fb.dev.none": "可不填",
     "fb.dev.desktop": "电脑",
     "fb.dev.phone": "手机",
     "fb.dev.tablet": "平板",
     "fb.dev.other": "其他",
     "fb.message": "反馈内容（必填）",
-    "fb.messagePh": "哪里可以更好？一句话就够…",
+    "fb.messagePh": "哪里可以更好？一句话即可…",
     "fb.send": "提交反馈",
     "fb.sending": "正在提交…",
     "fb.thanks": "已收到，谢谢。你的反馈已经进入我的后台。",
     "fb.needMsg": "请先写一句反馈内容。",
-    "fb.err": "没能提交成功，可能是网络问题。你写的内容还在，可以直接再点一次。",
+    "fb.err": "没能提交成功，可能是网络问题。你写的内容仍在，可以直接再试一次。",
     "fb.errLocal": "本地服务没在运行，没能存下来。也可以直接邮件我：lynn3540@163.com",
     "fb.noConfig": "反馈后台还没接上（正在配置中）。也可以直接邮件我：lynn3540@163.com",
     "fb.fab": "反馈",
-    "fb.fabTitle": "给我留条反馈",
+    "fb.fabTitle": "给我留一条反馈",
     "chat.cta": "若还有想说的，可以留一条反馈 →",
     "chat.offlineStatic": "（数字分身只在本地演示环境开放，公开版本暂不提供在线问答。欢迎通过下方「反馈」留言。）",
-    "music.recErrStatic": "暂时没能送出去，可能是网络问题。你写的内容还在，可以再点一次。也可以直接邮件我：lynn3540@163.com",
+    "music.recErrStatic": "暂时没能送出去，可能是网络问题。你写的内容仍在，可以再试一次。也可以直接邮件我：lynn3540@163.com",
     "contact.title": "认识一下 / 保持联系",
-    "contact.desc": "朋友、同学、老师，或者只是想聊两句的人，都欢迎来信。",
+    "contact.desc": "朋友、同学、老师，或只是想聊几句的人，都欢迎来信。",
     "footer.line": "用灯塔的光，照亮想做的事",
     "bgm.title": "轻音乐 · Cold (Salt) Water",
     "bgm.play": "播放背景音乐",
@@ -3221,30 +3241,30 @@ const I18N = {
   en: {
     "nav.about": "About",
     "nav.study": "Studies",
-    "nav.bci": "Brain–Computer",
+    "nav.bci": "BCI",
     "nav.postcard": "Postcards",
     "nav.drawing": "Drawing",
     "nav.music": "Music",
     "nav.chat": "AI Twin",
     "nav.contact": "Contact",
-    "hero.tagline": "First-year student, learning to stay with one thing a little longer.",
+    "hero.tagline": "Give one thing a longer horizon.",
     "hero.bio": "Intelligent Medical Engineering",
     "hero.bci": "Track: brain–computer interfaces",
     "hero.hobbies": "Drawing · Music · Street Dance · Reading",
     "about.title": "About",
-    "about.intro": "Hello, I am <b>Fledglynn</b>. <span class=\"hl\">Quiet, and on the slow side.</span> A first-year student in Intelligent Medical Engineering, filling in the basics while trying to build small things with AI.",
+    "about.intro": "Hello, I am <b>Fledglynn</b>. <span class=\"hl\">I believe in compounding, and I am willing to stay.</span> A first-year student in Intelligent Medical Engineering, filling in the basics while trying to turn ideas into things that work.",
     "card1.k": "Right now",
     "card1.h": "What I am doing",
-    "card1.p": "Filling in the fundamentals of my major and of programming. This site I built piece by piece myself.",
+    "card1.p": "Filling in the fundamentals of my major, and of programming. I built this site myself, piece by piece.",
     "card2.k": "What I care about",
     "card2.h": "Where I am heading",
-    "card2.p": "Non-invasive brain–computer interfaces, AI applications, knowledge management. I would like to bring technique and interest together into something useful.",
-    "chip.bci": "Brain–Computer",
+    "card2.p": "Non-invasive brain–computer interfaces, AI applications, knowledge management. I would like to bring craft and interest together into something useful.",
+    "chip.bci": "BCI",
     "chip.ai": "AI Applications",
     "chip.kn": "Knowledge",
     "card3.k": "Interests",
     "card3.h": "Hobbies",
-    "card3.p": "I like quiet, and record the world with lines and blocks of colour.",
+    "card3.p": "I prefer quiet, and record the world in lines and blocks of colour.",
     "chip.paint": "Drawing",
     "chip.music": "Music",
     "chip.dance": "Street Dance",
@@ -3252,16 +3272,16 @@ const I18N = {
     "study.title": "Studies",
     "study.n1.k": "2026.8",
     "study.n1.h": "Starting university",
-    "study.n1.p": "Enrolled in August 2026 in Intelligent Medical Engineering. Just beginning: first the fundamentals, then, slowly, a direction worth going deeper into.",
+    "study.n1.p": "Enrolled in August 2026 in Intelligent Medical Engineering. Just beginning: the fundamentals first, then, slowly, a direction worth going deeper into.",
     "study.n1.c1": "Intelligent Medical Engineering",
     "study.n1.c2": "Brain–computer interfaces",
     "study.n1.c3": "Vibe Coding",
     "study.more.k": "Ongoing",
     "study.more.p": "The timeline has only just started. I will add what happens, one entry at a time.",
     "bci.title": "Brain–Computer Interfaces",
-    "bci.h": "The direction I most want to go deeper into",
+    "bci.h": "The direction I most want to pursue",
     "bci.p1": "A brain–computer interface connects <b>neural signals</b> straight to a machine: a thought can become a movement or a sound on screen without passing through fingers or a keyboard. This is the direction I find most interesting now.",
-    "bci.p2": "I study Intelligent Medical Engineering, and what I am most curious about is what it can do in medicine — helping someone who has lost control of their limbs regain it, or someone who cannot speak speak again. The demonstration on the right is only a small imagining of mine.",
+    "bci.p2": "I study Intelligent Medical Engineering, and what I am most curious about is what it can do in medicine — helping someone who has lost control of their limbs regain it, or someone who cannot speak speak again. The demonstration on the right is a small imagining of mine.",
     "bci.chip1": "Neural signal decoding",
     "bci.chip2": "EEG",
     "bci.chip3": "Human–computer interaction",
@@ -3288,7 +3308,7 @@ const I18N = {
     "postcard.reply.cap": "A reply from moxel",
     "drawing.title": "Drawing",
     "drawing.h": "The colour is still on its way",
-    "drawing.p1": "I have liked drawing since I was five. Lately I am learning digital painting; it is slow work, and one piece takes a long time, so here is a blurred one for now, to be replaced when it is finished.",
+    "drawing.p1": "I have liked drawing since I was five. Lately I am learning digital painting; it is slow work, and one piece takes a long time. For now here is a blurred one, to be replaced when it is finished.",
     "drawing.hint": "Have a look",
     "drawing.pop1": "The pen is not picked up yet.",
     "drawing.pop2": "Progress stopped at 1%; composure intact.",
@@ -3309,6 +3329,17 @@ const I18N = {
     "music.hint": "Tap the cover for the next one",
     "music.prev": "Previous",
     "music.next": "Next",
+    "a11y.bgm": "Play background music",
+    "a11y.sea": "Play sea waves",
+    "a11y.lang": "Language switch",
+    "a11y.drawing": "Digital drawing (blurred preview), tap for a hint",
+    "img.study": "Campus photo from my first year",
+    "img.pcMap": "My Postcrossing postcard map",
+    "img.pcPoland": "Poland · Wawel Castle, Kraków",
+    "img.pcMovie": "Dune postcard",
+    "img.pcFinland": "Finland · Helsinki",
+    "img.pcReply": "A postcard reply from moxel",
+    "img.drawing": "Digital drawing (blurred preview)",
     "music.dot": "No. {n}",
     "music.recTitle": "Recommend a song to me",
     "music.recDesc": "Is there a song or an album you would like to recommend? A title is enough; a sentence alongside it is welcome too.",
@@ -3327,15 +3358,15 @@ const I18N = {
     "chat.q1": "What are you working on now?",
     "chat.q2": "What have you made?",
     "chat.q3": "How can I reach you?",
-    "chat.note": "This is an AI twin that relays information about me as I have given it; it will not invent answers beyond my own background.",
-    "chat.welcome": "Hello, I am Fledglynn's AI twin.<br>Ask me anything — what I am working on, what I have made; or start with the questions on the left.",
+    "chat.note": "The AI twin only relays information I have given it; it will not invent answers beyond my own background.",
+    "chat.welcome": "Hello, I am Fledglynn's AI twin.<br>You can ask what I am working on or what I have made; or start with the questions on the left.",
     "chat.placeholder": "Type your question…",
     "chat.send": "Send",
     "chat.typing": "Recalling…",
-    "chat.empty": "What would you like to ask? Use the questions on the left, or simply ask.",
+    "chat.empty": "What would you like to know? Use the questions on the left, or ask directly.",
     "chat.noKey": "(The AI twin is offline: the server has no OpenRouter API key configured. Add OPENROUTER_API_KEY to outputs/personal-homepage-v2/.env and restart the service.)",
-    "chat.err": "(My AI service ran into a problem. Please try again later.)",
-    "chat.timeout": "(The AI service has not replied yet; free models can be slow. Please wait a few seconds and try again.)",
+    "chat.err": "(The AI service is temporarily unavailable. Please try again later.)",
+    "chat.timeout": "(The AI service has not replied yet; free models can be slow. Please try again shortly.)",
     "chat.network": "(Could not reach the AI twin service. Please make sure python server.py is running, then try again.)",
     "nav.feedback": "Feedback",
     "fb.title": "Feedback",
@@ -3363,7 +3394,7 @@ const I18N = {
     "fb.messagePh": "What could be better? One sentence is enough…",
     "fb.send": "Send feedback",
     "fb.sending": "Sending…",
-    "fb.thanks": "Received, thank you. Your feedback has reached my dashboard.",
+    "fb.thanks": "Received, thank you. Your feedback has been recorded.",
     "fb.needMsg": "Please write a sentence first.",
     "fb.err": "It did not go through, possibly a network problem. What you wrote is still here, so you can simply send it again.",
     "fb.errLocal": "The local service is not running, so nothing was saved. You can also email me: lynn3540@163.com",
@@ -3375,7 +3406,7 @@ const I18N = {
     "music.recErrStatic": "It could not be sent, possibly a network problem. What you wrote is still here, so you can simply send it again. You can also email me: lynn3540@163.com",
     "contact.title": "Say hello / stay in touch",
     "contact.desc": "Friends, classmates, teachers — or anyone who simply feels like a chat — you are all welcome to write.",
-    "footer.line": "Light from the lighthouse, on the things I want to do",
+    "footer.line": "Lighthouse light, on the things I want to do",
     "bgm.title": "Light music · Cold (Salt) Water",
     "bgm.play": "Play background music",
     "bgm.pause": "Pause background music",
@@ -3404,6 +3435,17 @@ const SITE_ENV = (function(){
 })();
 
 
+// 把辅助文本（aria-label / img alt）设为当前语言：读屏访客也能听到当前语言
+function applyA11yI18n(root){
+  const scope = root || document;
+  scope.querySelectorAll('[data-i18n-aria]').forEach(el => {
+    el.setAttribute('aria-label', t(el.getAttribute('data-i18n-aria')));
+  });
+  scope.querySelectorAll('[data-i18n-alt]').forEach(el => {
+    el.setAttribute('alt', t(el.getAttribute('data-i18n-alt')));
+  });
+}
+
 function applyLang(lang){
   LANG = lang;
   localStorage.setItem('site-lang', lang);
@@ -3420,6 +3462,12 @@ function applyLang(lang){
   document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
     el.setAttribute('placeholder', t(el.getAttribute('data-i18n-placeholder')));
   });
+  // title 用翻译（只更新本来就有 title 的元素，避免给明信片等新增 hover 提示）
+  document.querySelectorAll('[data-i18n-title]').forEach(el => {
+    if(el.hasAttribute('title')) el.setAttribute('title', t(el.getAttribute('data-i18n-title')));
+  });
+  // 辅助文本（aria-label / alt）用翻译
+  applyA11yI18n(document);
 
   // 更新欢迎消息
   const w = document.getElementById('welcomeMsg');
@@ -3867,11 +3915,12 @@ document.querySelectorAll('.quick').forEach(btn=>{
     lb = document.createElement('div');
     lb.className = 'lightbox';
     lb.innerHTML =
-      '<button class="lightbox-close" data-i18n="lightbox.close" aria-label="关闭">&times;</button>' +
-      '<button class="lightbox-nav lightbox-prev" data-i18n="lightbox.prev" aria-label="上一张">&#8249;</button>' +
+      '<button class="lightbox-close" data-i18n-aria="lightbox.close" data-i18n-title="lightbox.close" title="关闭" aria-label="关闭">&times;</button>' +
+      '<button class="lightbox-nav lightbox-prev" data-i18n-aria="lightbox.prev" data-i18n-title="lightbox.prev" title="上一张" aria-label="上一张">&#8249;</button>' +
       '<div class="lightbox-panel"><img alt="放大预览"><div class="lightbox-title"></div></div>' +
-      '<button class="lightbox-nav lightbox-next" data-i18n="lightbox.next" aria-label="下一张">&#8250;</button>';
+      '<button class="lightbox-nav lightbox-next" data-i18n-aria="lightbox.next" data-i18n-title="lightbox.next" title="下一张" aria-label="下一张">&#8250;</button>';
     document.body.appendChild(lb);
+    applyA11yI18n(lb);
   }
   const lbImg = lb.querySelector('.lightbox-panel img');
   const lbTitle = lb.querySelector('.lightbox-title');
@@ -4237,6 +4286,13 @@ document.querySelectorAll('.quick').forEach(btn=>{
       })
     });
     if(!res.ok) throw new Error('cloud ' + res.status);
+    // 线上没有后端，这里补一封邮件通知（未配置 Web3Forms Access Key 时自动跳过）
+    if(window.notifyStationMaster){
+      window.notifyStationMaster('[个人主页] 新的歌曲推荐',
+        '推荐：' + item + (note ? '\n备注：' + note : '') +
+        '\n时间：' + new Date().toLocaleString() +
+        '\n来源：' + location.hostname);
+    }
     return true;
   }
 
@@ -4742,6 +4798,17 @@ document.querySelectorAll('.quick').forEach(btn=>{
 
     try{
       await send(p);
+      // 反馈目前不会经由任何服务端转发，这里补一封邮件通知（未配置时自动跳过）
+      if(window.notifyStationMaster){
+        window.notifyStationMaster('[个人主页] 新的反馈',
+          '留言：' + p.message +
+          '\n称呼：' + (p.name || '（未填）') +
+          '\n关系：' + (p.relation || '（未填）') +
+          '\n设备：' + (p.device || '（未填）') +
+          '\n版本：' + p.version +
+          '\n时间：' + new Date().toLocaleString() +
+          '\n来源：' + location.hostname);
+      }
       form.reset();
       guessDevice();
       setStatus('fb.thanks', 'ok');
