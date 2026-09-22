@@ -4855,6 +4855,100 @@ document.querySelectorAll('.quick').forEach(btn=>{
     update();
   })();
 
+  /* ===== 访客记录（只写不读）=====
+     每次打开页面，往 Supabase 的 visits 表写一条，站长在后台就能看到「谁在什么时候来过」。
+     只上报「语言 / 设备 / 屏幕 / 来源域名 / 时区 / 随机访客号」：
+       - 不写 IP、不种 cookie、不接任何第三方统计，读权限只留给站长（RLS 只允许匿名 INSERT）；
+       - 随机访客号存在访客自己的浏览器里，只用来区分「是不是同一个人」，不含任何身份信息；
+       - 全部包在 try/catch 里，失败一律静默 —— 统计绝不能影响访客体验。
+     表还没建好时（或网络不通）什么都不会发生，页面一切照常。 */
+  function visitConf(){
+    const c = window.SUPABASE_CONFIG || {};
+    const url = String(c.url || '').trim().replace(/\/+$/, '');
+    const key = String(c.publishableKey || c.anonKey || '').trim();
+    const ok = /^https:\/\/[a-z0-9-]+\.supabase\.co$/i.test(url) && key.length > 20;
+    return { url: url, key: key, table: String(c.visitsTable || 'visits').trim() || 'visits',
+             ok: ok, version: c.version || 'v3.0' };
+  }
+
+  function visitUUID(){
+    try{ if(window.crypto && crypto.randomUUID) return crypto.randomUUID(); }catch(e){}
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(cc){
+      const r = Math.random() * 16 | 0;
+      return (cc === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+  }
+
+  /* 访客号（长期，存 localStorage）与本次会话号（关掉标签页即失效） */
+  function visitMark(kind){
+    try{
+      const store = kind === 'vid' ? window.localStorage : window.sessionStorage;
+      const k = 'fw-' + kind;
+      let v = store.getItem(k);
+      if(!v){ v = visitUUID(); store.setItem(k, v); }
+      return v;
+    }catch(e){ return null; }
+  }
+
+  function visitDevice(){
+    const ua = navigator.userAgent || '';
+    if(/iPad|Tablet|PlayBook|Silk/i.test(ua) ||
+       (/Android/i.test(ua) && !/Mobile/i.test(ua))) return 'tablet';
+    if(/Mobile|iPhone|iPod|Android|Windows Phone/i.test(ua)) return 'mobile';
+    return 'desktop';
+  }
+
+  function visitReferrer(){
+    try{
+      if(!document.referrer) return null;
+      const h = new URL(document.referrer).hostname;
+      return h === location.hostname ? null : h.slice(0, 100);   // 站内跳转不算来源
+    }catch(e){ return null; }
+  }
+
+  function logVisit(){
+    try{
+      const c = visitConf();
+      if(!c.ok) return;
+      if(window.sessionStorage.getItem('fw-visit') === '1') return;   // 同一标签页只记一次
+      window.sessionStorage.setItem('fw-visit', '1');
+
+      const tz = (function(){
+        try{ return Intl.DateTimeFormat().resolvedOptions().timeZone || null; }catch(e){ return null; }
+      })();
+
+      fetch(c.url + '/rest/v1/' + encodeURIComponent(c.table), {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': c.key,
+          'Authorization': 'Bearer ' + c.key,
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({
+          kind: 'pageview',
+          visitor_id: visitMark('vid'),
+          session_id: visitMark('sid'),
+          lang: String(document.documentElement.lang || 'zh').slice(0, 8),
+          device: visitDevice(),
+          screen: window.screen ? (screen.width + 'x' + screen.height) : null,
+          viewport: window.innerWidth + 'x' + window.innerHeight,
+          referrer: visitReferrer(),
+          timezone: tz,
+          ua: String(navigator.userAgent || '').slice(0, 180),
+          version: c.version
+        }),
+        keepalive: true
+      }).catch(function(){});
+    }catch(e){}
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', logVisit, {once:true});
+  }else{
+    logVisit();
+  }
+
 })();
 </script>
 
