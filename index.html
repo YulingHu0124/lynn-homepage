@@ -4730,6 +4730,9 @@ document.querySelectorAll('.quick').forEach(btn=>{
   }
   if(relEl){ relEl.addEventListener('change', syncDeviceLabels); }
   document.addEventListener('langchange', syncDeviceLabels);   // 换语言后要重新贴回来
+  // 提交成功后表单会 reset()，而 reset 不触发 change，且 reset 事件早于控件被清空 —— 只能延后一拍重贴，
+  // 否则访客提交完会看到「关系：请选择」配着「天子的至尊手机」这种对不上的文案。
+  if(form){ form.addEventListener('reset', function(){ setTimeout(syncDeviceLabels, 0); }); }
   syncDeviceLabels();
 
   let sbClient = null, sbTried = false;
