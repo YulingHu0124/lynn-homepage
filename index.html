@@ -3011,6 +3011,7 @@
               <option value="家人" data-i18n="fb.rel.family">家人</option>
               <option value="朋友" data-i18n="fb.rel.friend">朋友</option>
               <option value="同事" data-i18n="fb.rel.colleague">同事</option>
+              <option value="天子" data-i18n="fb.rel.tianzi">天子</option>
             </select>
           </div>
         </div>
@@ -3201,12 +3202,18 @@ const I18N = {
     "fb.rel.family": "家人",
     "fb.rel.friend": "朋友",
     "fb.rel.colleague": "同事",
+    "fb.rel.tianzi": "天子",
     "fb.device": "你用什么设备看的",
     "fb.dev.none": "可不填",
+    "fb.dev.none.tz": "天子的至尊（暂不确定）",
     "fb.dev.desktop": "电脑",
+    "fb.dev.desktop.tz": "天子的至尊电脑",
     "fb.dev.phone": "手机",
+    "fb.dev.phone.tz": "天子的至尊手机",
     "fb.dev.tablet": "平板",
+    "fb.dev.tablet.tz": "天子的至尊平板",
     "fb.dev.other": "其他",
+    "fb.dev.other.tz": "天子的至尊设备（其他）",
     "fb.message": "反馈内容（必填）",
     "fb.messagePh": "哪里可以更好？一句话即可…",
     "fb.send": "提交反馈",
@@ -3380,12 +3387,18 @@ const I18N = {
     "fb.rel.family": "Family",
     "fb.rel.friend": "Friend",
     "fb.rel.colleague": "Colleague",
+    "fb.rel.tianzi": "Tianzi",
     "fb.device": "What you are viewing on",
     "fb.dev.none": "Optional",
+    "fb.dev.none.tz": "Tianzi's Supreme (undecided)",
     "fb.dev.desktop": "Computer",
+    "fb.dev.desktop.tz": "Tianzi's Supreme Computer",
     "fb.dev.phone": "Phone",
+    "fb.dev.phone.tz": "Tianzi's Supreme Phone",
     "fb.dev.tablet": "Tablet",
+    "fb.dev.tablet.tz": "Tianzi's Supreme Tablet",
     "fb.dev.other": "Other",
+    "fb.dev.other.tz": "Tianzi's Supreme Device (Other)",
     "fb.message": "Your feedback (required)",
     "fb.messagePh": "What could be better? One sentence is enough…",
     "fb.send": "Send feedback",
@@ -4701,6 +4714,23 @@ document.querySelectorAll('.quick').forEach(btn=>{
     if(Array.prototype.some.call(devEl.options, function(o){ return o.value === guess; })) devEl.value = guess;
   }
   guessDevice();
+
+  /* 天子彩蛋：关系一选「天子」，设备选项全部换成「天子的至尊xx」
+     —— 只改显示文字，option 的 value 仍是 电脑/手机/平板/其他，数据库与统计口径不受影响。 */
+  const DEV_KEY = { '': 'fb.dev.none', '电脑': 'fb.dev.desktop', '手机': 'fb.dev.phone',
+                    '平板': 'fb.dev.tablet', '其他': 'fb.dev.other' };
+  function isTianzi(){ return !!relEl && String(relEl.value || '').trim() === '天子'; }
+  function syncDeviceLabels(){
+    if(!devEl) return;
+    const tz = isTianzi();
+    Array.prototype.forEach.call(devEl.options, function(o){
+      const k = DEV_KEY[o.value];
+      if(k) o.textContent = t(tz ? k + '.tz' : k);
+    });
+  }
+  if(relEl){ relEl.addEventListener('change', syncDeviceLabels); }
+  document.addEventListener('langchange', syncDeviceLabels);   // 换语言后要重新贴回来
+  syncDeviceLabels();
 
   let sbClient = null, sbTried = false;
   async function getClient(){
