@@ -4290,21 +4290,33 @@ document.querySelectorAll('.quick').forEach(btn=>{
   async function sendCloud(item, note){
     const c = sbConf();
     if(!c.ok) throw new Error('no-backend');
-    const res = await fetch(c.url + '/rest/v1/feedback', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'apikey': c.key,
-        'Authorization': 'Bearer ' + c.key,
-        'Prefer': 'return=minimal'
-      },
-      body: JSON.stringify({
-        name: null, relation: null, device: null,
-        message: '【推荐】' + item + (note ? ' — ' + note : ''),
-        version: c.version
-      })
-    });
-    if(!res.ok) throw new Error('cloud ' + res.status);
+    let stored = false;
+    try{
+      const res = await fetch(c.url + '/rest/v1/feedback', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': c.key,
+          'Authorization': 'Bearer ' + c.key,
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({
+          name: null, relation: null, device: null,
+          message: '【推荐】' + item + (note ? ' — ' + note : ''),
+          version: c.version
+        })
+      });
+      if(res.ok) stored = true;
+    }catch(e){ stored = false; }
+
+    /* 国内网络访问不到 *.supabase.co，写入会失败；此时至少让邮件送达，不让访客白提交 */
+    if(!stored){
+      await viaMail('[个人主页] 新的歌曲推荐',
+        '推荐：' + item + (note ? '\n备注：' + note : '') +
+        '\n时间：' + new Date().toLocaleString() + '\n来源：' + location.hostname);
+      return true;
+    }
+
     // 线上没有后端，这里补一封邮件通知（未配置 Web3Forms Access Key 时自动跳过）
     if(window.notifyStationMaster){
       window.notifyStationMaster('[个人主页] 新的歌曲推荐',
@@ -4810,16 +4822,47 @@ document.querySelectorAll('.quick').forEach(btn=>{
     return true;
   }
 
+  /* 兜底通道：*.supabase.co 在国内解析不到（NXDOMAIN），此时改用 Web3Forms 直接发信，
+     访客照样看到"已收到"，站长邮箱立刻能收到同一个内容。 */
+  async function viaMail(subject, text){
+    const key = String(window.WEB3FORMS_ACCESS_KEY || '').trim();
+    if(!key) throw new Error('no-mail-key');
+    const res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ access_key: key, subject: subject,
+        from_name: 'Fledglynn 个人主页', message: text })
+    });
+    const d = await res.json().catch(function(){ return {}; });
+    if(!res.ok || (d && d.success === false)) throw new Error('mail ' + res.status);
+    return true;
+  }
+
+  function feedbackMailText(p){
+    return [
+      '称呼：' + (p.name || '（未填）'),
+      '关系：' + (p.relation || '（未填）'),
+      '设备：' + (p.device || '（未填）'),
+      '版本：' + (p.version || VERSION),
+      '时间：' + new Date().toLocaleString(),
+      '',
+      p.message
+    ].join('\n');
+  }
+
   async function send(p){
     if(HAS_SB){
       try{ return await viaSDK(p); }
       catch(e){
-        if(String(e && e.message) === 'sdk-unavailable') return viaREST(p);
+        if(String(e && e.message) === 'sdk-unavailable'){
+          try{ return await viaREST(p); }
+          catch(err2){ return viaMail('[个人主页] 新的反馈', feedbackMailText(p)); }
+        }
         throw e;
       }
     }
     if(SITE_ENV.local) return viaLocal(p);
-    throw new Error('no-backend');
+    return viaMail('[个人主页] 新的反馈', feedbackMailText(p));
   }
 
   form.addEventListener('submit', async function(e){
