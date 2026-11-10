@@ -39,8 +39,8 @@ const MAX_HISTORY = 10;           // 最多带 10 条历史（5 轮）
 const MAX_HISTORY_ITEM = 400;
 const MODEL_TIMEOUT_MS = 25000;   // 单次上游超时
 const MAX_TOKENS = 400;           // 回复上限，约 1-3 句
-const RATE_PER_IP_PER_DAY = 40;   // 单 IP 每日提问上限（尽力而为，实例会回收重算）
-const RATE_GLOBAL_PER_MIN = 60;   // 全局每分钟上限
+const RATE_PER_IP_PER_DAY = 400;   // 单 IP 每日提问上限（尽力而为，实例会回收重算）
+const RATE_GLOBAL_PER_MIN = 300;   // 全局每分钟上限
 
 // ---- 知识卡（persona.md 的压缩版；改资料时两处一起改）-----------------------
 const PERSONA = `你是「Fledglynn」（中文名 胡钰灵）的数字分身，负责替她回答访客问题。
