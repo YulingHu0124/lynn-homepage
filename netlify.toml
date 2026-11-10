@@ -1,0 +1,6 @@
+# Netlify 构建配置（v3 期末版）
+# 站点是纯静态文件 + 一个函数，因此不需要构建命令；
+# 但必须先「连接 Git 仓库」让 Netlify 走一次构建，函数才会被打包注册。
+[build]
+  publish = "."
+  functions = "netlify/functions"

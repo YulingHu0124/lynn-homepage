@@ -37,6 +37,8 @@
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth;overflow-x:clip}
+  /* 锚点跳转时给固定顶栏留出空间，否则版块标题会被压在顶栏下面 */
+  section[id]{scroll-margin-top:88px}
   ::selection{background:rgba(246,196,69,.32);color:var(--paper)}
   body{
     font-family:var(--font-body);
@@ -1079,7 +1081,10 @@
     .tagline{font-size:16px}
     .chat-shell{grid-template-columns:1fr}
     .chat-side{border-bottom:1px solid var(--line)}
-    .quick{text-align:center}
+    /* 常见问题：窄屏并排出现「两行两列」的参差换行，改成等宽两列网格 */
+    .chat-side > div:not(.bot-head){display:flex;flex-wrap:wrap;gap:8px}
+    .chat-side .quick-title{flex:1 0 100%;margin-top:0}
+    .quick{flex:1 1 calc(50% - 4px);text-align:center}
   }
   @media(max-width:440px){
     .brand{font-size:15px}
@@ -1618,6 +1623,7 @@
     /* ③ 版面留白收成手机尺寸 */
     .wrap{padding:0 14px}
     .section{padding:38px 0}
+    section[id]{scroll-margin-top:76px}
     .section-title{font-size:21px;margin-bottom:18px}
     .card{padding:20px}
     .about{padding:22px}
@@ -2967,6 +2973,7 @@
           <button class="quick" data-q="chat.q3"><span data-i18n="chat.q3">如何联系你？</span></button>
         </div>
         <p class="note" data-i18n="chat.note">数字分身只转述我给出的信息，不会编造超出我背景的回答。</p>
+          <p class="note" style="opacity:.72;margin-top:6px" data-i18n="chat.aiNote">回答由 AI 模型实时生成，可能有误差；重要的事请邮件确认。</p>
       </aside>
 
       <div class="chat-main">
@@ -3178,16 +3185,16 @@ const I18N = {
     "chat.q2": "你有哪些作品？",
     "chat.q3": "如何联系你？",
     "chat.note": "数字分身只转述我给出的信息，不会编造超出我背景的回答。",
-    "chat.building": "仍在建设中 · 它会一点点长大",
-    "chat.welcome": "你好，我是 Fledglynn 的数字分身。<br>可以问我正在做什么、有哪些作品；也可以先点左边的常见问题。",
+    "chat.building": "已接入语言模型 · 回答实时生成",
+    "chat.welcome": "你好，我是 Fledglynn 的数字分身。<br>可以问我正在做什么、有哪些作品；也可以先点一个常见问题。",
     "chat.placeholder": "输入你的问题…",
     "chat.send": "发送",
     "chat.typing": "正在回忆…",
-    "chat.empty": "想了解什么？可以点左边的常见问题，也可以直接提问。",
-    "chat.noKey": "（数字分身暂时离线：服务端还没配置 OpenRouter API Key。请在 outputs/personal-homepage-v2/.env 里填入 OPENROUTER_API_KEY 后重启服务。）",
+    "chat.empty": "想了解什么？可以先点一个常见问题，也可以直接提问。",
+    "chat.noKey": "（数字分身暂时离线：服务端还没有配置模型密钥。）",
     "chat.err": "（AI 服务暂时出错，请稍后再试。）",
-    "chat.timeout": "（AI 服务暂无回应，免费模型可能较慢，请稍候再试。）",
-    "chat.network": "（连接数字分身服务失败：请确认已运行 python server.py，然后重试。）",
+    "chat.timeout": "（AI 回复超时了，请稍后再试一次。）",
+    "chat.network": "（连接数字分身失败：请检查网络后再试一次。）",
     "nav.feedback": "反馈",
     "fb.title": "反馈",
     "fb.h": "这个主页还有哪里可以更好？",
@@ -3228,6 +3235,9 @@ const I18N = {
     "fb.fabTitle": "给我留一条反馈",
     "chat.cta": "若还有想说的，可以留一条反馈 →",
     "chat.offlineStatic": "（数字分身只在本地演示环境开放，公开版本暂不提供在线问答。欢迎通过下方「反馈」留言。）",
+    "chat.notReady": "（数字分身正在上线中，暂时答不了。可以先给我留一条反馈。）",
+    "chat.limit": "（问得有点快，歇一会儿再试。）",
+    "chat.aiNote": "回答由 AI 模型实时生成，可能有误差；重要的事请邮件确认。",
     "music.recErrStatic": "暂时没能送出去，可能是网络问题。你写的内容仍在，可以再试一次。也可以直接邮件我：lynn3540@163.com",
     "contact.title": "认识一下 / 保持联系",
     "contact.desc": "朋友、同学、老师，或只是此刻想聊几句的人——都欢迎来信。",
@@ -3363,16 +3373,16 @@ const I18N = {
     "chat.q2": "What have you made?",
     "chat.q3": "How can I reach you?",
     "chat.note": "The AI twin only relays information I have given it; it will not invent answers beyond my own background.",
-    "chat.building": "Still under construction — it will grow.",
-    "chat.welcome": "Hello, I am Fledglynn's AI twin.<br>You can ask what I am working on or what I have made; or start with the questions on the left.",
+    "chat.building": "Live language model · answers generated in real time",
+    "chat.welcome": "Hello, I am Fledglynn's AI twin.<br>You can ask what I am working on or what I have made, or start with a suggested question.",
     "chat.placeholder": "Type your question…",
     "chat.send": "Send",
     "chat.typing": "Recalling…",
-    "chat.empty": "What would you like to know? Use the questions on the left, or ask directly.",
-    "chat.noKey": "(The AI twin is offline: the server has no OpenRouter API key configured. Add OPENROUTER_API_KEY to outputs/personal-homepage-v2/.env and restart the service.)",
+    "chat.empty": "What would you like to know? Pick a suggested question, or just ask.",
+    "chat.noKey": "(The AI twin is offline: no model key is configured on the server.)",
     "chat.err": "(The AI service is temporarily unavailable. Please try again later.)",
-    "chat.timeout": "(The AI service has not replied yet; free models can be slow. Please try again shortly.)",
-    "chat.network": "(Could not reach the AI twin service. Please make sure python server.py is running, then try again.)",
+    "chat.timeout": "(The AI reply timed out. Please try again in a moment.)",
+    "chat.network": "(Could not reach the AI twin. Please check your connection and try again.)",
     "nav.feedback": "Feedback",
     "fb.title": "Feedback",
     "fb.h": "What could be better on this page?",
@@ -3413,6 +3423,9 @@ const I18N = {
     "fb.fabTitle": "Leave me a note",
     "chat.cta": "Anything more to say? Leave a note in Feedback →",
     "chat.offlineStatic": "(The AI twin is available in the local demo only; the public version does not offer live Q&A. Please use Feedback below.)",
+    "chat.notReady": "(The AI twin is being switched on and cannot answer right now. Feel free to leave a note in Feedback.)",
+    "chat.limit": "(A bit fast — take a short break and try again.)",
+    "chat.aiNote": "Answers are generated live by an AI model and may contain mistakes; please confirm anything important by email.",
     "music.recErrStatic": "It could not be sent, possibly a network problem. What you wrote is still here, so you can simply send it again. You can also email me: lynn3540@163.com",
     "contact.title": "Say hello / stay in touch",
     "contact.desc": "Friends, classmates, teachers — or anyone who simply feels like a chat — you are all welcome to write.",
@@ -3677,8 +3690,17 @@ window.addEventListener('load', ()=>{ document.body.classList.add('loaded'); });
 })();
 
 /* ===== 数字分身 · 真实 AI 模型 ===== */
-// 前端只调用本地代理 /api/chat，API Key 由后端 server.py 从 .env 读取，绝不出现在前端。
-// 若后端未配置 Key，代理会返回 {error:"no_key"}，前端会优雅降级提示。
+// 端点点位（Key 一律在服务端，前端永远不持有）：
+//   · 本地开发（127.0.0.1 / localhost）→ /api/chat（server.py 代理，Key 从 .env 读）
+//   · Netlify 镜像站 → 同域 /api/chat（Netlify Function，免跨域）
+//   · GitHub Pages → 跨域调用 Netlify Function（函数侧已放行 github.io 来源）
+// 说明：早期的 Supabase Edge Function 已弃用——*.supabase.co 的项目域名在国内解析不到。
+const NETLIFY_FN_ORIGIN = 'https://lynn-homepage-2026.netlify.app';
+const IS_NETLIFY = /\.netlify\.app$/i.test(location.hostname || '');
+const CHAT_ENDPOINT = window.__CHAT_ENDPOINT || (
+  SITE_ENV.local ? '/api/chat'
+    : (IS_NETLIFY ? '/api/chat' : NETLIFY_FN_ORIGIN + '/api/chat')
+);
 
 // 请求超时控制：用 AbortController 在 25s 后放弃，避免一直转圈
 const CHAT_TIMEOUT_MS = 25000;
@@ -3686,33 +3708,30 @@ const CHAT_TIMEOUT_MS = 25000;
 async function answer(q, history){
   q = q.trim();
   if(!q) return t("chat.empty");
-  // 纯静态托管（GitHub Pages / Netlify）没有 /api/chat：直接给友好说明，不发无效请求
-  if(!SITE_ENV.local) return t("chat.offlineStatic");
+  // 公网端未配置（函数还没部署）时给一句人话，不白发请求
+  if(!CHAT_ENDPOINT) return t("chat.notReady");
+
   const controller = new AbortController();
   const timer = setTimeout(()=>controller.abort(), CHAT_TIMEOUT_MS);
   try{
-    const res = await fetch('/api/chat', {
+    const headers = {'Content-Type':'application/json'};
+    const res = await fetch(CHAT_ENDPOINT, {
       method: 'POST',
-      headers: {'Content-Type':'application/json'},
+      headers: headers,
       body: JSON.stringify({ message: q, history: history }),
       signal: controller.signal
     });
     clearTimeout(timer);
-    const data = await res.json();
-    if(res.ok && data.reply){
-      return data.reply;
-    }
-    if(data.error === 'no_key'){
-      return SITE_ENV.local ? t("chat.noKey") : t("chat.offlineStatic");
-    }
-    return SITE_ENV.local ? t("chat.err") : t("chat.offlineStatic");
+    let data = {};
+    try{ data = await res.json(); }catch(e){ data = {}; }
+    if(res.ok && data.reply) return data.reply;
+    if(res.status === 429 || data.error === 'rate_limited') return t("chat.limit");
+    if(data.error === 'no_key' || res.status === 503) return t("chat.notReady");
+    return t("chat.err");
   }catch(e){
     clearTimeout(timer);
-    // 主动中断（超时）与网络失败都归为连接提示
-    if(e && e.name === 'AbortError'){
-      return SITE_ENV.local ? t("chat.timeout") : t("chat.offlineStatic");
-    }
-    return SITE_ENV.local ? t("chat.network") : t("chat.offlineStatic");
+    if(e && e.name === 'AbortError') return t("chat.timeout");
+    return SITE_ENV.local ? t("chat.network") : t("chat.err");
   }
 }
 
@@ -3792,38 +3811,45 @@ function add(text, who){
   return d;
 }
 
-function respond(text){
-  const t_ = add('', 'bot');
-  t_.innerHTML = '<span class="typing"><span data-i18n="chat.typing">正在回忆</span><span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></span>';
-  setTimeout(()=>{ t_.textContent = text; t_.classList.remove('bot'); t_.className='msg bot'; log.scrollTop=log.scrollHeight; }, 500);
+// 占位气泡：先显示「正在回忆…」，等真实回复到达再原地替换。
+// 不能沿用早期的 setTimeout 写法——定时器会把已经写好的回复再清成空串。
+function placeholder(){
+  const d = add('', 'bot');
+  d.innerHTML = '<span class="typing"><span data-i18n="chat.typing">正在回忆</span><span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></span>';
+  return d;
 }
 
 // 对话历史（发送给后端作为上下文）
 const history = [];
 
-function submit(){
-  const v = q.value.trim();
+// 统一入口：显示提问 → 请求模型 → 就地替换占位气泡。
+// 占位气泡的引用必须由这里持有，不能事后用 log.lastElementChild 再取一次，
+// 否则用户连发两条时回复会写进后一个气泡。
+function ask(v){
+  v = (v || '').trim();
   if(!v) return;
   add(escapeHtml(v), 'user');
   history.push({role:'user', content:v});
-  q.value = '';
-  respond(''); // 先显示"正在回忆…"
+  const ph = placeholder();
   answer(v, history)
     .then(reply=>{
       history.push({role:'assistant', content:reply});
-      // 替换占位气泡为正式回复
-      const last = log.lastElementChild;
-      last.textContent = reply;
-      last.className = 'msg bot';
-      log.scrollTop = log.scrollHeight;
+      ph.textContent = reply;
+      ph.className = 'msg bot';
     })
-    .catch(err=>{
-      // 兜底：确保占位气泡不会永远卡在"正在回忆…"
-      const last = log.lastElementChild;
-      last.textContent = t("chat.network");
-      last.className = 'msg bot';
-      log.scrollTop = log.scrollHeight;
-    });
+    .catch(()=>{
+      // 兜底：占位气泡不会永远卡在「正在回忆…」
+      ph.textContent = t("chat.network");
+      ph.className = 'msg bot';
+    })
+    .then(()=>{ log.scrollTop = log.scrollHeight; });
+}
+
+function submit(){
+  const v = q.value.trim();
+  if(!v) return;
+  q.value = '';
+  ask(v);
 }
 
 function escapeHtml(s){ return s.replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
@@ -3832,25 +3858,8 @@ send.addEventListener('click', ()=>{ launchGull(send); submit(); });
 q.addEventListener('keydown', e=>{ if(e.key==='Enter'){ launchGull(send); submit(); } });
 document.querySelectorAll('.quick').forEach(btn=>{
   btn.addEventListener('click', ()=>{
-    const v = t(btn.dataset.q);
     launchGull(btn);
-    add(escapeHtml(v), 'user');
-    history.push({role:'user', content:v});
-    respond('');
-    answer(v, history)
-      .then(reply=>{
-        history.push({role:'assistant', content:reply});
-        const last = log.lastElementChild;
-        last.textContent = reply;
-        last.className = 'msg bot';
-        log.scrollTop = log.scrollHeight;
-      })
-      .catch(err=>{
-        const last = log.lastElementChild;
-        last.textContent = t("chat.network");
-        last.className = 'msg bot';
-        log.scrollTop = log.scrollHeight;
-      });
+    ask(t(btn.dataset.q));
   });
 });
 
