@@ -3521,8 +3521,16 @@ applyLang(LANG);
 
 document.getElementById('year').textContent = new Date().getFullYear();
 
-/* ===== 入场动画 ===== */
-window.addEventListener('load', ()=>{ document.body.classList.add('loaded'); });
+/* ===== 入场动画 =====
+   不能挂在 window.load 上：慢网络（如图片走境外 CDN）时 load 可能几十秒不触发，
+   body 会一直停在 opacity:0，看起来就是白屏。改为 DOM 就绪即淡入，另加兜底计时。 */
+(function(){
+  var shown = false;
+  function reveal(){ if(shown) return; shown = true; document.body.classList.add('loaded'); }
+  if(document.readyState !== 'loading') reveal();
+  else document.addEventListener('DOMContentLoaded', reveal, {once:true});
+  setTimeout(reveal, 1500);
+})();
 
 // 顶部导航滚动态：下移一点加投影
 (function(){
