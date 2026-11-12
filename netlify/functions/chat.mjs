@@ -236,7 +236,7 @@ async function callModel(messages) {
 function sanitizeReply(text) {
   const parts = String(text || "")
     .split(/[ \t]*[|｜]{3}[ \t]*|\s*<\|split\|>\s*/)
-    .map((s) => s.replace(/[ \t]+/g, " ").trim())
+    .map((s) => s.replace(/^(?:听你说|我跟你说|给你讲个|那我讲一个)[^，,。：:！!？?\n]{0,8}[，,。：:！!？?]?\s*/, "").replace(/[ \t]+/g, " ").trim())
     .filter(Boolean);
   if (parts.length <= 1) return (parts[0] || "").trim();
   return parts[0] + " ||| " + parts.slice(1).join(" ");

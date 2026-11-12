@@ -3831,10 +3831,14 @@ function placeholder(){
 const history = [];
 
 // 回复可能被 ||| 拆成两段（她发微信的习惯：一句一条）。最多两段，多的并进第二条。
+// 模型偶尔会用「听你说……」「我跟你说……」这类开场，提示词压不住，这里直接剥掉。
+function stripFiller(s){
+  return String(s).replace(/^(?:听你说|我跟你说|给你讲个|那我讲一个)[^，,。：:！!？?\n]{0,8}[，,。：:！!？?]?\s*/, '');
+}
 function splitReply(text){
   const raw = String(text || '')
     .split(/[ \t]*[|｜]{3}[ \t]*|\s*<\|split\|>\s*/)
-    .map(s => s.trim()).filter(Boolean);
+    .map(s => stripFiller(s.trim())).filter(Boolean);
   if (raw.length <= 1) return raw.length ? raw : [String(text || '')];
   return [raw[0], raw.slice(1).join(' ')];
 }
