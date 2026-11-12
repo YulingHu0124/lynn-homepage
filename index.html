@@ -3833,7 +3833,9 @@ const history = [];
 // 回复可能被 ||| 拆成两段（她发微信的习惯：一句一条）。最多两段，多的并进第二条。
 // 模型偶尔会用「听你说……」「我跟你说……」这类开场，提示词压不住，这里直接剥掉。
 function stripFiller(s){
-  return String(s).replace(/^(?:听你说|我跟你说|给你讲个|那我讲一个)[^，,。：:！!？?\n]{0,8}[，,。：:！!？?]?\s*/, '');
+  const t = String(s);
+  const cut = t.replace(/^(?:听你说|我跟你说|给你讲个|那我讲一个)[^，,。：:！!？?\n]{0,8}[，,。：:！!？?]?\s*/, '');
+  return cut.trim().length >= 2 ? cut : t;   // 剥光了就保留原句，别给出空气泡
 }
 function splitReply(text){
   const raw = String(text || '')
