@@ -203,7 +203,8 @@ async function callModel(messages) {
       }
       const data = JSON.parse(text);
       const reply = String(data?.choices?.[0]?.message?.content ?? "").trim();
-      if (reply) return reply;
+      const cleaned = sanitizeReply(reply);
+      if (cleaned) return cleaned;
       lastErr = "empty completion";
     } catch (e) {
       lastErr = String(e?.message ?? e);
@@ -216,6 +217,17 @@ async function callModel(messages) {
     }
   }
   throw new Error(lastErr);
+}
+
+// 模型可能用 ||| 把一句话拆成两条（前端渲染成两个气泡）。
+// 这里统一各种分隔写法，并限制最多两段，避免出现三条以上的碎消息。
+function sanitizeReply(text) {
+  const parts = String(text || "")
+    .split(/[ \t]*[|｜]{3}[ \t]*|\s*<\|split\|>\s*/)
+    .map((s) => s.replace(/[ \t]+/g, " ").trim())
+    .filter(Boolean);
+  if (parts.length <= 1) return (parts[0] || "").trim();
+  return parts[0] + " ||| " + parts.slice(1).join(" ");
 }
 
 // ---- HTTP 入口（Netlify Functions v2）--------------------------------------

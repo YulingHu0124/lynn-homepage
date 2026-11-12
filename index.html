@@ -3830,6 +3830,15 @@ function placeholder(){
 // 对话历史（发送给后端作为上下文）
 const history = [];
 
+// 回复可能被 ||| 拆成两段（她发微信的习惯：一句一条）。最多两段，多的并进第二条。
+function splitReply(text){
+  const raw = String(text || '')
+    .split(/[ \t]*[|｜]{3}[ \t]*|\s*<\|split\|>\s*/)
+    .map(s => s.trim()).filter(Boolean);
+  if (raw.length <= 1) return raw.length ? raw : [String(text || '')];
+  return [raw[0], raw.slice(1).join(' ')];
+}
+
 // 统一入口：显示提问 → 请求模型 → 就地替换占位气泡。
 // 占位气泡的引用必须由这里持有，不能事后用 log.lastElementChild 再取一次，
 // 否则用户连发两条时回复会写进后一个气泡。
@@ -3841,9 +3850,19 @@ function ask(v){
   const ph = placeholder();
   answer(v, history)
     .then(reply=>{
-      history.push({role:'assistant', content:reply});
-      ph.textContent = reply;
+      const parts = splitReply(reply);
+      history.push({role:'assistant', content: parts.join(' ')});
+      ph.textContent = parts[0];
       ph.className = 'msg bot';
+      // 第二条：稍等一下再出现，像真的在打字
+      if(parts.length > 1){
+        setTimeout(()=>{
+          const d = add('', 'bot');
+          d.textContent = parts[1];
+          log.scrollTop = log.scrollHeight;
+        }, 420);
+      }
+      return null;
     })
     .catch(()=>{
       // 兜底：占位气泡不会永远卡在「正在回忆…」
