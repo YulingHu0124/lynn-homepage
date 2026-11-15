@@ -1701,6 +1701,66 @@
     /* 表单控件默认不继承页面字体（中文会落到系统黑体），统一到思源宋体；
        拉丁保持 Arial 不动，汉字不在 Arial 里，自然落到思源宋体 */
     button,input,select,textarea{font-family:Arial,"Noto Serif SC",sans-serif;}
+
+/* ===== 首屏分身入口 ===== */
+.hero-cta{display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:26px;position:relative;z-index:3}
+.twin-btn{display:inline-flex;align-items:center;gap:10px;padding:13px 26px;border-radius:999px;cursor:pointer;
+  border:1px solid rgba(246,196,69,.42);background:linear-gradient(180deg,rgba(246,196,69,.16),rgba(246,196,69,.05));
+  color:var(--ink);font-family:var(--font-body);font-size:15px;letter-spacing:.04em;
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  box-shadow:0 10px 30px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.12);
+  transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
+.twin-btn:hover{transform:translateY(-2px);border-color:rgba(246,196,69,.75);box-shadow:0 16px 40px rgba(0,0,0,.45),0 0 26px rgba(246,196,69,.18)}
+.twin-btn:focus-visible{outline:2px solid var(--yellow);outline-offset:3px}
+.twin-btn-dot{width:7px;height:7px;border-radius:50%;background:var(--yellow);animation:twinPulse 2.4s ease-out infinite}
+@keyframes twinPulse{0%{box-shadow:0 0 0 0 rgba(246,196,69,.55)}70%{box-shadow:0 0 0 9px rgba(246,196,69,0)}100%{box-shadow:0 0 0 0 rgba(246,196,69,0)}}
+.twin-hint{font-size:12.5px;color:var(--muted);letter-spacing:.03em}
+
+/* ===== 分身对话层 ===== */
+body.twin-open{overflow:hidden}
+.twin-overlay{position:fixed;inset:0;z-index:900;display:flex;align-items:center;justify-content:center;padding:24px;
+  background:rgba(6,8,11,.66);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);opacity:0;transition:opacity .22s ease}
+.twin-overlay[hidden]{display:none}
+.twin-overlay.on{opacity:1}
+.twin-panel{display:flex;flex-direction:column;width:min(560px,100%);height:min(640px,84vh);overflow:hidden;
+  border-radius:20px;border:1px solid var(--glass-border);background:linear-gradient(180deg,rgba(24,28,35,.96),rgba(14,17,21,.98));
+  box-shadow:0 34px 90px rgba(0,0,0,.62);transform:translateY(14px) scale(.98);opacity:0;transition:transform .26s ease,opacity .26s ease}
+.twin-overlay.on .twin-panel{transform:none;opacity:1}
+.twin-head{display:flex;align-items:center;gap:12px;padding:15px 16px;border-bottom:1px solid var(--line);flex:0 0 auto}
+.twin-ava{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-family:var(--font-display);
+  color:#1b1405;background:linear-gradient(160deg,var(--yellow-light),var(--yellow));flex:0 0 auto}
+.twin-meta{flex:1 1 auto;min-width:0}
+.twin-name{font-size:14.5px;letter-spacing:.03em}
+.twin-state{font-size:11.5px;color:var(--muted);margin-top:2px}
+.twin-x{flex:0 0 auto;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:transparent;
+  color:var(--muted);font-size:20px;line-height:1;cursor:pointer;transition:color .2s,border-color .2s}
+.twin-x:hover{color:var(--ink);border-color:rgba(255,255,255,.3)}
+.twin-x:focus-visible{outline:2px solid var(--yellow);outline-offset:2px}
+.twin-log{flex:1 1 auto;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px}
+.twin-log .msg{max-width:88%}
+.twin-quick{display:flex;gap:8px;flex-wrap:wrap;padding:0 16px 10px;flex:0 0 auto}
+.twin-chip{padding:6px 12px;border-radius:999px;border:1px solid var(--glass-border);background:var(--glass);
+  color:var(--muted);font-size:12.5px;font-family:var(--font-body);cursor:pointer;transition:color .2s,border-color .2s,transform .2s}
+.twin-chip:hover{color:var(--ink);border-color:rgba(246,196,69,.5);transform:translateY(-1px)}
+.twin-input{display:flex;gap:9px;padding:12px 16px 15px;border-top:1px solid var(--line);flex:0 0 auto}
+.twin-input input{flex:1 1 auto;min-width:0;padding:11px 14px;border-radius:999px;border:1px solid var(--line);
+  background:rgba(255,255,255,.04);color:var(--ink);font-family:var(--font-body);font-size:14px;outline:none}
+.twin-input input:focus{border-color:rgba(246,196,69,.55);box-shadow:0 0 0 3px rgba(246,196,69,.12)}
+
+/* 逐字输出：光标跟随 */
+.msg.typing-text::after{content:"";display:inline-block;width:2px;height:1em;margin-left:2px;vertical-align:-2px;
+  background:var(--yellow);animation:twinCaret .85s steps(1) infinite}
+@keyframes twinCaret{0%,49%{opacity:1}50%,100%{opacity:0}}
+
+@media (max-width:640px){
+  .twin-overlay{padding:0;align-items:stretch}
+  .twin-panel{width:100%;height:100%;border-radius:0;border:0}
+  .twin-hint{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .twin-overlay,.twin-panel,.twin-btn,.twin-chip{transition:none}
+  .msg.typing-text::after{animation:none}
+}
 </style>
   <!-- 3D「神经网络」的模块链预加载：不加这几行，10 个模块会一个接一个串行请求，
        跨境访问时每次往返 1~3 秒，串起来就显得「半天加载不出来」。预加载后浏览器并行取。 -->
@@ -1810,6 +1870,15 @@
       <span class="badge" data-i18n="hero.bci">脑机接口方向</span>
       <span class="badge">Vibe Coding</span>
       <span class="badge" data-i18n="hero.hobbies">绘画 · 音乐 · 阅读</span>
+    </div>
+
+    <!-- 首屏入口：分身原来在第 7 个板块，访客要滚到底才看得到 -->
+    <div class="hero-cta">
+      <button class="twin-btn" id="openTwin" type="button">
+        <span class="twin-btn-dot" aria-hidden="true"></span>
+        <span data-i18n="twin.open">和我的分身聊聊</span>
+      </button>
+      <span class="twin-hint" data-i18n="twin.hint">问点没预设过的，它现场回答</span>
     </div>
   </div>
 
@@ -3058,6 +3127,35 @@
 
 </div>
 
+<!-- ===== 分身对话层 =====
+     和页面下方「数字分身」板块共用同一个 ask() 与会话上下文，
+     区别只在这里逐字输出、并且从首屏就能打开。 -->
+<div class="twin-overlay" id="twinOverlay" hidden>
+  <div class="twin-panel" role="dialog" aria-modal="true" aria-labelledby="twinTitle">
+    <header class="twin-head">
+      <div class="twin-ava" aria-hidden="true">F</div>
+      <div class="twin-meta">
+        <div class="twin-name" id="twinTitle" data-i18n="twin.name">Fledglynn 的数字分身</div>
+        <div class="twin-state" data-i18n="twin.online">在线 · 依据我的资料回答</div>
+      </div>
+      <button class="twin-x" id="closeTwin" type="button" data-i18n-aria="twin.close" aria-label="关闭">&times;</button>
+    </header>
+    <div class="twin-log" id="twinLog">
+      <div class="msg bot" id="twinWelcome"></div>
+    </div>
+    <div class="twin-quick">
+      <button class="twin-chip" type="button" data-q="twin.q1" data-i18n="twin.q1">你平时在做什么？</button>
+      <button class="twin-chip" type="button" data-q="twin.q2" data-i18n="twin.q2">为什么想做脑机接口？</button>
+      <button class="twin-chip" type="button" data-q="twin.q3" data-i18n="twin.q3">推荐一首歌</button>
+    </div>
+    <div class="twin-input">
+      <input id="twinQ" type="text" maxlength="400" autocomplete="off"
+             data-i18n-placeholder="twin.placeholder" placeholder="随便问，比如：你最近在忙什么">
+      <button class="send" id="twinSend" type="button" data-i18n="twin.send">发送</button>
+    </div>
+  </div>
+</div>
+
 <footer>
   © <span id="year"></span> <b>Fledglynn</b> · <span data-i18n="footer.line">用灯塔的光，照亮想做的事</span>
 </footer>
@@ -3074,6 +3172,17 @@ const I18N = {
     "nav.music": "音乐",
     "nav.chat": "数字分身",
     "nav.contact": "联系",
+    "twin.open": "和我的分身聊聊",
+    "twin.hint": "问点没预设过的，它现场回答",
+    "twin.name": "Fledglynn 的数字分身",
+    "twin.online": "在线 · 依据我的资料回答",
+    "twin.close": "关闭",
+    "twin.welcome": "在的。想问什么直接说——课程、脑机接口、画和歌，或者随便聊聊都行。",
+    "twin.q1": "你平时在做什么？",
+    "twin.q2": "为什么想做脑机接口？",
+    "twin.q3": "推荐一首歌",
+    "twin.placeholder": "随便问，比如：你最近在忙什么",
+    "twin.send": "发送",
     "hero.tagline": "never stop trying",
     "hero.bio": "智能医学工程",
     "hero.bci": "脑机接口方向",
@@ -3262,6 +3371,17 @@ const I18N = {
     "nav.music": "Music",
     "nav.chat": "AI Twin",
     "nav.contact": "Contact",
+    "twin.open": "Talk to my AI twin",
+    "twin.hint": "Ask something I never pre-wrote, it answers live",
+    "twin.name": "Fledglynn's AI twin",
+    "twin.online": "Online, answers from my own notes",
+    "twin.close": "Close",
+    "twin.welcome": "Hey. Ask me anything: courses, BCI, drawings, music, or just chat.",
+    "twin.q1": "What are you up to lately?",
+    "twin.q2": "Why BCI?",
+    "twin.q3": "Recommend a song",
+    "twin.placeholder": "Ask anything, e.g. what are you busy with",
+    "twin.send": "Send",
     "hero.tagline": "never stop trying",
     "hero.bio": "Intelligent Medical Engineering",
     "hero.bci": "Track: brain–computer interfaces",
@@ -3485,6 +3605,8 @@ function applyLang(lang){
   document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
     el.setAttribute('placeholder', t(el.getAttribute('data-i18n-placeholder')));
   });
+  // 分身对话层的欢迎语是动态生成的，语言切换时同步
+  if (typeof window.twinSyncLang === 'function') window.twinSyncLang();
   // title 用翻译（只更新本来就有 title 的元素，避免给明信片等新增 hover 提示）
   document.querySelectorAll('[data-i18n-title]').forEach(el => {
     if(el.hasAttribute('title')) el.setAttribute('title', t(el.getAttribute('data-i18n-title')));
@@ -3810,19 +3932,20 @@ const log = document.getElementById('log');
 const q = document.getElementById('q');
 const send = document.getElementById('send');
 
-function add(text, who){
+function add(text, who, box){
+  const target = box || log;
   const d = document.createElement('div');
   d.className = 'msg ' + who;
   d.innerHTML = text;
-  log.appendChild(d);
-  log.scrollTop = log.scrollHeight;
+  target.appendChild(d);
+  target.scrollTop = target.scrollHeight;
   return d;
 }
 
 // 占位气泡：先显示「正在回忆…」，等真实回复到达再原地替换。
 // 不能沿用早期的 setTimeout 写法——定时器会把已经写好的回复再清成空串。
-function placeholder(){
-  const d = add('', 'bot');
+function placeholder(box){
+  const d = add('', 'bot', box);
   d.innerHTML = '<span class="typing"><span data-i18n="chat.typing">正在回忆</span><span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></span>';
   return d;
 }
@@ -3845,27 +3968,54 @@ function splitReply(text){
   return [raw[0], raw.slice(1).join(' ')];
 }
 
+// 逐字输出（打字机）。返回 {finish}：点气泡或超时都能立刻补全，不会卡住半句。
+function typeInto(el, text, box){
+  const chars = Array.from(String(text || ''));
+  let i = 0, timer = null, done = false;
+  el.textContent = '';
+  el.classList.add('typing-text');
+  function finish(){
+    if(done) return;
+    done = true;
+    clearTimeout(timer);
+    el.textContent = text;
+    el.classList.remove('typing-text');
+    el._skip = null;
+    if(box) box.scrollTop = box.scrollHeight;
+  }
+  el._skip = finish;
+  (function step(){
+    if(done) return;
+    if(i >= chars.length){ finish(); return; }
+    const c = chars[i++];
+    el.textContent += c;
+    if(box) box.scrollTop = box.scrollHeight;
+    timer = setTimeout(step, /[，。！？、,.!?…；;：:]/.test(c) ? 130 : 22);
+  })();
+  return { finish };
+}
+
 // 统一入口：显示提问 → 请求模型 → 就地替换占位气泡。
 // 占位气泡的引用必须由这里持有，不能事后用 log.lastElementChild 再取一次，
 // 否则用户连发两条时回复会写进后一个气泡。
-function ask(v){
+function ask(v, box){
+  const target = box || log;
   v = (v || '').trim();
   if(!v) return;
-  add(escapeHtml(v), 'user');
+  add(escapeHtml(v), 'user', target);
   history.push({role:'user', content:v});
-  const ph = placeholder();
+  const ph = placeholder(target);
   answer(v, history)
     .then(reply=>{
       const parts = splitReply(reply);
       history.push({role:'assistant', content: parts.join(' ')});
-      ph.textContent = parts[0];
       ph.className = 'msg bot';
+      typeInto(ph, parts[0], target);
       // 第二条：稍等一下再出现，像真的在打字
       if(parts.length > 1){
         setTimeout(()=>{
-          const d = add('', 'bot');
-          d.textContent = parts[1];
-          log.scrollTop = log.scrollHeight;
+          const d = add('', 'bot', target);
+          typeInto(d, parts[1], target);
         }, 420);
       }
       return null;
@@ -3875,7 +4025,7 @@ function ask(v){
       ph.textContent = t("chat.network");
       ph.className = 'msg bot';
     })
-    .then(()=>{ log.scrollTop = log.scrollHeight; });
+    .then(()=>{ target.scrollTop = target.scrollHeight; });
 }
 
 function submit(){
@@ -3895,6 +4045,63 @@ document.querySelectorAll('.quick').forEach(btn=>{
     ask(t(btn.dataset.q));
   });
 });
+
+/* ===== 首屏入口 → 全屏对话层 =====
+   和下面的「数字分身」板块共用 history，所以两边上下文是连续的；
+   区别只在渲染位置，以及这里逐字输出。 */
+(function(){
+  const twinOverlay = document.getElementById('twinOverlay');
+  if(!twinOverlay) return;
+  const twinLog = document.getElementById('twinLog');
+  const twinQ = document.getElementById('twinQ');
+  const twinWelcome = document.getElementById('twinWelcome');
+
+  function twinSyncLang(){
+    // 只有还没开始聊的时候才刷新欢迎语，否则会把对话内容覆盖掉
+    if(twinLog.children.length <= 1) twinWelcome.textContent = t('twin.welcome');
+  }
+  window.twinSyncLang = twinSyncLang;
+
+  function openTwin(){
+    twinOverlay.hidden = false;
+    document.body.classList.add('twin-open');
+    requestAnimationFrame(()=> twinOverlay.classList.add('on'));
+    twinSyncLang();
+    setTimeout(()=>{ try{ twinQ.focus({preventScroll:true}); }catch(e){ twinQ.focus(); } }, 180);
+  }
+  function closeTwin(){
+    twinOverlay.classList.remove('on');
+    document.body.classList.remove('twin-open');
+    setTimeout(()=>{ twinOverlay.hidden = true; }, 200);
+  }
+
+  document.getElementById('openTwin').addEventListener('click', openTwin);
+  document.getElementById('closeTwin').addEventListener('click', closeTwin);
+  twinOverlay.addEventListener('click', e=>{ if(e.target === twinOverlay) closeTwin(); });
+  document.addEventListener('keydown', e=>{
+    if(e.key === 'Escape' && !twinOverlay.hidden) closeTwin();
+  });
+
+  function twinSubmit(){
+    const v = twinQ.value.trim();
+    if(!v) return;
+    twinQ.value = '';
+    ask(v, twinLog);
+  }
+  document.getElementById('twinSend').addEventListener('click', twinSubmit);
+  twinQ.addEventListener('keydown', e=>{ if(e.key === 'Enter') twinSubmit(); });
+  document.querySelectorAll('.twin-chip').forEach(btn=>{
+    btn.addEventListener('click', ()=> ask(t(btn.dataset.q), twinLog));
+  });
+
+  // 点气泡立刻补全正在打字的回复（两个入口都生效）
+  [log, twinLog].forEach(box=>{
+    box.addEventListener('click', e=>{
+      const m = e.target.closest('.msg');
+      if(m && typeof m._skip === 'function') m._skip();
+    });
+  });
+})();
 
 /* ===== 灯塔扫射：单束光绕垂直轴(水平面)旋转，带透视纵深；转到朝左海面时照亮海浪 ===== */
 (function(){
