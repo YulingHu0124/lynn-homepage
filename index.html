@@ -1761,6 +1761,133 @@ body.twin-open{overflow:hidden}
   .twin-overlay,.twin-panel,.twin-btn,.twin-chip{transition:none}
   .msg.typing-text::after{animation:none}
 }
+
+/* ============================================================
+   编辑部式天文档案 · 精修（2026-11）
+   —— 只改观感层：配色、字体、星空密度、光晕、卡片形状。
+      内容、链接、中英切换、音乐与对话逻辑未动。
+      整块删除即可回到上一版外观。
+   ============================================================ */
+:root{
+  --yellow:#D9A94B; --yellow-light:#E9CB8A;
+  --blue:#1B2E44; --blue-deep:#0D1726;
+  --ink:#F1ECE2; --bg:#0A1018; --panel:#101821;
+  --line:rgba(240,236,226,.10); --paper:#F5F0E4; --muted:#8B94A3;
+  --font-display:"Cormorant Garamond","Noto Serif SC",Georgia,"Times New Roman",serif;
+  --font-body:"Inter","PingFang SC","Noto Sans SC","Microsoft YaHei",system-ui,sans-serif;
+  --glass:rgba(255,255,255,.035); --glass-border:rgba(240,236,226,.10);
+  --glow-shadow:0 18px 44px rgba(0,0,0,.5);
+}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body)}
+/* 星空与极光：降亮度，不抢文字 */
+.starfield{opacity:.55}
+.hero-stars{opacity:.36}
+.aurora{opacity:.18}
+/* 首屏：去掉大面积金色光晕与 3px 厚描边 */
+.hero{
+  background:
+    radial-gradient(55% 46% at 18% 6%, rgba(217,169,75,.07), transparent 72%),
+    radial-gradient(60% 60% at 84% 90%, rgba(140,170,200,.05), transparent 65%),
+    linear-gradient(180deg,#0D1726 0%,#12202F 58%,#0A1018 100%);
+  border-bottom:1px solid rgba(217,169,75,.28);
+}
+/* 灯塔：缩小右移，光锥变窄变淡，不压标题 */
+.lighthouse{width:318px;height:380px;right:-26px;opacity:.92}
+.beam{width:560px;height:56px;opacity:.4}
+.lamp-halo{fill:rgba(255,214,120,.2)}
+@media (max-width:720px){
+  .lighthouse{width:168px;height:200px;right:-34px}
+}
+/* 卡片：去玻璃、去大圆角、去发光，改用细线与留白分层次 */
+.card{
+  background:var(--panel) !important;
+  border:1px solid var(--line) !important;
+  border-top:1px solid rgba(217,169,75,.35) !important;
+  border-radius:3px !important;
+  box-shadow:none !important;
+  backdrop-filter:none !important;-webkit-backdrop-filter:none !important;
+}
+.card::after{display:none !important}
+.card:hover{transform:translateY(-2px);border-color:rgba(217,169,75,.34) !important}
+/* 章节标题：衬线 + 短细线，建立层级 */
+.section-title{font-weight:600;letter-spacing:.01em}
+.section-title::after{content:"";display:block;width:34px;height:1px;background:rgba(217,169,75,.5);margin-top:14px}
+/* 键盘焦点：全站可见 */
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
+  outline:2px solid var(--yellow);outline-offset:3px;border-radius:2px;
+}
+/* 减少动效 */
+@media (prefers-reduced-motion:reduce){
+  .hero-stars,.aurora,.sf-m1,.sf-m2,.sf-m3{animation:none !important}
+  .card{transition:none !important}
+}
+
+/* ---- 首屏排版：眉标 / 一句话 / 两个主入口 / 弱化标签 ---- */
+.hero-eyebrow{font-family:var(--font-body);font-size:11px;letter-spacing:.36em;text-transform:uppercase;
+  color:rgba(233,203,138,.72);margin:0 0 20px}
+.hero h1{font-size:clamp(38px,6.4vw,62px);letter-spacing:.02em;font-weight:600;text-shadow:none}
+.hero-intro{max-width:470px;margin:20px auto 0;font-size:15.5px;line-height:1.9;color:rgba(241,236,226,.7)}
+.hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:32px}
+.hero-btn{display:inline-flex;align-items:center;justify-content:center;min-width:128px;padding:12px 24px;
+  font-size:13.5px;letter-spacing:.08em;text-decoration:none;border-radius:2px;border:1px solid transparent;
+  transition:background .2s ease,color .2s ease,border-color .2s ease}
+.hero-btn--solid{background:var(--yellow);color:#151006;border-color:var(--yellow)}
+.hero-btn--solid:hover{background:var(--yellow-light);border-color:var(--yellow-light)}
+.hero-btn--ghost{color:var(--ink);border-color:rgba(240,236,226,.22)}
+.hero-btn--ghost:hover{color:var(--yellow-light);border-color:rgba(217,169,75,.62)}
+.hero-badges{margin-top:34px;gap:0}
+.badge{font-size:11.5px;letter-spacing:.06em;padding:0;border:0;background:none;box-shadow:none;
+  border-radius:0;color:rgba(241,236,226,.5);backdrop-filter:none}
+.badge + .badge{border-left:1px solid rgba(240,236,226,.16);margin-left:14px;padding-left:14px}
+.badge:hover{transform:none;color:rgba(241,236,226,.8);background:none}
+.twin-link{display:inline-flex;align-items:center;gap:8px;margin-top:26px;padding:6px 2px;
+  background:none;border:0;border-bottom:1px solid transparent;cursor:pointer;
+  color:rgba(233,203,138,.86);font-family:var(--font-body);font-size:13px;letter-spacing:.05em;
+  transition:color .2s,border-color .2s}
+.twin-link:hover{color:var(--yellow-light);border-bottom-color:rgba(217,169,75,.55)}
+.twin-link-arrow{transition:transform .2s}
+.twin-link:hover .twin-link-arrow{transform:translateX(3px)}
+@media (max-width:640px){
+  .hero-inner{padding:72px 20px 96px}
+  .hero-intro{font-size:14.5px;line-height:1.85}
+  .hero-actions{margin-top:26px}
+  .hero-btn{min-width:118px;padding:11px 18px;font-size:13px}
+  .hero-badges{margin-top:26px;row-gap:8px}
+  .badge + .badge{margin-left:0;padding-left:0;border-left:0}
+}
+
+/* ---- 导航与工具：降视觉重量 ---- */
+html,body{overflow-x:hidden}
+.nav{gap:20px}
+.nav a{font-weight:400;opacity:.62;letter-spacing:.02em}
+.nav a:hover{opacity:.95}
+.nav a.active,.nav a[aria-current]{opacity:1;font-weight:500}
+.lang-switch{background:none;border:0;border-radius:0;padding:0;gap:12px}
+.lang-btn{font-weight:400;font-size:12px;padding:4px 2px;border-radius:0;color:rgba(241,236,226,.42)}
+.lang-btn.active{color:var(--ink);font-weight:500;background:none;box-shadow:none}
+.sound-hint{font-size:11px;opacity:.45;letter-spacing:.04em}
+.sound-hint:hover{opacity:.85}
+
+/* ---- 顶栏：扁平细分隔线，去掉玻璃胶囊与金色渐变 ---- */
+.topbar{background:rgba(10,16,24,.86);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);padding:13px 92px 13px 22px}
+.topbar.scrolled{box-shadow:0 1px 0 rgba(240,236,226,.06)}
+.brand{font-weight:600;letter-spacing:.04em;font-size:17px}
+.brand .dot{width:7px;height:7px;box-shadow:none;background:var(--yellow)}
+/* ---- 声音提示：纯文字，不占视觉层级 ---- */
+.sound-hint{top:58px;right:88px;height:auto;padding:0;border:0;background:none;box-shadow:none;
+  backdrop-filter:none;-webkit-backdrop-filter:none;color:rgba(241,236,226,.42);font-size:11px;letter-spacing:.06em}
+
+/* ---- 首屏主题元素：压亮度，回到背景位 ---- */
+.avatar{transform:scale(.76);transform-origin:50% 50%;filter:saturate(.92) brightness(.92)}
+.sea-left{opacity:.42}
+.lighthouse{opacity:.8}
+.beam{width:400px;height:40px;opacity:.13}
+.lamp-halo{fill:rgba(255,214,120,.14)}
+@media (max-width:720px){
+  .avatar{transform:scale(.8)}
+  .sea-left{opacity:.34}
+}
 </style>
   <!-- 3D「神经网络」的模块链预加载：不加这几行，10 个模块会一个接一个串行请求，
        跨境访问时每次往返 1~3 秒，串起来就显得「半天加载不出来」。预加载后浏览器并行取。 -->
@@ -1863,8 +1990,13 @@ body.twin-open{overflow:hidden}
       <div class="ring"></div>
       <div class="core">F</div>
     </div>
+    <p class="hero-eyebrow" data-i18n="hero.tagline">never stop trying</p>
     <h1>Fledglynn</h1>
-    <p class="tagline" data-i18n="hero.tagline">never stop trying</p>
+    <p class="hero-intro" data-i18n="hero.intro">智能医学工程在读。方向是非侵入式脑机接口，顺带把画画、音乐和这学期的事记在这里。</p>
+    <div class="hero-actions">
+      <a class="hero-btn hero-btn--solid" href="#bci" data-i18n="hero.work">查看项目</a>
+      <a class="hero-btn hero-btn--ghost" href="#about" data-i18n="hero.about">关于我</a>
+    </div>
     <div class="hero-badges">
       <span class="badge" data-i18n="hero.bio">智能医学工程</span>
       <span class="badge" data-i18n="hero.bci">脑机接口方向</span>
@@ -1872,14 +2004,12 @@ body.twin-open{overflow:hidden}
       <span class="badge" data-i18n="hero.hobbies">绘画 · 音乐 · 阅读</span>
     </div>
 
-    <!-- 首屏入口：分身原来在第 7 个板块，访客要滚到底才看得到 -->
-    <div class="hero-cta">
-      <button class="twin-btn" id="openTwin" type="button">
-        <span class="twin-btn-dot" aria-hidden="true"></span>
-        <span data-i18n="twin.open">和我的分身聊聊</span>
-      </button>
-      <span class="twin-hint" data-i18n="twin.hint">问点没预设过的，它现场回答</span>
-    </div>
+    <!-- 分身入口：从首屏就能打开（第三层级，不抢主按钮） -->
+    <button class="twin-link" id="openTwin" type="button">
+      <span class="twin-btn-dot" aria-hidden="true"></span>
+      <span data-i18n="twin.open">和我的分身聊聊</span>
+      <span class="twin-link-arrow" aria-hidden="true">&rarr;</span>
+    </button>
   </div>
 
   <!-- 灯塔（右侧）：塔身侧视剪影 + 光束绕垂直轴(水平面)旋转，带透视纵深 -->
@@ -3184,6 +3314,9 @@ const I18N = {
     "twin.placeholder": "随便问，比如：你最近在忙什么",
     "twin.send": "发送",
     "hero.tagline": "never stop trying",
+    "hero.intro": "智能医学工程在读。方向是非侵入式脑机接口，顺带把画画、音乐和这学期的事记在这里。",
+    "hero.work": "查看项目",
+    "hero.about": "关于我",
     "hero.bio": "智能医学工程",
     "hero.bci": "脑机接口方向",
     "hero.hobbies": "绘画 · 音乐 · 阅读",
@@ -3383,6 +3516,9 @@ const I18N = {
     "twin.placeholder": "Ask anything, e.g. what are you busy with",
     "twin.send": "Send",
     "hero.tagline": "never stop trying",
+    "hero.intro": "Studying intelligent medical engineering. My focus is non-invasive BCI; I also keep my drawings, music and notes from this term here.",
+    "hero.work": "See the work",
+    "hero.about": "About me",
     "hero.bio": "Intelligent Medical Engineering",
     "hero.bci": "Track: brain–computer interfaces",
     "hero.hobbies": "Drawing · Music · Reading",
